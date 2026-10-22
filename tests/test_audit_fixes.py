@@ -451,3 +451,14 @@ def test_watchdog_counts_terminated_session_spend(monkeypatch):
     monkeypatch.setattr(providers, "now", lambda: fixed_now)
     watchdog(provider)
     assert provider.list_instances() == []
+
+
+def test_poll_respects_remaining_physical_capacity(client, headers):
+    client.post("/v1/jobs", headers=headers, json=body(4))
+    wh = register(client)
+    with Session.begin() as s:
+        schedule(s)
+    assert client.post("/internal/workers/poll", headers=wh, json={"available_slots": 0}).json()["items"] == []
+    assert len(client.post("/internal/workers/poll", headers=wh, json={"available_slots": 1}).json()["items"]) == 1
+    with Session.begin() as s:
+        assert len(list(s.scalars(select(Work).where(Work.status == "leased")))) == 3

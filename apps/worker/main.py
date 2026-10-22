@@ -32,7 +32,7 @@ async def main():
         r.raise_for_status()
         client.headers["Authorization"] = "Bearer " + r.json()["worker_token"]
 
-        active: dict[str, dict] = {}
+        active: dict[tuple[str, int], dict] = {}
 
         async def execute(item):
             try:
@@ -54,10 +54,10 @@ async def main():
                 try:
                     r = await client.post("/internal/workers/requests/" + item["id"] + "/finalize", json=payload)
                     if r.status_code in (404, 409):
-                        active.pop(item["id"], None)
+                        active.pop((item["id"], item["epoch"]), None)
                         return
                     r.raise_for_status()
-                    active.pop(item["id"], None)
+                    active.pop((item["id"], item["epoch"]), None)
                     return
                 except httpx.HTTPError:
                     await asyncio.sleep(min(15, 2 ** min(attempt, 4)))
@@ -72,21 +72,25 @@ async def main():
                 await asyncio.sleep(15)
 
         heartbeat = asyncio.create_task(heartbeats())
-        tasks = set()
+        tasks: set[asyncio.Task] = set()
         try:
             while True:
                 if heartbeat.done():
                     await heartbeat
-                r = await client.post("/internal/workers/poll")
+                free = 16 - len(tasks)
+                if free <= 0:
+                    await asyncio.sleep(0.25)
+                    continue
+                r = await client.post("/internal/workers/poll", json={"available_slots": free})
                 r.raise_for_status()
                 for item in r.json()["items"]:
-                    active[item["id"]] = {"id": item["id"], "epoch": item["epoch"]}
+                    active[(item["id"], item["epoch"])] = {"id": item["id"], "epoch": item["epoch"]}
                     task = asyncio.create_task(execute(item))
                     tasks.add(task)
 
-                    def finished(task, rid=item["id"]):
+                    def finished(task, identity=(item["id"], item["epoch"])):
                         tasks.discard(task)
-                        active.pop(rid, None)
+                        active.pop(identity, None)
                         if not task.cancelled() and task.exception() is not None:
                             print('{"alert":"worker_task_failed"}', flush=True)
 

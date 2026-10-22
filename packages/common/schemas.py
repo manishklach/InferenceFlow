@@ -61,6 +61,10 @@ class Checkout(Strict):
     amount_usd: Literal[10, 25, 100]
 
 
+class Poll(Strict):
+    available_slots: int = Field(default=16, ge=0, le=16)
+
+
 class ActiveLease(Strict):
     id: str
     epoch: int

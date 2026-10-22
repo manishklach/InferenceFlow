@@ -15,7 +15,7 @@ from packages.common.metrics import PlatformCollector
 from packages.common.config import settings
 from packages.common.db import Session, Tenant, Wallet, Key, Job, Work, Worker, Ledger, now, uid
 from packages.common.security import digest_candidates, digest, token, encrypt, decrypt, validate_url
-from packages.common.schemas import Submit, Completion, Registration, NamedKey, Checkout, Telemetry
+from packages.common.schemas import Submit, Completion, Registration, NamedKey, Checkout, Telemetry, Poll
 from packages.common import service as svc
 from packages.common.payments import handle_event
 from apps.api.oidc import router as oidc_router
@@ -534,7 +534,7 @@ def heartbeat(request: Request, body: Telemetry | None = None, wid=Depends(worke
 
 
 @app.post("/internal/workers/poll")
-def poll(request: Request, wid=Depends(worker_auth), s=Depends(db)):
+def poll(request: Request, body: Poll | None = None, wid=Depends(worker_auth), s=Depends(db)):
     tenant_ids = sorted(set(s.scalars(select(Work.tenant_id).where(Work.worker_id == wid, Work.status == "leased"))))
     for tenant_id in tenant_ids:
         svc.lock_wallet(s, tenant_id)
@@ -542,6 +542,7 @@ def poll(request: Request, wid=Depends(worker_auth), s=Depends(db)):
         s.scalars(
             select(Work)
             .where(Work.worker_id == wid, Work.status == "leased", Work.lease_until > now())
+            .limit(body.available_slots if body else 16)
             .with_for_update(skip_locked=True)
         )
     )

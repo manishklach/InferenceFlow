@@ -253,7 +253,7 @@ Real GPU testing requires approved spending and attached infrastructure. RUN_GPU
 
 | Check | Recorded result |
 |---|---|
-| Native PostgreSQL suite after audit fixes | **55 passed; 1 GPU test skipped** |
+| Native PostgreSQL suite after audit fixes | **56 passed; 1 GPU test skipped** |
 | Earlier v0.1.0 Python 3.12 Docker suite | **32 passed; 1 GPU test skipped** (before audit fixes) |
 | Native + Docker 100-request HTTP smoke | Succeeded; zero ledger drift |
 | Ruff / mypy | Passed |
