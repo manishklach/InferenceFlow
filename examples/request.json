@@ -1,0 +1,18 @@
+{
+  "model": "qwen3-4b",
+  "tier": "standard",
+  "requests": [
+    {
+      "custom_id": "doc-001",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Summarize this document."
+        }
+      ],
+      "max_output_tokens": 128,
+      "temperature": 0.2,
+      "top_p": 1
+    }
+  ]
+}

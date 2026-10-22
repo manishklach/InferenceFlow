@@ -1,58 +1,343 @@
 # InferenceFlow
-A prepaid asynchronous inference execution platform. FastAPI + PostgreSQL 16 + a durable scheduler + outbound GPU worker + Next.js dashboard + Python SDK. Local mode produces clearly labeled deterministic MOCK outputs. No GPU is provisioned and no real payment is accepted by default.
 
-## Local Docker quickstart
-Requires Docker Engine/Compose. In PowerShell:
-```powershell
-cd C:\Users\ManishKL\Documents\Playground\inferenceflow
-Copy-Item .env.example .env
+**Submit inference batches. Track execution. Pay for completed tokens.**
+
+A prepaid asynchronous text-inference platform built with FastAPI, PostgreSQL, a durable scheduler, outbound GPU workers, vLLM, and Next.js.
+
+[![CI](https://github.com/manishklach/inferenceflow/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/manishklach/inferenceflow/actions/workflows/test.yml)
+![Release](https://img.shields.io/badge/release-v0.1.0--MVP-blue)
+![Python](https://img.shields.io/badge/Python-3.12-3776AB)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1)
+
+[Quickstart](#quickstart) · [Architecture](#architecture) · [API and SDK](#api-and-sdk) · [Testing](#testing-and-validation) · [GPU deployment](docs/gpu-deploy.md) · [Release notes](docs/releases/v0.1.0.md)
+
+> **MVP prerelease:** local execution and accounting have been validated with deterministic mock inference. The real vLLM adapter and pinned source configuration are included. Rented-GPU execution and external payment/provider/OIDC flows still need validation. No GPU performance, pricing advantage, or production-readiness claim is made.
+
+## What it does
+
+Customers submit independent chat-generation requests, receive a job ID immediately, and retrieve ordered results while the platform owns queueing, execution, recovery, metering, and prepaid accounting. Workloads include document extraction, classification, enrichment, summaries, and synthetic-data batches that tolerate asynchronous completion.
+
+| Area | Included |
+|---|---|
+| API | 1–100 requests/job, idempotency, partial results, pagination, JSONL, cancellation |
+| Identity | OIDC code + PKCE/state/nonce, local sign-in, memberships, one-time API keys |
+| Scheduling | Model affinity, weighted fairness/aging, deadlines, concurrency and KV-cache pressure caps |
+| Workers | Outbound async agent, deterministic mock, private vLLM, canary, lease recovery |
+| Accounting | Integer micro-USD, immutable ledger/rates, atomic capture/release, audited reconciliation |
+| Payments | Gated Stripe test Checkout, verified webhooks, deduplication, refunds, dispute freeze |
+| Callbacks | Registered HTTPS, HMAC, IP pinning, SSRF/rebinding protection, durable retries |
+| Operations | Provider kill switch/caps, watchdog, Prometheus, optional OTLP, content retention |
+| Tools | Next.js dashboard, Python SDK, OpenAPI, Compose, CI, tests and runbooks |
+
+## Quickstart
+
+Requires Git, a running Docker Engine with Compose v2, and free local ports **3000**, **8080**, and **55432**. Mock mode requires no GPU or external service account.
+
+~~~bash
+git clone https://github.com/manishklach/inferenceflow.git
+cd inferenceflow
+cp .env.example .env
 docker compose up --build -d
 docker compose exec api python -m packages.common.cli seed
-```
-The last command prints a new API key once and adds $10 in test credits (the funding reference is idempotent). Visit http://localhost:3000 and sign in as `developer@example.local`. API docs: http://localhost:8080/docs. OpenAPI: `/openapi.json` and `docs-openapi.json`.
+~~~
 
-```powershell
-$env:INFERENCEFLOW_API_KEY = '<key printed by seed>'
-# Install locally if you want to use the SDK outside Docker:
-python -m venv .venv
-.venv/Scripts/python -m pip install -e '.[dev]'
-.venv/Scripts/python examples/batch.py
-```
-`python scripts/local_demo.py` performs the same 100-request smoke test with three real local processes and cleans them up. `docker compose exec api python scripts/docker_smoke.py` tests the running container stack.
+PowerShell users can copy the environment template with:
 
-The example submits 100 independent requests and polls until `succeeded`, prints ordered results, token counts and the remaining wallet. Each output starts with `MOCK` in mock mode. `POST /v1/jobs/{id}/cancel` releases queued reservations; running work can finish and be billed if returned.
+~~~powershell
+Copy-Item .env.example .env
+~~~
 
-## Without Docker
-Use PostgreSQL 16 and set `DATABASE_URL` in `.env`. Python 3.12 is the deployment target; development also supports 3.11.
-```powershell
-.venv/Scripts/python -m pip install -e '.[dev,gpu]'
-.venv/Scripts/python -m alembic upgrade head
-.venv/Scripts/python -m packages.common.cli seed
-# Separate terminals, same working directory:
-.venv/Scripts/python -m uvicorn apps.api.main:app --host 127.0.0.1 --port 8080
-.venv/Scripts/python -m apps.scheduler.main
-.venv/Scripts/python -m apps.worker.main
-cd apps/dashboard
-npm ci
-npm run dev
-```
+The seed command creates **developer@example.local**, adds **$10 in test funds**, and prints a new API key once. Funding is idempotent for its default reference: rerunning creates another key without duplicating that funding entry. Store the displayed key securely.
 
-## Verification
-Tests always use a separate database ending `_test` (by default the DATABASE_URL database name plus `_test`) and truncate only that test database. Create it first; set TEST_DATABASE_URL to customize. No SQLite fallback exists.
-```powershell
-.venv/Scripts/python -m alembic upgrade head
-# For Docker's local Postgres:
+| Service | URL |
+|---|---|
+| Dashboard | http://localhost:3000 |
+| Interactive API docs | http://localhost:8080/docs |
+| OpenAPI | http://localhost:8080/openapi.json |
+| Readiness | http://localhost:8080/readyz |
+| Metrics | http://localhost:8080/metrics |
+
+Sign in as developer@example.local, submit a sample, and inspect tokens, charges, results, and ledger. Local outputs start with **MOCK**; rates are test fixtures.
+
+### Prove the complete flow
+
+~~~bash
+docker compose exec api python scripts/docker_smoke.py
+~~~
+
+This submits 100 requests over HTTP, waits for the separate scheduler/worker, retrieves results, and reconciles the ledger. Recorded result:
+
+~~~json
+{
+  "completed": 100,
+  "captured_micro_usd": 2500,
+  "usage": {"input_tokens": 3690, "output_tokens": 6900},
+  "ledger_drift": 0
+}
+~~~
+
+The charge is **$0.002500 at synthetic test rates**, not a public service price or GPU cost measurement.
+
+~~~bash
+docker compose logs --tail=100 api scheduler worker
+docker compose down
+docker compose up -d
+~~~
+
+Stopping preserves the PostgreSQL named volume. Retain it to keep accounts, jobs, and accounting history.
+
+## Architecture
+
+~~~mermaid
+flowchart LR
+    C[SDK / dashboard] --> A[FastAPI]
+    A --> P[(PostgreSQL)]
+    S[Scheduler] --> P
+    W[Outbound worker] -->|poll / heartbeat / finalize| A
+    W --> M{Execution mode}
+    M --> L[Local mock]
+    M --> V[Private vLLM / NVIDIA]
+    ST[Stripe test Checkout] -->|verified webhook| A
+    S --> H[Signed customer callbacks]
+    G[Independent watchdog] --> R[GPU provider]
+~~~
+
+PostgreSQL provides durable work and transactional SKIP LOCKED leases. The worker keeps one model warm and calls vLLM concurrently so the engine performs continuous batching.
+
+1. Validate the batch, count tokens, snapshot rates, and atomically reserve the maximum charge.
+2. Assign a lease with an increasing fencing epoch; perform inference outside DB transactions.
+3. Accept finalization only from the current worker/epoch with a valid lease.
+4. Atomically persist output/usage, capture once, and release unused funds.
+5. Recover abandoned work with bounded retries/backoff and reject stale completion.
+
+**Execution is at least once; accounting is exactly once.** Crashes can repeat physical inference, but fencing and unique accounting references prevent repeated capture.
+
+~~~mermaid
+stateDiagram-v2
+    [*] --> queued
+    queued --> leased
+    leased --> running
+    leased --> queued: lease recovery
+    running --> queued: retryable failure
+    queued --> canceled
+    leased --> canceled
+    queued --> expired
+    leased --> expired
+    running --> succeeded
+    running --> failed
+    running --> billing_pending: inconsistent usage
+    billing_pending --> succeeded: audited capture
+    billing_pending --> failed: audited release
+~~~
+
+Targets are best effort. Unstarted work past target expires without capture. Running work can finish late, including after cancellation, and can be billed if its output is returned.
+
+## API and SDK
+
+Customer calls use a Bearer API key. Submissions also require an Idempotency-Key header. Dashboard and worker authentication are separate.
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | /v1/models | Revision, limits, rates, mode |
+| POST / GET | /v1/jobs | Submit batch / list history |
+| GET | /v1/jobs/{id} | Progress, usage and accounting |
+| GET | /v1/jobs/{id}/results | Ordered paginated partial results |
+| GET | /v1/jobs/{id}/results.jsonl | Authenticated download |
+| POST | /v1/jobs/{id}/cancel | Best-effort cancellation |
+| GET | /v1/wallet, /v1/wallet/transactions | Balances and ledger |
+| POST / GET / DELETE | /v1/keys and /v1/keys/{id} | Dashboard-only key management |
+| POST | /v1/webhook-destination | Register callbacks |
+| POST | /v1/billing/checkout-session | Gated test top-up |
+
+Sample payload: [examples/request.json](examples/request.json).
+
+~~~bash
+export INFERENCEFLOW_API_KEY='<key from seed or dashboard>'
+curl -X POST http://localhost:8080/v1/jobs \
+  -H "Authorization: Bearer $INFERENCEFLOW_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -H 'Idempotency-Key: example-job-001' \
+  --data-binary @examples/request.json
+~~~
+
+HTTP 202 returns a job ID and reservation. A repeated key/body returns the same job; a changed body under that key returns 409. See [API contract](docs/api.md) and [OpenAPI export](docs-openapi.json).
+
+The SDK is included here; no PyPI publication is claimed. Create/activate a virtual environment, then install:
+
+~~~bash
+python -m pip install -e '.[dev]'
+~~~
+
+~~~python
+import os
+from packages.python_sdk import InferenceFlowClient
+
+with InferenceFlowClient(os.environ["INFERENCEFLOW_API_KEY"]) as client:
+    job = client.create_job(requests=[{
+        "custom_id": "doc-001",
+        "messages": [{"role": "user", "content": "Summarize this document."}],
+        "max_output_tokens": 128,
+    }], tier="economy")
+    print(client.wait_for_job(job["id"], timeout=300))
+    print(client.get_results(job["id"]))
+    print(client.get_wallet())
+~~~
+
+The client generates idempotency keys and retries transient failures. It also supports catalog/status/cancellation. The batch example submits 100 requests:
+
+~~~bash
+python examples/batch.py
+~~~
+
+## Billing and defaults
+
+Money uses integer micro-USD: USD 1 = 1,000,000 units. Rates are per million tokens and snapshotted at acceptance.
+
+~~~text
+reserve = ceil(prompt_tokens × input_rate / 1,000,000)
+        + ceil(max_output_tokens × output_rate / 1,000,000)
+capture = ceil(engine_input_tokens × input_rate / 1,000,000)
+        + ceil(engine_output_tokens × output_rate / 1,000,000)
+release = reservation − capture
+~~~
+
+Missing/inconsistent usage enters billing_pending, holds its reservation, and requires audited reconciliation; no customer charge is guessed. Failed attempts cost the operator without a customer token charge. Refunds/disputes freeze affected accounts and audit shortfalls.
+
+| Default | Limit |
+|---|---|
+| Requests/job / body | 1–100 / 5 MiB |
+| Prompt / output tokens | 8,192 / 2,048 |
+| Pending / in-flight per tenant | 2,000 / 16 |
+| Lease TTL / attempts | 60 seconds / 3 |
+| Standard / economy target | 30 minutes / 24 hours, best effort |
+| Content retention / GPUs | 7 days / 1 active GPU |
+
+Read [billing invariants and reconciliation](docs/billing.md) before enabling payments.
+
+## Configuration and real integrations
+
+Copy [.env.example](.env.example); keep .env out of Git.
+
+| Setting | Purpose / safe default |
+|---|---|
+| DATABASE_URL | PostgreSQL; Compose overrides its internal host |
+| SECRET_KEY | Sessions, hashes, encryption; replace development value before deployment |
+| EXECUTION_MODE | mock locally, vllm for attached capacity |
+| MODEL_REVISION | mock-v1 locally, exact reviewed SHA in real mode |
+| WORKER_BOOTSTRAP_TOKEN | Separate worker credential; rotate before deployment |
+| PROVISIONING_ENABLED | **false** |
+| MAX_ACTIVE_GPUS | **1**, including creation intents |
+| MAX_DAILY_GPU_SPEND_USD | Quote-based ceiling, initially **25** |
+| STRIPE_ENABLED / PUBLIC_BETA_ENABLED | **false** / **false** |
+| OIDC_* | Provider/client, issuer/audience, redirect settings |
+| OTEL_EXPORTER_OTLP_ENDPOINT | Optional collector; install the observability extra first |
+
+Follow [GPU deployment](docs/gpu-deploy.md) for pins, private vLLM, outbound worker, TLS/network isolation, smoke/restart testing, and shutdown. See [model/image lock](infra/model-lock.json).
+
+~~~bash
+# Downloads only the pinned tokenizer; no weights or rental.
+python -m pip install -e '.[gpu]'
+python scripts/check_tokenizer.py
+~~~
+
+Real GPU testing requires approved spending and attached infrastructure. RUN_GPU_E2E=1 opts in after configuration. Stripe stays test-only and grants credits only from verified paid webhooks. Managed OIDC validates PKCE/state/nonce/signature/issuer/audience/expiry. Development sign-in and seeding stay local-only.
+
+## Testing and validation
+
+| Check | Recorded result |
+|---|---|
+| Native PostgreSQL suite | **32 passed; 1 GPU test skipped** |
+| Python 3.12 Docker suite | **32 passed; 1 GPU test skipped** |
+| Native + Docker 100-request HTTP smoke | Succeeded; zero ledger drift |
+| Ruff / mypy | Passed |
+| Dashboard build / TypeScript | Passed |
+| npm production audit | Zero reported vulnerabilities at validation time |
+| Exact real tokenizer | Loaded; checked prompt counts 18 tokens |
+| GPU / external service integration | Pending |
+
+Coverage includes auth, isolation, idempotency, ordering, concurrent reserves/submissions/finalizers, rounding, immutable ledger, crash recovery, stale epochs, retries, partial success, cancellation, deadlines, signed payments, OIDC, SSRF/rebinding/redirects, callbacks, logging, limits, retention, migrations, and KV-cache pressure.
+
+~~~bash
+# Create once; skip if this dedicated test database exists.
 docker compose exec postgres createdb -U inferenceflow inferenceflow_test
-.venv/Scripts/python -m pytest -q
-.venv/Scripts/python -m ruff check .
-.venv/Scripts/python -m mypy apps packages
-.venv/Scripts/python -m packages.common.cli reconcile
+docker compose exec api python -m pytest -q
+docker compose exec api python -m ruff check .
+docker compose exec api python -m mypy apps packages
+docker compose exec api python -m packages.common.cli reconcile
+~~~
+
+Tests apply migrations and truncate only a separate database ending _test. TEST_DATABASE_URL customizes its connection. PostgreSQL is required; SQLite is not used to approximate locking.
+
+For native checks, install the dev extra, then run make test lint typecheck or the matching python -m commands. Build the dashboard separately:
+
+~~~bash
 cd apps/dashboard
 npm ci
 npm run build
-```
-Linux equivalents: `make test lint typecheck`. CI supplies PostgreSQL 16.9. GPU test is opt-in with `RUN_GPU_E2E=1`; it requires a real-mode catalog and verifies real output, engine usage and captured credit.
+~~~
 
-See [implementation status](IMPLEMENTATION_STATUS.md), [architecture](docs/architecture.md), [API](docs/api.md), [billing](docs/billing.md), [GPU setup](docs/gpu-deploy.md), [security](docs/security.md) and [operations](docs/ops.md). Public beta remains gated pending measured pricing, external integration validation and launch review.
+## Native development
 
-This machine was additionally validated using an isolated Docker Engine in WSL because Docker Desktop was stopped. Standard Docker commands above require your normal engine to be running. The native Windows preview uses PostgreSQL in WSL; its local `.env` is intentionally ignored by Git.
+Requires PostgreSQL 16, Python 3.12 (3.11 development compatibility), Node.js 22 and npm. Create/activate .venv, copy the environment template, and configure DATABASE_URL.
+
+~~~bash
+python -m pip install -e '.[dev,gpu]'
+python -m alembic upgrade head
+python -m packages.common.cli seed
+~~~
+
+Run in separate terminals from the root:
+
+~~~bash
+python -m uvicorn apps.api.main:app --host 127.0.0.1 --port 8080
+python -m apps.scheduler.main
+# Start after API readiness succeeds:
+python -m apps.worker.main
+~~~
+
+In another terminal run npm ci and npm run dev from apps/dashboard. The temporary native smoke harness starts its own API/scheduler/worker and cleans them up; run it with ports free:
+
+~~~bash
+python scripts/local_demo.py
+~~~
+
+## Operations and troubleshooting
+
+- **Docker connection:** start your engine/Desktop and verify docker info.
+- **Occupied ports:** stop native previews before normal Docker deployment.
+- **No credits:** use the exact seeded email or seed the intended development account.
+- **Queued work:** inspect logs, readiness, revisions, heartbeats and KV-cache pressure.
+- **Billing pending:** follow [audited procedures](docs/billing.md); never edit ledger rows.
+- **Monitoring:** enable the observability Compose profile; Prometheus is at http://localhost:9090. See [alerts](infra/alerts.yml).
+- **Traces:** install the observability extra, configure an OTLP HTTP collector, restart API.
+- **GPU leaks:** use an independent watchdog, dedicated account and provider-side limits/alerts. Control-plane ceilings cannot guarantee billing stops during outages.
+
+## Repository and documentation
+
+~~~text
+apps/api/                 FastAPI and OIDC
+apps/scheduler/           Dispatch, recovery, callbacks, watchdog
+apps/worker/              Agent, mock/vLLM engines, telemetry
+apps/dashboard/           Next.js + TypeScript interface
+packages/common/          DB, auth, ledger, providers, metrics
+packages/python_sdk/      InferenceFlowClient
+migrations/               Alembic revisions
+infra/                    Dockerfile, model pins, Prometheus
+scripts/                  Smoke tests and tokenizer check
+tests/                    API, accounting, concurrency, security, migrations
+examples/                 SDK example and API payload
+docs/                     Contracts, deployment, runbooks, release notes
+~~~
+
+- [Implementation evidence and boundaries](IMPLEMENTATION_STATUS.md)
+- [Architecture](docs/architecture.md), [API](docs/api.md), [OpenAPI](docs-openapi.json)
+- [Billing](docs/billing.md), [GPU deployment](docs/gpu-deploy.md), [security](docs/security.md), [operations](docs/ops.md)
+- [Internal pricing experiment](docs/pricing-experiment.md)
+- [Changelog](CHANGELOG.md) and [release notes](docs/releases/v0.1.0.md)
+- [Product specification](inferenceflow_mvp_spec.md) and [implementation brief](codex_inferenceflow_prompt.md)
+
+## Scope and launch gates
+
+One model is enabled. The optional second model, advanced throughput prediction, organization UI, distributed rate limiting, and invoice ingestion are outside this implementation. Reservations/idempotency/leases are consolidated into durable rows; encrypted PostgreSQL columns replace object storage.
+
+Before limited prepaid beta, validate GPU inference/recovery, actual OIDC/Stripe/provider flows, callback TLS/egress, backups, measured margins, model licensing, and security/legal/accounting requirements. Mock results and synthetic rates do not establish GPU performance or savings.
