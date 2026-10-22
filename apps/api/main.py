@@ -1,7 +1,5 @@
 import json
 import secrets
-import time
-from collections import defaultdict, deque
 from datetime import timedelta
 from contextlib import asynccontextmanager
 import jwt
@@ -10,13 +8,13 @@ from fastapi import FastAPI, Depends, Request, Header, Query
 from fastapi.responses import JSONResponse, Response
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import select, text
+from sqlalchemy import select, text, case
 from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST, REGISTRY
 from packages.common.metrics import PlatformCollector
 
 from packages.common.config import settings
 from packages.common.db import Session, Tenant, Wallet, Key, Job, Work, Worker, Ledger, now, uid
-from packages.common.security import digest, token, encrypt, decrypt, validate_url
+from packages.common.security import digest_candidates, digest, token, encrypt, decrypt, validate_url
 from packages.common.schemas import Submit, Completion, Registration, NamedKey, Checkout, Telemetry
 from packages.common import service as svc
 from packages.common.payments import handle_event
@@ -46,7 +44,6 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type", "Idempotency-Key", "X-CSRF-Token"],
 )
 requests_metric = Counter("inferenceflow_http_requests_total", "HTTP requests", ["method", "status"])
-limits: dict[str, deque[float]] = defaultdict(deque)
 
 
 @app.middleware("http")
@@ -104,20 +101,38 @@ def result(request, data):
     return {**data, "request_id": request.state.request_id}
 
 
+def rate_window(session):
+    return session.scalar(text("SELECT floor(extract(epoch FROM clock_timestamp()) / 60)::bigint"))
+
+
+def rate_limit(tenant_id):
+    # Commit independently so a failed endpoint cannot roll back its request allowance.
+    from packages.common.db import RateBucket
+    from sqlalchemy.dialects.postgresql import insert
+
+    with Session.begin() as session:
+        window = rate_window(session)
+        statement = insert(RateBucket).values(tenant_id=tenant_id, window=window, hits=1)
+        admission = statement.on_conflict_do_update(
+            index_elements=[RateBucket.tenant_id],
+            set_={"window": window, "hits": case((RateBucket.window == window, RateBucket.hits + 1), else_=1)},
+            where=(RateBucket.window != window) | (RateBucket.hits < 120),
+        ).returning(RateBucket.hits)
+        admitted = session.scalar(admission)
+    if admitted is None:
+        raise svc.Problem(429, "rate_limit")
+
+
 def auth(request: Request, s=Depends(db), authorization: str = Header(default="")):
     if not authorization.startswith("Bearer "):
         raise svc.Problem(401, "unauthorized")
     raw = authorization[7:]
-    k = s.scalar(select(Key).where(Key.digest == digest(raw), Key.revoked.is_(False)))
+    k = s.scalar(select(Key).where(Key.digest.in_(digest_candidates(raw)), Key.revoked.is_(False)))
     if not k:
         raise svc.Problem(401, "unauthorized")
-    q = limits[k.tenant_id]
-    stamp = time.monotonic()
-    while q and q[0] < stamp - 60:
-        q.popleft()
-    if len(q) >= 120:
-        raise svc.Problem(429, "rate_limit")
-    q.append(stamp)
+    if k.digest != digest(raw):
+        k.digest = digest(raw)
+    rate_limit(k.tenant_id)
     return k.tenant_id
 
 
@@ -133,6 +148,7 @@ def dashboard(request: Request, s=Depends(db), authorization: str = Header(defau
     t = s.get(Tenant, claims["sub"])
     if not t:
         raise svc.Problem(401, "unauthorized")
+    rate_limit(t.id)
     return t.id
 
 
@@ -144,9 +160,11 @@ def customer(request: Request, s=Depends(db), authorization: str = Header(defaul
 
 def worker_auth(request: Request, s=Depends(db), authorization: str = Header(default="")):
     raw = authorization.removeprefix("Bearer ")
-    w = s.scalar(select(Worker).where(Worker.token_hash == digest(raw), Worker.expires_at > now()))
+    w = s.scalar(select(Worker).where(Worker.token_hash.in_(digest_candidates(raw)), Worker.expires_at > now()))
     if not w:
         raise svc.Problem(401, "worker_unauthorized")
+    if w.token_hash != digest(raw):
+        w.token_hash = digest(raw)
     return w.id
 
 
@@ -162,7 +180,10 @@ def ready(s=Depends(db)):
 
 
 @app.get("/metrics")
-def metrics():
+def metrics(authorization: str = Header(default="")):
+    expected = settings().metrics_token
+    if not expected or not secrets.compare_digest(authorization, "Bearer " + expected):
+        raise svc.Problem(401, "metrics_unauthorized")
     return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
 
@@ -343,6 +364,7 @@ def wallet(request: Request, t=Depends(customer), s=Depends(db)):
         {
             "available_micro_usd": w.available,
             "reserved_micro_usd": w.reserved,
+            "debt_micro_usd": w.debt,
             "total_balance_micro_usd": w.available + w.reserved,
             "frozen": s.get(Tenant, t).frozen,
         },
@@ -375,6 +397,7 @@ def transactions(
                     "kind": r.kind,
                     "available_delta": r.available_delta,
                     "reserved_delta": r.reserved_delta,
+                    "debt_delta": r.debt_delta,
                     "source": r.source,
                     "created_at": r.created_at,
                 }
@@ -446,13 +469,26 @@ def register(request: Request, body: Registration, authorization: str = Header(d
     if not secrets.compare_digest(authorization, "Bearer " + settings().worker_bootstrap_token):
         raise svc.Problem(401, "worker_unauthorized")
     raw = token("if_worker_")
-    w = s.get(Worker, body.id)
+    # Serialize concurrent enrollment for an ID, including the first insert.
+    s.execute(text("SELECT pg_advisory_xact_lock(hashtext(:identity))"), {"identity": "worker:" + body.id})
+    w = s.scalar(select(Worker).where(Worker.id == body.id).with_for_update())
 
     if not w:
         w = Worker(id=body.id)
         s.add(w)
     if body.revision != settings().model_revision:
         raise svc.Problem(422, "model_revision_mismatch")
+    if (body.repo, body.tokenizer_revision, body.execution_mode) != (
+        settings().model_repo,
+        settings().model_revision,
+        settings().execution_mode,
+    ):
+        raise svc.Problem(422, "model_identity_mismatch")
+    w.generation = uid()
+    w.revision = body.revision
+    w.repo = body.repo
+    w.tokenizer_revision = body.tokenizer_revision
+    w.execution_mode = body.execution_mode
     w.provider_instance_id = body.provider_instance_id
     w.model = body.model
     w.capacity = body.capacity
@@ -470,16 +506,19 @@ def heartbeat(request: Request, body: Telemetry | None = None, wid=Depends(worke
     )
     for tid in tenants:
         svc.lock_wallet(s, tid)
-    w = s.get(Worker, wid)
+    w = s.scalar(select(Worker).where(Worker.id == wid).with_for_update().execution_options(populate_existing=True))
     w.heartbeat = now()
     if body is not None:
         w.telemetry = body.model_dump_json(exclude_none=True)
     canceled = []
+    active = {(lease.id, lease.epoch) for lease in (body.active if body else [])}
     for r in s.scalars(
         select(Work)
         .where(Work.worker_id == wid, Work.status.in_(["leased", "running"]), Work.lease_until > now())
         .with_for_update()
     ):
+        if r.worker_generation != w.generation or (r.id, r.epoch) not in active:
+            continue
         r.lease_until = now() + timedelta(seconds=settings().lease_seconds)
         if s.get(Job, r.job_id).cancel:
             canceled.append(r.id)
@@ -507,13 +546,34 @@ def poll(request: Request, wid=Depends(worker_auth), s=Depends(db)):
         )
     )
     out = []
+    node = s.scalar(select(Worker).where(Worker.id == wid).with_for_update().execution_options(populate_existing=True))
     for r in rows:
+        if r.worker_generation != node.generation:
+            continue
+        if s.get(Tenant, r.tenant_id).frozen:
+            svc.terminal(s, r, "canceled", "account_frozen")
+            continue
         if s.get(Job, r.job_id).target < now():
             svc.terminal(s, r, "expired")
             continue
         r.status = "running"
         r.started_at = r.started_at or now()
-        out.append({"id": r.id, "epoch": r.epoch, "prompt_tokens": r.prompt_tokens, "payload": decrypt(r.payload)})
+        price = s.get(svc.ModelPrice, r.price_id)
+        version = s.get(svc.ModelVersion, price.model_version_id)
+        out.append(
+            {
+                "id": r.id,
+                "epoch": r.epoch,
+                "prompt_tokens": r.prompt_tokens,
+                "payload": decrypt(r.payload),
+                "identity": {
+                    "repo": version.repo,
+                    "revision": version.revision,
+                    "tokenizer_revision": version.tokenizer_revision,
+                    "execution_mode": version.execution_mode,
+                },
+            }
+        )
     return result(request, {"items": out})
 
 

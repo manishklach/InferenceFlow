@@ -41,12 +41,26 @@ services:
     command: python -m apps.scheduler.main
     depends_on:
       migrate: {condition: service_completed_successfully}
-  worker:
+  callbacks:
     <<: *platform
+    command: python -m apps.callbacks.main
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+  worker:
+    image: inferenceflow-control:local
+    build:
+      context: .
+      dockerfile: infra/Dockerfile
+    restart: unless-stopped
     command: python -m apps.worker.main
+    # Workers receive no database, payment, signing, encryption or provider secrets.
     environment:
-      DATABASE_URL: postgresql+psycopg://inferenceflow:localdev@postgres:5432/inferenceflow
+      ENVIRONMENT: development
+      EXECUTION_MODE: mock
+      MODEL_REVISION: mock-v1
+      WORKER_BOOTSTRAP_TOKEN: ${WORKER_BOOTSTRAP_TOKEN:-local-worker-only}
       CONTROL_PLANE_URL: http://api:8080
+      WORKER_ID: local-worker
     depends_on:
       api: {condition: service_healthy}
   dashboard:
@@ -63,6 +77,7 @@ services:
     volumes:
       - ./infra/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - ./infra/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - ./.runtime/metrics-token:/etc/prometheus/metrics-token:ro
     depends_on:
       api: {condition: service_healthy}
 volumes:

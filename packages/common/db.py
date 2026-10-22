@@ -56,6 +56,8 @@ class Wallet(Base):
     tenant_id: Mapped[str] = mapped_column(ForeignKey("tenants.id"), primary_key=True)
     available: Mapped[int] = mapped_column(BigInteger, default=0)
     reserved: Mapped[int] = mapped_column(BigInteger, default=0)
+    debt: Mapped[int] = mapped_column(BigInteger, default=0)
+    schedule_checked: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
     __table_args__ = (CheckConstraint("available >= 0 AND reserved >= 0"),)
 
 
@@ -67,6 +69,7 @@ class Ledger(Base):
     kind: Mapped[str] = mapped_column(String)
     available_delta: Mapped[int] = mapped_column(BigInteger)
     reserved_delta: Mapped[int] = mapped_column(BigInteger)
+    debt_delta: Mapped[int] = mapped_column(BigInteger, default=0)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
 
 
@@ -138,6 +141,7 @@ class Work(Base):
     attempts: Mapped[int] = mapped_column(Integer, default=0)
     epoch: Mapped[int] = mapped_column(Integer, default=0)
     worker_id: Mapped[str | None] = mapped_column(String, index=True)
+    worker_generation: Mapped[str | None] = mapped_column(String)
     lease_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     eligible_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
     started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
@@ -156,6 +160,11 @@ class Worker(Base):
     heartbeat: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
     token_hash: Mapped[str] = mapped_column(String)
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    generation: Mapped[str] = mapped_column(String, default=uid)
+    revision: Mapped[str] = mapped_column(String, default="unverified")
+    repo: Mapped[str] = mapped_column(String, default="unverified")
+    tokenizer_revision: Mapped[str] = mapped_column(String, default="unverified")
+    execution_mode: Mapped[str] = mapped_column(String, default="unverified")
     served: Mapped[int] = mapped_column(Integer, default=0)
     provider_instance_id: Mapped[str | None] = mapped_column(String)
     telemetry: Mapped[str | None] = mapped_column(Text)
@@ -188,6 +197,8 @@ class Delivery(Base):
     due: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
     delivered: Mapped[bool] = mapped_column(Boolean, default=False)
+    claim: Mapped[str | None] = mapped_column(String)
+    claim_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
 class Instance(Base):
@@ -199,6 +210,13 @@ class Instance(Base):
     last_busy: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
     terminated: Mapped[bool] = mapped_column(Boolean, default=False)
     terminated_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class RateBucket(Base):
+    __tablename__ = "rate_buckets"
+    tenant_id: Mapped[str] = mapped_column(ForeignKey("tenants.id"), primary_key=True)
+    window: Mapped[int] = mapped_column(BigInteger)
+    hits: Mapped[int] = mapped_column(Integer)
 
 
 class Audit(Base):

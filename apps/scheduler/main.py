@@ -1,7 +1,7 @@
 import time
 from packages.common.db import Session
 from packages.common.service import schedule, purge, reconcile
-from packages.common.webhooks import enqueue, deliver
+from packages.common.webhooks import enqueue
 
 
 def tick():
@@ -10,7 +10,6 @@ def tick():
     with Session.begin() as s:
         enqueue(s)
         purge(s)
-    deliver()
     with Session.begin() as s:
         if reconcile(s):
             print('{"alert":"wallet_reconciliation_drift"}', flush=True)

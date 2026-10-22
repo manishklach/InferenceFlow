@@ -11,19 +11,38 @@ from packages.common.config import settings
 
 
 def digest(s):
-    return hmac.new(settings().secret_key.encode(), s.encode(), hashlib.sha256).hexdigest()
+    key = settings().credential_hash_key or settings().secret_key
+    return hmac.new(key.encode(), s.encode(), hashlib.sha256).hexdigest()
+
+
+def digest_candidates(s):
+    cfg = settings()
+    keys = [cfg.credential_hash_key or cfg.secret_key, *cfg.credential_hash_previous_keys]
+    return [hmac.new(k.encode(), s.encode(), hashlib.sha256).hexdigest() for k in keys]
 
 
 def crypt():
-    return Fernet(base64.urlsafe_b64encode(hashlib.sha256(settings().secret_key.encode()).digest()))
+    cfg = settings()
+    if cfg.encryption_active_key:
+        return Fernet(cfg.encryption_keys[cfg.encryption_active_key].encode())
+    return Fernet(base64.urlsafe_b64encode(hashlib.sha256(cfg.secret_key.encode()).digest()))
 
 
 def encrypt(obj):
-    return crypt().encrypt(json.dumps(obj).encode()).decode()
+    value = crypt().encrypt(json.dumps(obj).encode()).decode()
+    key = settings().encryption_active_key
+    return "v1:" + key + ":" + value if key else value
 
 
 def decrypt(value):
-    return json.loads(crypt().decrypt(value.encode()))
+    cfg = settings()
+    if value.startswith("v1:"):
+        _, key, ciphertext = value.split(":", 2)
+        return json.loads(Fernet(cfg.encryption_keys[key].encode()).decrypt(ciphertext.encode()))
+    # Explicit legacy key permits staged migration without coupling new encryption to JWT keys.
+    legacy = cfg.encryption_legacy_secret or cfg.secret_key
+    cipher = Fernet(base64.urlsafe_b64encode(hashlib.sha256(legacy.encode()).digest()))
+    return json.loads(cipher.decrypt(value.encode()))
 
 
 def token(prefix="if_live_"):

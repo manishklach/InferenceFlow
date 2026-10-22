@@ -1,6 +1,6 @@
 from sqlalchemy import select, text
-from packages.common.db import Payment, Tenant, Audit
-from packages.common.service import lock_wallet, post, Problem
+from packages.common.db import Payment, Tenant, Audit, Work
+from packages.common.service import lock_wallet, post, terminal, TERMINAL, Problem
 
 
 def handle_event(s, event):
@@ -32,11 +32,18 @@ def handle_event(s, event):
         w = lock_wallet(s, p.tenant_id)
         tenant = s.get(Tenant, p.tenant_id)
         tenant.frozen = True
+        # Freeze is immediate, including running work: discard later completions without charging.
+        for request in s.scalars(
+            select(Work).where(Work.tenant_id == p.tenant_id, Work.status.not_in(TERMINAL)).with_for_update()
+        ):
+            request.epoch += 1
+            terminal(s, request, "canceled", "funding_reversed")
+        s.flush()
         target = p.amount if kind == "charge.dispute.created" else min(p.amount, obj.get("amount_refunded", 0) * 10000)
         delta = max(0, target - p.reversed_amount)
         debit = min(w.available, delta)
-        post(s, w, "reversal:" + event["id"], "reversal", -debit, 0)
-        # Shortfall is a debt audit; frozen account cannot spend reserved/disputed funds.
+        post(s, w, "reversal:" + event["id"], "reversal", -debit, 0, debt=delta - debit)
+        # Liability is journaled above; audit preserves the operator-facing payment reference.
         if debit < delta:
             s.add(Audit(kind="reversal_debt", reference=f"{p.id}:{delta - debit}"))
         p.reversed_amount += delta

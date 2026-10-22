@@ -4,7 +4,7 @@ from sqlalchemy import text
 from fastapi.testclient import TestClient
 from packages.common.db import Session, engine
 from packages.common.service import account, new_key, lock_wallet, post
-from apps.api.main import app, limits
+from apps.api.main import app
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -29,7 +29,6 @@ def clean(migrate_test_database):
         )
         if names:
             c.execute(text("TRUNCATE " + ",".join('"' + n + '"' for n in names) + " CASCADE"))
-    limits.clear()
 
 
 @pytest.fixture

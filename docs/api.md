@@ -35,3 +35,8 @@ Errors: 400 missing idempotency/invalid signature; 401 authentication; 403 CSRF/
 Webhooks are registered first, exact HTTPS URL required on submit. Terminal notification payload: event_id, type=job.completed, created_at, job_id, status. HMAC SHA256(timestamp + '.' + raw body), headers `X-IF-Timestamp`, `X-IF-Signature: v1=<hex>`. Verify within five minutes and dedupe event_id. Delivery retries exponentially for 24 hours; callbacks never change billing. New DNS IP requires re-registration. Redirects are rejected.
 
 Internal routes have separate worker bearer credentials. Bootstrap register issues a one-hour token; heartbeat renews valid leases, poll returns assigned work, finalize requires current epoch. Stripe callback verifies raw-body signatures and never credits on browser redirect.
+
+## Worker protocol and operational endpoints (migration 0005)
+Worker enrollment includes repo, revision, tokenizer_revision and execution_mode; these must match the deployment configuration. Enrollment issues a fresh generation as well as a rotated worker token. Work items include an identity object with those four fields. Heartbeats include active: [{id, epoch}, ...] for requests still executing or retrying finalization, alongside optional telemetry. Only those current-generation epochs receive lease extensions. Old worker binaries must be restarted/upgraded with the API.
+
+GET /metrics requires a separate METRICS_TOKEN bearer credential and is excluded from the dashboard proxy. Dashboard sessions and API keys share a database-backed fixed-window rate limit of 120 authenticated requests per tenant per UTC minute. Wallets expose debt_micro_usd; ledger entries expose debt_delta. Stripe webhooks use the API origin directly, never the dashboard proxy.

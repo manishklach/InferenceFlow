@@ -21,14 +21,28 @@ def lock_wallet(s, tenant):
     return s.scalar(select(Wallet).where(Wallet.tenant_id == tenant).with_for_update())
 
 
-def post(s, w, source, kind, available, reserved):
+def post(s, w, source, kind, available, reserved, debt=0):
     if s.scalar(select(Ledger.id).where(Ledger.source == source)):
         return False
-    if w.available + available < 0 or w.reserved + reserved < 0:
+    # Credits, including released reservations, repay reversal liabilities first.
+    repayment = min(max(available, 0), w.debt)
+    available -= repayment
+    debt -= repayment
+    if w.available + available < 0 or w.reserved + reserved < 0 or w.debt + debt < 0:
         raise Problem(402, "insufficient_credits")
     w.available += available
     w.reserved += reserved
-    s.add(Ledger(tenant_id=w.tenant_id, source=source, kind=kind, available_delta=available, reserved_delta=reserved))
+    w.debt += debt
+    s.add(
+        Ledger(
+            tenant_id=w.tenant_id,
+            source=source,
+            kind=kind,
+            available_delta=available,
+            reserved_delta=reserved,
+            debt_delta=debt,
+        )
+    )
     s.flush()
     return True
 
@@ -66,6 +80,14 @@ def new_key(s, tenant, name):
 def submit(s, tenant, body, idem):
     if not idem or len(idem) > 200:
         raise Problem(400, "idempotency_key_required")
+    prepared = []
+    for item in body.requests:
+        data = item.model_dump()
+        n = count_prompt(data["messages"])
+        if n > 8192 or n + item.max_output_tokens > 10240:
+            raise Problem(422, "context_limit")
+        reserve = cost(n, settings().input_rate) + cost(item.max_output_tokens, settings().output_rate)
+        prepared.append((data, n, reserve))
     w = lock_wallet(s, tenant)
     fingerprint = hashlib.sha256(
         json.dumps(body.model_dump(), sort_keys=True, separators=(",", ":")).encode()
@@ -76,7 +98,7 @@ def submit(s, tenant, body, idem):
             raise Problem(409, "idempotency_conflict")
         return old
     t = s.scalar(select(Tenant).where(Tenant.id == tenant).execution_options(populate_existing=True))
-    if t.frozen:
+    if t.frozen or w.debt:
         raise Problem(403, "account_frozen")
     if body.webhook_url and body.webhook_url != t.webhook_url:
         raise Problem(422, "webhook_not_registered")
@@ -113,14 +135,6 @@ def submit(s, tenant, body, idem):
         )
         .on_conflict_do_nothing()
     )
-    prepared = []
-    for item in body.requests:
-        data = item.model_dump()
-        n = count_prompt(data["messages"])
-        if n > 8192 or n + item.max_output_tokens > 10240:
-            raise Problem(422, "context_limit")
-        reserve = cost(n, settings().input_rate) + cost(item.max_output_tokens, settings().output_rate)
-        prepared.append((data, n, reserve))
     if w.available < sum(x[2] for x in prepared):
         raise Problem(402, "insufficient_credits")
     seconds = body.deadline_seconds or (1800 if body.tier == "standard" else 86400)
@@ -260,7 +274,14 @@ def finalize(s, worker, rid, body):
     if r.worker_id != worker or r.epoch != body.epoch or r.status not in {"leased", "running"} or r.lease_until < now():
         raise Problem(409, "stale_lease")
     j = s.get(Job, r.job_id)
-    worker_node = s.get(Worker, worker)
+    worker_node = s.scalar(
+        select(Worker).where(Worker.id == worker).with_for_update().execution_options(populate_existing=True)
+    )
+    if worker_node is None or r.worker_generation != worker_node.generation:
+        raise Problem(409, "stale_generation")
+    if s.get(Tenant, tenant).frozen:
+        terminal(s, r, "canceled", "account_frozen")
+        return
     if worker_node and worker_node.provider_instance_id:
         from packages.common.db import Instance
 
@@ -307,9 +328,20 @@ def schedule(s):
     # Serialize dispatch/recovery, then use SKIP LOCKED. Wallet-first ordering prevents API deadlocks.
     if not s.scalar(text("SELECT pg_try_advisory_xact_lock(1081841)")):
         return
-    tenants = list(s.scalars(select(Tenant.id).order_by(Tenant.id)))
+    # A busy tenant cannot hold the global dispatcher behind its wallet transaction.
+    wallets = list(
+        s.scalars(
+            select(Wallet)
+            .where(Wallet.tenant_id.in_(select(Work.tenant_id).where(Work.status.in_(["queued", "leased", "running"]))))
+            .order_by(Wallet.schedule_checked, Wallet.tenant_id)
+            .limit(64)
+            .with_for_update(skip_locked=True)
+        )
+    )
+    tenants = [w.tenant_id for w in wallets]
+    for wallet in wallets:
+        wallet.schedule_checked = now()
     for tid in tenants:
-        lock_wallet(s, tid)
         rows = list(
             s.scalars(
                 select(Work)
@@ -319,6 +351,13 @@ def schedule(s):
         )
         for r in rows:
             j = s.get(Job, r.job_id)
+            if s.get(Tenant, tid).frozen:
+                r.epoch += 1
+                terminal(s, r, "canceled", "account_frozen")
+                continue
+            node = s.get(Worker, r.worker_id) if r.worker_id else None
+            if r.status in {"leased", "running"} and (node is None or r.worker_generation != node.generation):
+                r.lease_until = now() - timedelta(seconds=1)
             if r.status in {"leased", "running"} and r.lease_until < now():
                 if j.cancel:
                     terminal(s, r, "canceled")
@@ -349,8 +388,18 @@ def schedule(s):
             s.scalars(
                 select(Work)
                 .join(Job)
+                .join(ModelPrice, Work.price_id == ModelPrice.id)
+                .join(ModelVersion, ModelPrice.model_version_id == ModelVersion.id)
                 .where(
-                    Work.status == "queued", Work.eligible_at <= now(), Job.model == worker.model, Job.cancel.is_(False)
+                    Work.status == "queued",
+                    Work.eligible_at <= now(),
+                    Job.model == worker.model,
+                    Job.cancel.is_(False),
+                    Work.tenant_id.in_(tenants),
+                    ModelVersion.repo == worker.repo,
+                    ModelVersion.revision == worker.revision,
+                    ModelVersion.tokenizer_revision == worker.tokenizer_revision,
+                    ModelVersion.execution_mode == worker.execution_mode,
                 )
                 .with_for_update(of=Work, skip_locked=True)
             )
@@ -395,6 +444,7 @@ def schedule(s):
             candidates.remove(r)
             r.status = "leased"
             r.worker_id = worker.id
+            r.worker_generation = worker.generation
             r.epoch += 1
             r.attempts += 1
             r.lease_until = now() + timedelta(seconds=settings().lease_seconds)
@@ -406,12 +456,25 @@ def schedule(s):
 def reconcile(s):
     failures = []
     for w in s.scalars(select(Wallet)):
-        a, b = s.execute(
+        a, b, debt = s.execute(
             select(
-                func.coalesce(func.sum(Ledger.available_delta), 0), func.coalesce(func.sum(Ledger.reserved_delta), 0)
+                func.coalesce(func.sum(Ledger.available_delta), 0),
+                func.coalesce(func.sum(Ledger.reserved_delta), 0),
+                func.coalesce(func.sum(Ledger.debt_delta), 0),
             ).where(Ledger.tenant_id == w.tenant_id)
         ).one()
-        if (a, b) != (w.available, w.reserved):
+        outstanding = s.scalar(
+            select(func.coalesce(func.sum(Work.reservation - Work.captured - Work.released), 0)).where(
+                Work.tenant_id == w.tenant_id
+            )
+        )
+        captured = s.scalar(select(func.coalesce(func.sum(Work.captured), 0)).where(Work.tenant_id == w.tenant_id))
+        usage = s.scalar(
+            select(func.coalesce(func.sum(Usage.charge), 0))
+            .join(Work, Usage.request_id == Work.id)
+            .where(Work.tenant_id == w.tenant_id)
+        )
+        if (a, b, debt) != (w.available, w.reserved, w.debt) or outstanding != w.reserved or captured != usage:
             failures.append(w.tenant_id)
     return failures
 

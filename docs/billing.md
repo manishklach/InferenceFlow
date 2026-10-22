@@ -22,3 +22,6 @@ Run `python -m packages.common.cli reconcile`. For billing_pending, compare engi
 Audited CLI reconciliation (operator database access only): `python -m packages.common.cli reconcile-request --request-id <id> --input-tokens <verified> --output-tokens <verified> --reference <review-ticket>`. It only accepts billing_pending, caps capture at original reservation, records usage/output and a permanent audit reference atomically.
 
 For unverifiable or retention-purged output use `reconcile-request --request-id <id> --release-only --reference <review-ticket>` to release the full reservation and audit the decision.
+
+## Refund and dispute freeze policy
+After a verified reversal, the wallet lock serializes the event against finalization. All outstanding requests (including running/quarantined work) are canceled and fenced; their reservations are released before reversal. No later result from that work is charged. If finalization already committed, its captured amount remains usage and any unfunded reversal is journaled as wallet debt. Future credits repay debt first. The account remains frozen until an operator reviews its funding and explicitly unfreezes it. Debt is exposed as debt_micro_usd and debt_delta on wallet/transaction responses. Reconciliation compares wallet balances/debt to ledger totals, remaining request reservations, and captured usage.
