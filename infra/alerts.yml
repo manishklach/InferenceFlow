@@ -1,0 +1,23 @@
+groups:
+  - name: inferenceflow
+    rules:
+      - alert: WalletDrift
+        expr: inferenceflow_wallet_drift > 0
+        for: 0m
+        labels: {severity: critical}
+        annotations: {summary: "Wallet journal does not reconcile"}
+      - alert: WorkerHeartbeatLost
+        expr: inferenceflow_worker_max_heartbeat_age_seconds > 90
+        for: 1m
+        labels: {severity: critical}
+        annotations: {summary: "Worker heartbeat older than 90 seconds"}
+      - alert: StandardTargetBacklog
+        expr: inferenceflow_oldest_queue_age_seconds > 1800
+        for: 5m
+        labels: {severity: warning}
+        annotations: {summary: "Queue exceeds standard best-effort target"}
+      - alert: ApiFailureRate
+        expr: sum(rate(inferenceflow_http_requests_total{status=~"5.."}[5m])) / clamp_min(sum(rate(inferenceflow_http_requests_total[5m])), 0.001) > 0.05
+        for: 5m
+        labels: {severity: critical}
+        annotations: {summary: "API 5xx error rate exceeds five percent"}

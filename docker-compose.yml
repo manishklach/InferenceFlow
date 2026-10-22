@@ -1,0 +1,69 @@
+x-platform: &platform
+  image: inferenceflow-control:local
+  build:
+    context: .
+    dockerfile: infra/Dockerfile
+  env_file: .env
+  environment:
+    DATABASE_URL: postgresql+psycopg://inferenceflow:localdev@postgres:5432/inferenceflow
+  restart: unless-stopped
+services:
+  postgres:
+    image: postgres:16.9
+    environment:
+      POSTGRES_USER: inferenceflow
+      POSTGRES_PASSWORD: localdev
+      POSTGRES_DB: inferenceflow
+    ports: ["127.0.0.1:55432:5432"]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U inferenceflow"]
+      interval: 3s
+      retries: 30
+  migrate:
+    <<: *platform
+    command: alembic upgrade head
+    restart: "no"
+    depends_on:
+      postgres: {condition: service_healthy}
+  api:
+    <<: *platform
+    ports: ["127.0.0.1:8080:8080"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080/readyz',timeout=3)"]
+      interval: 3s
+      start_period: 10s
+      retries: 30
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+  scheduler:
+    <<: *platform
+    command: python -m apps.scheduler.main
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+  worker:
+    <<: *platform
+    command: python -m apps.worker.main
+    environment:
+      DATABASE_URL: postgresql+psycopg://inferenceflow:localdev@postgres:5432/inferenceflow
+      CONTROL_PLANE_URL: http://api:8080
+    depends_on:
+      api: {condition: service_healthy}
+  dashboard:
+    build: apps/dashboard
+    environment:
+      API_PROXY_URL: http://api:8080
+    ports: ["127.0.0.1:3000:3000"]
+    depends_on:
+      api: {condition: service_healthy}
+  prometheus:
+    image: prom/prometheus:v3.4.0
+    profiles: [observability]
+    ports: ["127.0.0.1:9090:9090"]
+    volumes:
+      - ./infra/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./infra/alerts.yml:/etc/prometheus/alerts.yml:ro
+    depends_on:
+      api: {condition: service_healthy}
+volumes:
+  pgdata:

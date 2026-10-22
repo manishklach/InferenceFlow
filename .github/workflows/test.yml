@@ -1,0 +1,27 @@
+name: Test
+on: [push, pull_request]
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql+psycopg://inferenceflow:localdev@localhost:55432/inferenceflow_test
+    services:
+      postgres:
+        image: postgres:16.9
+        env:
+          POSTGRES_USER: inferenceflow
+          POSTGRES_PASSWORD: localdev
+          POSTGRES_DB: inferenceflow_test
+        ports: ["55432:5432"]
+        options: --health-cmd "pg_isready -U inferenceflow" --health-interval 3s --health-retries 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -e '.[dev]'
+      - run: alembic upgrade head
+      - run: make test lint typecheck
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: npm ci && npm run build
+        working-directory: apps/dashboard

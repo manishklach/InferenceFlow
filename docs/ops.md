@@ -1,0 +1,16 @@
+# Operations
+Health: /healthz; DB readiness: /readyz; Prometheus: /metrics. API logs only request ID/method/status. Scheduler logs failures and reconciliation drift; detailed queue/worker/financial gauges are exported by the metrics collector. Keep metrics private at the reverse proxy.
+
+Stuck jobs: inspect `job_requests.status,attempts,lease_until,epoch,worker_id`. Never manually reset epochs downward. Scheduler requeues expired leases with backoff and fails after three attempts, releasing reservation. Restart scheduler/worker and check `python -m packages.common.cli reconcile`. billing_pending deliberately holds funds and requires reviewed engine usage reconciliation.
+
+Worker restart: one-hour credentials renew while heartbeats are healthy; re-registration with the protected bootstrap secret rotates the credential after restart. Crash after output but before finalize may redo inference; one usage record and one capture source remain. Do not expose engine port to the internet. Monitor readiness canary and model revision.
+
+Provider leaks: run watchdog independently once a minute. List provider inventory even during API outages; confirm every InferenceFlow pod has a tracked record. Terminate owned orphans, expired sessions and budget/idle violations, then verify provider invoice/console. Unexpected create timeout leaves intent row; find deterministic name in provider inventory before any retry. Provider cost admission uses quote-based conservative estimates, not invoice settlement. Do not enable unattended provisioning until cost/idle telemetry has been validated.
+
+Payments: inspect payment_events and signed Stripe delivery history, retry webhook after correcting configuration, never seed production credit on a redirect. Freeze disputed accounts; inspect audited reversal debt. No journal edits. Failed customer webhook: inspect webhook_deliveries due/attempts; re-register destination if DNS changed; verify secret/timestamp; delivery failure never changes job money.
+
+Retention: scheduler purges encrypted prompt/output columns after seven days. Run `python -m packages.common.cli purge` manually if scheduler down. Backups require their own retention deletion policy.
+
+Rollback: stop intake, let running work settle or expire, take database backup, deploy last known image. Never downgrade financial schema with live data. Migration downgrade is only tested in an empty test database. Restore drill must verify journal and materialized balances. Alerts: drift >0, worker heartbeat older than 90s, expired target backlog, 5xx >5%/5min, provider spend 80%, orphan count >0 and webhook retry exhaustion. Keep provider kill credentials and separate funded-account alerts available during control-plane failure.
+
+Optional distributed API traces: install `pip install -e ".[observability]"`, set OTEL_EXPORTER_OTLP_ENDPOINT to your HTTP collector base URL, restart API. FastAPI spans export via OTLP /v1/traces. Payloads/headers are excluded; restrict collector access.
