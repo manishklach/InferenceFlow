@@ -495,9 +495,13 @@ def test_logs_redact_sensitive_body(client, headers, capsys):
     assert "request_id" in log
 
 
-def test_metrics_and_body_limit(client, headers):
+def test_metrics_and_body_limit(client, headers, monkeypatch):
+    monkeypatch.setattr(settings(), "metrics_token", "test-metrics-token")
     assert client.get("/readyz").status_code == 200
-    assert "inferenceflow_wallet_drift" in client.get("/metrics").text
+    assert (
+        "inferenceflow_wallet_drift"
+        in client.get("/metrics", headers={"Authorization": "Bearer test-metrics-token"}).text
+    )
     assert client.post("/v1/jobs", content=b"x" * (5 * 1024 * 1024 + 1), headers=headers).status_code == 413
 
 
@@ -655,6 +659,10 @@ def test_vllm_http_protocol():
     def handler(request):
         if request.url.path == "/health":
             return httpx.Response(200, json={})
+        if request.url.path == "/v1/models":
+            from packages.common.identity import served_model_name
+
+            return httpx.Response(200, json={"data": [{"id": served_model_name()}]})
         p = json.loads(request.content)
         calls.append(p)
         assert p["stream"] is False and p["chat_template_kwargs"] == {"enable_thinking": False}

@@ -5,7 +5,7 @@ import time
 from datetime import timedelta
 from urllib.parse import urlsplit
 import httpx
-from sqlalchemy import select, text
+from sqlalchemy import select, or_
 from packages.common.db import Job, Tenant, Delivery, Session, now, uid
 from packages.common.service import works, status, TERMINAL
 from packages.common.security import validate_url, decrypt
@@ -61,32 +61,54 @@ def send(url, ips, body, headers):
 
 
 def deliver():
-    with Session.begin() as s:
-        if not s.scalar(text("SELECT pg_try_advisory_xact_lock(1081842)")):
-            return
-        ids = list(s.scalars(select(Delivery.id).where(Delivery.delivered.is_(False), Delivery.due <= now()).limit(10)))
-    for did in ids:
+    # Claim with a lease, commit, then do network I/O without holding database locks.
+    for _ in range(10):
         with Session.begin() as s:
-            d = s.scalar(select(Delivery).where(Delivery.id == did).with_for_update(skip_locked=True))
-            if not d or d.delivered or d.due > now():
-                continue
+            d = s.scalar(
+                select(Delivery)
+                .where(
+                    Delivery.delivered.is_(False),
+                    Delivery.due <= now(),
+                    or_(Delivery.claim_until.is_(None), Delivery.claim_until < now()),
+                )
+                .order_by(Delivery.due, Delivery.id)
+                .limit(1)
+                .with_for_update(skip_locked=True)
+            )
+            if not d:
+                return
+            claim = uid()
+            d.claim = claim
+            d.claim_until = now() + timedelta(minutes=2)
+            did, body = d.id, d.body.encode()
             t = s.get(Tenant, d.tenant_id)
             assert t is not None
-            stamp = str(int(time.time()))
-            body = d.body.encode()
-            try:
-                send(
-                    t.webhook_url,
-                    t.webhook_ips,
-                    body,
-                    {
-                        "Content-Type": "application/json",
-                        "X-IF-Timestamp": stamp,
-                        "X-IF-Signature": signature(decrypt(t.webhook_secret), stamp, body),
-                    },
-                )
+            url, ips, secret = t.webhook_url, t.webhook_ips, t.webhook_secret
+        stamp = str(int(time.time()))
+        delivered = False
+        try:
+            send(
+                url,
+                ips,
+                body,
+                {
+                    "Content-Type": "application/json",
+                    "X-IF-Timestamp": stamp,
+                    "X-IF-Signature": signature(decrypt(secret), stamp, body),
+                },
+            )
+            delivered = True
+        except Exception:
+            pass
+        with Session.begin() as s:
+            d = s.scalar(select(Delivery).where(Delivery.id == did).with_for_update())
+            if d is None or d.claim != claim:
+                continue
+            d.claim = None
+            d.claim_until = None
+            if delivered:
                 d.delivered = True
-            except Exception:
+            else:
                 d.attempts += 1
                 d.due = now() + timedelta(seconds=min(3600, 2 ** min(d.attempts, 12)))
                 if now() - d.created_at > timedelta(hours=24):

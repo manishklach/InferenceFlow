@@ -165,8 +165,11 @@ class RunpodProvider:
         }
         pod = self.call("POST", "/pods", json=payload)
         with Session.begin() as s:
-            i = s.get(Instance, "intent_" + source)
+            s.execute(text("SELECT pg_advisory_xact_lock(1081843)"))
+            i = s.scalar(select(Instance).where(Instance.source == source))
             assert i is not None
+            if i.terminated:
+                raise NotConfigured("Creation expired during provisioning; reconcile provider inventory")
             i.id = pod["id"]
         return pod
 
@@ -174,17 +177,24 @@ class RunpodProvider:
 def watchdog(provider):
     inventory = provider.list_instances()
     with Session.begin() as s:
-        tracked = {i.id: i for i in s.scalars(select(Instance).where(Instance.terminated.is_(False)))}
+        s.execute(text("SELECT pg_advisory_xact_lock(1081843)"))
+        history = list(s.scalars(select(Instance)))
+        tracked = {i.id: i for i in history if not i.terminated}
+        intents = {"inferenceflow-" + i.source: i for i in tracked.values() if i.id.startswith("intent_")}
         cfg = settings()
         stamp = now()
         day = stamp.replace(hour=0, minute=0, second=0, microsecond=0)
         spend = sum(
-            max(0, int((stamp - max(i.created_at, day)).total_seconds())) * i.hourly_micro_usd // 3600
-            for i in tracked.values()
+            max(0, int(((i.terminated_at or stamp) - max(i.created_at, day)).total_seconds()))
+            * i.hourly_micro_usd
+            // 3600
+            for i in history
         )
         for pod in inventory:
             pid = pod["id"]
-            i = tracked.get(pid)
+            i = tracked.get(pid) or intents.get(pod.get("name"))
+            if i and i.id.startswith("intent_"):
+                i.id = pid
             if not pod.get("name", "").startswith("inferenceflow-"):
                 continue
             if not i:
@@ -199,5 +209,14 @@ def watchdog(provider):
                 i.terminated = True
                 i.terminated_at = stamp
                 s.add(Audit(kind="instance_terminated", reference=pid))
+        present = {pod["id"] for pod in inventory}
+        for i in tracked.values():
+            if i.id.startswith("intent_"):
+                # Retain ambiguous intent admission fences until an operator reconciles it.
+                continue
+            if i.id not in present and not i.terminated:
+                i.terminated = True
+                i.terminated_at = stamp
+                s.add(Audit(kind="instance_missing", reference=i.id))
         if spend >= cfg.max_daily_gpu_spend_usd * 800000:
             s.add(Audit(kind="provider_budget_alert", reference=str(spend)))

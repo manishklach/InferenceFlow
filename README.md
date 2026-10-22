@@ -55,7 +55,7 @@ The seed command creates **developer@example.local**, adds **$10 in test funds**
 | Interactive API docs | http://localhost:8080/docs |
 | OpenAPI | http://localhost:8080/openapi.json |
 | Readiness | http://localhost:8080/readyz |
-| Metrics | http://localhost:8080/metrics |
+| Metrics | http://localhost:8080/metrics (requires METRICS_TOKEN bearer credential) |
 
 Sign in as developer@example.local, submit a sample, and inspect tokens, charges, results, and ledger. Local outputs start with **MOCK**; rates are test fixtures.
 
@@ -79,12 +79,18 @@ This submits 100 requests over HTTP, waits for the separate scheduler/worker, re
 The charge is **$0.002500 at synthetic test rates**, not a public service price or GPU cost measurement.
 
 ~~~bash
-docker compose logs --tail=100 api scheduler worker
+docker compose logs --tail=100 api scheduler callbacks worker
 docker compose down
 docker compose up -d
 ~~~
 
 Stopping preserves the PostgreSQL named volume. Retain it to keep accounts, jobs, and accounting history.
+
+## Audit fixes and upgrades
+
+The [audit remediation guide](docs/audits/2026-10-22-remediation.md) describes all ten fixes, migration 0005, worker protocol changes, secret rotation, and remaining infrastructure validation. Existing deployments must stop old API/scheduler/worker processes, back up PostgreSQL, apply migrations, and restart all services together. Old worker enrollment credentials must be replaced for production. Run the new callback process as well as the scheduler.
+
+Customer sessions and API keys now share a PostgreSQL-backed allowance of 120 requests per tenant per UTC minute across API replicas. Refunds/disputes freeze the account and cancel outstanding work without further customer capture; consumed reversed funds become journaled debt. Authenticated wallet responses include debt_micro_usd.
 
 ## Architecture
 
@@ -98,7 +104,8 @@ flowchart LR
     M --> L[Local mock]
     M --> V[Private vLLM / NVIDIA]
     ST[Stripe test Checkout] -->|verified webhook| A
-    S --> H[Signed customer callbacks]
+    P --> H[Callback delivery worker]
+    H --> CB[Signed customer callbacks]
     G[Independent watchdog] --> R[GPU provider]
 ~~~
 
@@ -221,7 +228,7 @@ Copy [.env.example](.env.example); keep .env out of Git.
 | Setting | Purpose / safe default |
 |---|---|
 | DATABASE_URL | PostgreSQL; Compose overrides its internal host |
-| SECRET_KEY | Sessions, hashes, encryption; replace development value before deployment |
+| SECRET_KEY | Dashboard/PKCE signing only; replace development value before deployment |
 | EXECUTION_MODE | mock locally, vllm for attached capacity |
 | MODEL_REVISION | mock-v1 locally, exact reviewed SHA in real mode |
 | WORKER_BOOTSTRAP_TOKEN | Separate worker credential; rotate before deployment |
@@ -246,8 +253,8 @@ Real GPU testing requires approved spending and attached infrastructure. RUN_GPU
 
 | Check | Recorded result |
 |---|---|
-| Native PostgreSQL suite | **32 passed; 1 GPU test skipped** |
-| Python 3.12 Docker suite | **32 passed; 1 GPU test skipped** |
+| Native PostgreSQL suite after audit fixes | **56 passed; 1 GPU test skipped** |
+| Earlier v0.1.0 Python 3.12 Docker suite | **32 passed; 1 GPU test skipped** (before audit fixes) |
 | Native + Docker 100-request HTTP smoke | Succeeded; zero ledger drift |
 | Ruff / mypy | Passed |
 | Dashboard build / TypeScript | Passed |
@@ -291,6 +298,8 @@ Run in separate terminals from the root:
 ~~~bash
 python -m uvicorn apps.api.main:app --host 127.0.0.1 --port 8080
 python -m apps.scheduler.main
+# In another terminal:
+python -m apps.callbacks.main
 # Start after API readiness succeeds:
 python -m apps.worker.main
 ~~~
@@ -338,6 +347,6 @@ docs/                     Contracts, deployment, runbooks, release notes
 
 ## Scope and launch gates
 
-One model is enabled. The optional second model, advanced throughput prediction, organization UI, distributed rate limiting, and invoice ingestion are outside this implementation. Reservations/idempotency/leases are consolidated into durable rows; encrypted PostgreSQL columns replace object storage.
+One model is enabled. The optional second model, advanced throughput prediction, organization UI, and invoice ingestion are outside this implementation. Reservations/idempotency/leases are consolidated into durable rows; encrypted PostgreSQL columns replace object storage.
 
 Before limited prepaid beta, validate GPU inference/recovery, actual OIDC/Stripe/provider flows, callback TLS/egress, backups, measured margins, model licensing, and security/legal/accounting requirements. Mock results and synthetic rates do not establish GPU performance or savings.

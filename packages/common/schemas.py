@@ -44,6 +44,9 @@ class Completion(Strict):
 
 class Registration(Strict):
     revision: str = "mock-v1"
+    repo: str = "Qwen/Qwen3-4B"
+    tokenizer_revision: str = "mock-v1"
+    execution_mode: Literal["mock", "vllm"] = "mock"
     provider_instance_id: str | None = None
     id: str = Field(min_length=1, max_length=100)
     model: Literal["qwen3-4b"] = "qwen3-4b"
@@ -58,7 +61,17 @@ class Checkout(Strict):
     amount_usd: Literal[10, 25, 100]
 
 
+class Poll(Strict):
+    available_slots: int = Field(default=16, ge=0, le=16)
+
+
+class ActiveLease(Strict):
+    id: str
+    epoch: int
+
+
 class Telemetry(Strict):
+    active: list[ActiveLease] = Field(default_factory=list, max_length=16)
     kv_cache_usage: float | None = Field(default=None, ge=0, le=1)
     gpu_utilization: float | None = Field(default=None, ge=0, le=1)
     engine_running: int | None = Field(default=None, ge=0)

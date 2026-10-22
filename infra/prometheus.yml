@@ -3,5 +3,7 @@ global:
 rule_files: ["/etc/prometheus/alerts.yml"]
 scrape_configs:
   - job_name: inferenceflow
+    authorization:
+      credentials_file: /etc/prometheus/metrics-token
     static_configs:
       - targets: ["api:8080"]

@@ -7,7 +7,7 @@ from packages.common.service import account, new_key, lock_wallet, post, reconci
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=["seed", "reconcile", "purge", "reconcile-request"])
+    parser.add_argument("command", choices=["seed", "reconcile", "purge", "reconcile-request", "rotate-encryption"])
     parser.add_argument("--email", default="developer@example.local")
     parser.add_argument("--micro-usd", type=int, default=10000000)
     parser.add_argument("--reference", default="initial")
@@ -26,6 +26,22 @@ def main():
                 raise SystemExit("Positive credits required")
             post(s, w, "seed:" + t.id + ":" + args.reference, "topup", args.micro_usd, 0)
             print(json.dumps({"tenant_id": t.id, **new_key(s, t.id, "CLI seed")}))
+        elif args.command == "rotate-encryption":
+            from sqlalchemy import select
+            from packages.common.db import Work, Tenant
+            from packages.common.security import encrypt, decrypt
+
+            if not settings().encryption_active_key:
+                raise SystemExit("Configure an active versioned encryption key first")
+            changed = 0
+            for model, fields in [(Work, ["payload", "output"]), (Tenant, ["webhook_secret"])]:
+                for row in s.scalars(select(model).with_for_update()):
+                    for field in fields:
+                        value = getattr(row, field)
+                        if value is not None:
+                            setattr(row, field, encrypt(decrypt(value)))
+                            changed += 1
+            print(json.dumps({"reencrypted_fields": changed}))
         elif args.command == "reconcile":
             drift = reconcile(s)
             print(json.dumps({"drift": drift}))

@@ -2,6 +2,7 @@ import asyncio
 import hashlib
 import os
 import httpx
+from packages.common.identity import served_model_name
 
 
 class MockInferenceEngine:
@@ -36,11 +37,15 @@ class VllmInferenceEngine:
     async def ready(self):
         r = await self.client.get("/health")
         r.raise_for_status()
+        models = await self.client.get("/v1/models")
+        models.raise_for_status()
+        if served_model_name() not in {model["id"] for model in models.json()["data"]}:
+            raise RuntimeError("vLLM served identity does not match the configured immutable artifact")
         # Canary proves the engine can actually generate before accepting customer work.
         r = await self.client.post(
             "/v1/chat/completions",
             json={
-                "model": "qwen3-4b",
+                "model": served_model_name(),
                 "messages": [{"role": "user", "content": "Say ready"}],
                 "max_tokens": 4,
                 "stream": False,
@@ -86,7 +91,7 @@ class VllmInferenceEngine:
         r = await self.client.post(
             "/v1/chat/completions",
             json={
-                "model": "qwen3-4b",
+                "model": served_model_name(),
                 "messages": p["messages"],
                 "max_tokens": p["max_output_tokens"],
                 "temperature": p["temperature"],

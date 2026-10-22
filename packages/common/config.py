@@ -8,6 +8,12 @@ class Settings(BaseSettings):
     environment: str = "development"
     secret_key: str = "development-only-change-before-deployment"
     worker_bootstrap_token: str = "local-worker-only"
+    metrics_token: str = ""
+    credential_hash_key: str = ""
+    credential_hash_previous_keys: list[str] = []
+    encryption_keys: dict[str, str] = {}
+    encryption_active_key: str = ""
+    encryption_legacy_secret: str = ""
     execution_mode: str = "mock"
     model_revision: str = "mock-v1"
     model_repo: str = "Qwen/Qwen3-4B"
@@ -40,7 +46,23 @@ class Settings(BaseSettings):
     public_beta_enabled: bool = False
 
     def validate_runtime(self):
+        if any(not key or ":" in key for key in self.encryption_keys):
+            raise ValueError("Encryption key IDs must be nonempty and contain no colons")
+        if self.execution_mode not in {"mock", "vllm"}:
+            raise ValueError("Unsupported execution mode")
         if self.environment != "development":
+            if len(self.worker_bootstrap_token) < 32 or self.worker_bootstrap_token == "local-worker-only":
+                raise ValueError("Configure a strong WORKER_BOOTSTRAP_TOKEN")
+            if len(self.metrics_token) < 32:
+                raise ValueError("Configure a strong METRICS_TOKEN")
+            if len(self.credential_hash_key) < 32 or self.credential_hash_key == self.secret_key:
+                raise ValueError("Configure an independent CREDENTIAL_HASH_KEY")
+            if not self.encryption_active_key or self.encryption_active_key not in self.encryption_keys:
+                raise ValueError("Configure versioned ENCRYPTION_KEYS and ENCRYPTION_ACTIVE_KEY")
+            from cryptography.fernet import Fernet
+
+            for value in self.encryption_keys.values():
+                Fernet(value.encode())
             if len(self.secret_key) < 32 or self.secret_key.startswith("development"):
                 raise ValueError("Configure a high entropy SECRET_KEY")
             if not self.oidc_issuer or not self.oidc_audience or not self.oidc_jwks_url:
