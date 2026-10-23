@@ -23,8 +23,15 @@ The FastAPI, PostgreSQL, scheduler and GPU services retain their separate deploy
 
 Hosting identity is tracked in `.openai/hosting.json`; preserve it when updating this Site.
 
-## Published preview and source
+## Engineering blog
 
-[Live Sites preview](https://inferenceflow-execution.abc123xyza.chatgpt.site/) (owner-private access). This directory mirrors the deployed showcase source at commit `f158ba612d7700650c292e9f0daf641c1d26311b`. Repository visibility does not change Site access.
+- [Blog](https://inferenceflow-execution.abc123xyza.chatgpt.site/blog/)
+- [What If AI Inference Didn't Have to Be Instant?](https://inferenceflow-execution.abc123xyza.chatgpt.site/blog/what-if-ai-inference-didnt-have-to-be-instant/)
 
-From the repository root, preview with `python -m http.server 8093 --bind 127.0.0.1 --directory sites/inferenceflow/dist`. Preserve the existing Sites project identity when publishing updates; GitHub pushes alone do not deploy the Site or the platform backend.
+Published October 23, 2026, by The InferenceFlow Team. Full editorial source: `content/first-engineering-post.md`. The static article and index live in `dist/blog/`; diagrams and social image sources live in `dist/assets/blog/`. Future posts can follow the same directory-per-slug structure and add a card to the index. Keep canonical URLs and structured data aligned with each actual publication date. No analytics were added. Site audience remains owner-private; SEO metadata does not make private content discoverable.
+
+### Validation
+
+No build step is needed. For repeatable checks, install `beautifulsoup4 markdown playwright`, then `python -m playwright install chromium`. Start the preview on port 8095 (`python -m http.server 8095 --bind 127.0.0.1 --directory dist`), then run `python tests/check_blog.py`. Screenshots go into ignored `.qa/`. Checks cover full source paragraph fidelity, eight main sections, local links/assets, metadata, desktop/mobile layout, image loading, navigation, single/batch replay, walkthrough dialog and language tabs/copy.
+
+The article distinguishes the engineering vision from measured results: real GPU benchmarks remain pending, the 60-minute target is not an SLA, and vLLM owns continuous batching. No backend, billing or GPU configuration is changed by this publication.
