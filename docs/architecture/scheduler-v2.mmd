@@ -1,17 +1,22 @@
 flowchart LR
-    A[Customer API] --> Q[(Durable PostgreSQL Queue)]
-    Q --> E[DeadlineEstimator]
-    E --> D[DispatchPolicy and adaptive slots]
-    D --> C[CapacityPlanner recommendations]
-    D --> W[Warm GPU Workers]
-    C -. Operator approval only .-> W
-    W --> V[vLLM continuous batching]
-    V --> R[Results and exactly-once billing]
-    R --> Q
-    W --> T[Timestamped telemetry and attempt observations]
+    A[Customer API] --> E[DeadlineEstimator admission prediction]
+    E --> Q[(Durable PostgreSQL queue and reservations)]
+    Q --> D[DispatchPolicy ranking and model affinity]
+    T[Timestamped worker and engine telemetry] --> AD[Adaptive dispatch slot limit]
+    AD --> D
+    E --> D
+    D --> W[Outbound worker concurrent HTTP requests]
+    W --> V[vLLM token-level continuous batching]
+    V --> F[Epoch and generation fenced finalization]
+    F --> R[One customer usage record and unique ledger capture]
+    W --> T
     V --> T
-    T --> E
-    T --> D
+    Q --> C[CapacityPlanner read-only recommendation]
     T --> C
-    T --> O[Metrics and tenant / operator dashboard]
+    C --> O[Protected operator report]
+    T --> O
     R --> O
+    O -. Manual approval required .-> P[Runpod manual capacity attachment]
+    P -. Existing GPU only .-> W
+    X[Vast and Lambda read-only discovery] --> K[Complete quote and workload cost simulation]
+    K --> O

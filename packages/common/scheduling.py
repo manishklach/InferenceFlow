@@ -168,11 +168,12 @@ def admission(s, prepared, seconds):
 
 class CapacityPlanner:
     @staticmethod
-    def recommend(demand_seconds, seconds_left, warm_gpus, tracked_gpus, daily_spend, idle_instances=()):
+    def recommend(demand_seconds, seconds_left, warm_gpus, tracked_gpus, daily_spend, idle_instances=(), slots_per_gpu=None):
         c = settings()
         overhead = c.gpu_startup_seconds + c.model_loading_seconds
         usable = max(0, seconds_left - overhead)
-        required = math.ceil(demand_seconds / (usable * 16)) if usable else (warm_gpus + 1 if demand_seconds else 0)
+        slots = slots_per_gpu or c.worker_capacity
+        required = math.ceil(demand_seconds / (usable * slots)) if usable else (warm_gpus + 1 if demand_seconds else 0)
         desired = max(warm_gpus, required) if demand_seconds else 0
         requested = max(0, desired - tracked_gpus)
         session_seconds = c.max_gpu_session_minutes * 60
@@ -211,7 +212,9 @@ def capacity_report(s, stamp=None):
                             i.hourly_micro_usd, settings().provider_billing_increment_seconds) for i in instances)
     idle = [i.id for i in live if (stamp - i.last_busy).total_seconds() >= settings().idle_shutdown_seconds
             and not any(r.worker_id == w.id for r, j in rows for w in workers if w.provider_instance_id == i.id)]
-    result = CapacityPlanner.recommend(demand, left, len(workers), tracked, spend, idle)
+    slots = min((w.capacity for w in workers), default=settings().worker_capacity)
+    result = CapacityPlanner.recommend(demand, left, len(workers), tracked, spend, idle, slots_per_gpu=slots)
+    result["assumed_slots_per_gpu"] = slots
     result["estimate_calibrated"] = est.calibrated
     result["capacity_measurement_mode"] = settings().execution_mode
     result["warm_worker_count"] = len(workers)

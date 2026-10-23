@@ -1,3 +1,7 @@
+> October23 verification: see [current readiness package](validation/2026-10-23/readiness-report.md). No real GPU or public alpha validation is claimed.
+
+Untracked pod names are not ownership: watchdog now audits instead of deleting untracked prefix matches. GPU private experiments use a separate reviewed gate; keep public beta and Stripe disabled. Worker traces exclude prompts/results/credentials; vLLM request logging and optional usage telemetry are disabled in the proposed launcher. Remote TLS/OIDC, key rotation, image/dependency security review and restore drills remain required.
+
 # Security and beta gate
 API keys are random 256-bit secrets, displayed once, stored only as prefix plus HMAC-SHA256 keyed digest, immediately revocable. Cookie sessions are HttpOnly/SameSite strict, Secure outside development; CSRF token required for dashboard mutations. Production uses an authorization-code flow with PKCE, signed state and nonce cookies, then verifies RS256 identity tokens against configured JWKS, issuer, audience, nonce and expiry. Local email login and credit seed must never be enabled on a public deployment.
 

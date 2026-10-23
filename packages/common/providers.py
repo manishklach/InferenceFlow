@@ -201,7 +201,9 @@ def watchdog(provider):
                 continue
             if not i:
                 s.add(Audit(kind="orphan_instance", reference=pid))
-                provider.terminate_instance(pid)
+                # A shared name prefix is not proof of ownership. Only tracked
+                # instance IDs or persistent create intents authorize cleanup.
+                continue
             elif (
                 stamp - i.created_at > timedelta(minutes=cfg.max_gpu_session_minutes)
                 or stamp - i.last_busy > timedelta(seconds=cfg.idle_shutdown_seconds)

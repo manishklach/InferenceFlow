@@ -1,15 +1,18 @@
+> Current readiness and approval gate: [2026-10-23 validation](validation/2026-10-23/readiness-report.md). That report supersedes older quotes, two-arm commands and beta-gate instructions below. No GPU or Site fix deployment is authorized yet.
+
 # Rented NVIDIA deployment
+Current experiment selection: [RTX 4090 Community Cloud](rtx4090-community-experiment.md), four resident engine sequences on 24 GB, $10 all-in maximum and final explicit approval required. Community stock is currently unavailable; do not substitute another tier/GPU or run the older L40S proposal. Its gated preparation/load/telemetry tools do not change customer financial behavior.
 For the first approved experiment, use the [dated RunPod readiness review and 10/100/1,000-request plan](first-gpu-experiment.md), including its proposed payload, $10 all-in ceiling, preflight gaps and teardown requirements. The generic commands below describe a conventional Docker-capable GPU host; do not run Docker-in-Docker inside a RunPod Pod. Preparing or pushing these files does not authorize rental or execution.
 
 No GPU was rented during implementation. These commands are a deployment path requiring a GPU smoke test; throughput/VRAM fit are unmeasured. Obtain explicit expense approval before renting anything. Prefer manually attached capacity first; PROVISIONING_ENABLED stays false.
 
-1. CPU control plane: deploy API/scheduler/PostgreSQL behind HTTPS, restrict DB access, install managed OIDC settings, configure independent session, credential-HMAC and versioned encryption keys, and rotate the worker bootstrap token (see the audit remediation guide). Set EXECUTION_MODE=vllm, MODEL_REVISION to a reviewed 40-character Qwen/Qwen3-4B commit SHA, PUBLIC_BETA_ENABLED=true only after license/rate review. The same tokenizer revision must be installed on the CPU API. Install `.[gpu]`.
+1. CPU control plane: deploy API/scheduler/PostgreSQL behind HTTPS, restrict DB access, install managed OIDC settings, configure independent session, credential-HMAC and versioned encryption keys, and rotate the worker bootstrap token (see the audit remediation guide). Set EXECUTION_MODE=vllm, MODEL_REVISION to a reviewed 40-character Qwen/Qwen3-4B commit SHA, PUBLIC_BETA_ENABLED=false and REVIEWED_GPU_EXPERIMENT_ENABLED=true only after private experiment license/rate review. The same tokenizer revision must be installed on the CPU API. Install `.[gpu]`.
 2. On an approved 24–48 GB NVIDIA machine install NVIDIA container toolkit. Download reviewed revision; never use floating main for a deployment. Select and record a tested vLLM image digest before release. Reference compatibility image: `vllm/vllm-openai@sha256:6cf9808ca8810fc6c3fd0451c2e7784fb224590d81f7db338e7eaf3c02a33d33` (not validated on a GPU here).
 3. Start the private model server:
 ```bash
 export MODEL_REVISION=1cfa9a7208912126459214e8b04321603b3df60c
 export EXECUTION_MODE=vllm
-export PUBLIC_BETA_ENABLED=true
+export PUBLIC_BETA_ENABLED=false REVIEWED_GPU_EXPERIMENT_ENABLED=true
 # Install the codebase on this host before deriving the identity-bound served alias.
 export SERVED_MODEL_NAME=$(python -m packages.common.identity)
 export VLLM_API_KEY=<random-local-engine-secret>
@@ -29,7 +32,7 @@ Check the selected image's `--help` before deployment; version-specific flags mu
 pip install -e .
 export EXECUTION_MODE=vllm
 export MODEL_REVISION=1cfa9a7208912126459214e8b04321603b3df60c
-export PUBLIC_BETA_ENABLED=true
+export PUBLIC_BETA_ENABLED=false REVIEWED_GPU_EXPERIMENT_ENABLED=true
 export CONTROL_PLANE_URL=https://control.example.com
 export WORKER_BOOTSTRAP_TOKEN=<scoped-bootstrap-secret>
 export WORKER_ID=nvidia-1

@@ -1,3 +1,7 @@
+> October23 verification: see [current readiness package](validation/2026-10-23/readiness-report.md). No real GPU or public alpha validation is claimed.
+
+Independent exact-pod guard: `python -m scripts.experiment_guard --execute --receipt PRIVATE_RECEIPT.json --log PRIVATE_GUARD.jsonl` only AFTER separately approved create/read-back. Guard estimates do not guarantee a provider cap; watch heartbeat and provider billing manually, preserve a direct termination backup. No supervisor was armed in this task. Delete/read404, not container exit or metadata updates, stops the experiment resource.
+
 # Operations
 Health: /healthz; DB readiness: /readyz; Prometheus: /metrics, requiring Authorization: Bearer <METRICS_TOKEN>. API logs only request ID/method/status. Scheduler logs failures and reconciliation drift; detailed queue/worker/financial gauges are exported by the metrics collector. Keep metrics private at the reverse proxy. The dashboard proxy excludes management routes.
 

@@ -1,5 +1,25 @@
 # Implementation status
 
+## October 23 readiness validation
+
+**NOT READY — BLOCKERS REMAIN.** Final local validation:113 tests passed,1 real-GPU test skipped. See [the complete live-site, scheduling, provider and GPU approval report](docs/validation/2026-10-23/readiness-report.md), [website screenshots and issue register](docs/validation/2026-10-23/website-report.md), [provider architecture](docs/architecture/providers.md), [first-GPU economics](docs/economics/first-gpu-economics.md) and [future private-alpha checklist](docs/releases/private-alpha-checklist.md). Website fixes are prepared but unpublished pending confirmation. Real GPU inference, actual savings, remote staging connectivity and independent teardown credentials remain unverified. No paid GPU was created.
+
+Private experimental real mode now has a separate `REVIEWED_GPU_EXPERIMENT_ENABLED` gate; public beta, Stripe and auto provisioning remain off. Worker metrics include cumulative engine tokens, overlap/idle and hardware memory. Provider selection remains simulation-only; optional providers cannot create/terminate or execute. Customer wallet/settlement algorithms are unchanged.
+
+## Current preparation: provider discovery and batching instrumentation
+
+Read [the complete readiness report](docs/microbatching-readiness.md) for the implementation/default/test matrix, corrected architecture, exact manual Runpod baseline/adaptive 10/100/1,000 procedure, optional interruption phase, evidence calculations and teardown. No real GPU result or provider cost advantage is claimed.
+
+- Runpod remains the sole selectable execution provider. Vast.ai/Lambda implement optional read-only catalog/inventory/quote contracts; create/delete paths and automatic failover are disabled. Complete-quote ranking excludes unknown fees/storage/billing, stale stock and incompatible currency/GPU counts. No optional-provider credentials or account calls were used.
+- Real-mode workers expose HTTP current/peak concurrency, overlap duration, request-seconds, completion/errors and optional metadata-only JSONL tracing. Protected telemetry/metrics keep these separate from actual vLLM running/waiting sequences, KV pressure and NVIDIA utilization. Worker hard capacity is configurable; the proposed 4090 worker and engine both cap at four. CapacityPlanner uses registered/configured slots instead of assuming 16.
+- Gated load tools verify pinned model, API scheduling flags, real worker identity/freshness and four-slot caps before load. Scheduler startup logs independently expose its policy flags. Read-only audits inspect exact request timings, unique usage/capture accounting, retries and ledger drift. Offline comparisons require matching workload hashes/model/instance IDs and retain unknown cost provenance.
+- Experiment-only interruption is off by default. If separately approved, a synthetic-prefix wrapper exits after engine output/before finalization; the launcher restarts it once while preserving vLLM and an atomic one-shot marker. No production financial algorithm or wallet/rate schema was changed.
+- Defaults/local on-disk configuration remain mock execution, scheduler v2/adaptive/calibration false, provisioning and Stripe false. An environment template is not an applied deployment; running external process flags are not assumed.
+
+Verification: Python 3.12 with isolated PostgreSQL `inferenceflow_batching_test`: **102 passed, one opt-in GPU test skipped**. This includes fixed/adaptive interruption after execution, stale-finalization rejection and zero-drift unique-capture audits. New standalone HTTP-overlap/provider/experiment contracts also pass without GPU/account access. Ruff passes and mypy passes across 33 source files. Source-hashed manual payload/OpenAPI are regenerated; shell syntax and final targeted verification are recorded in the readiness report. Earlier Windows TCP forwarding failed intermittently; Linux-native test execution resolved that infrastructure path without changing the saved application database URL.
+
+Before real execution: obtain explicit approval; recheck Community capacity and exact quote/storage/tax; verify private CPU control-plane deployment, pinned engine/kernel/memory fit, scoped credentials and independently supervised provider deletion. Maintain the $10 all-in/120-minute ceiling; no automated provider budget guarantee is assumed. No Pod, volume, live GPU test, public endpoint, Sites update or paid operation was created/executed in this preparation.
+
 This is a working local inference execution MVP with real integration code. It is not a live GPU service or a public beta deployment. No billable GPU was created and no real payment credentials were used.
 
 ## Implemented
@@ -57,5 +77,7 @@ Final verification: 78 Python regression tests (including 22 new scheduling/econ
 PR #3 is merged into main. The v0.3 release remains unpublished; do not infer a formal SLA, production readiness or verified economics.
 
 ## First GPU experiment preparation — 2026-10-23
+
+The current user-selected proposal is `docs/rtx4090-community-experiment.md`: one Community RTX 4090, four engine sequences, unchanged 10,240-token API context, no public ports/retained volumes, and a $10 all-in/120-minute ceiling. The final Community-scoped read reports no capacity at $0.34/hour compute; exact machine/storage/tax quote, private CPU routing and independent termination remain blockers. Gated load/telemetry/offline cost-report tools and eight CPU-only tests were added without touching application wallet, billing, database or provider code. No Pod or real GPU inference was executed.
 
 The dated review in `docs/first-gpu-experiment.md` includes RunPod catalog evidence, immutable artifact checks, inert deployment files in `infra/first-gpu/`, staged test/measurement instructions, and a proposed $10 all-in/120-minute ceiling. No GPU provisioning, inference test, paid resource or deployment was executed. Bash syntax/payload field checks and two directly invoked mocked HTTP checks passed; four focused pytest cases stopped at PostgreSQL fixture setup. Private control-plane routing, independent provider termination, worker-only restart supervision and database test connectivity remain preflight requirements. Provisioning and Stripe stay disabled pending explicit expense authorization.

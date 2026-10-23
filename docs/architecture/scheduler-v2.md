@@ -1,4 +1,8 @@
+> October23 verification: see [current readiness package](../validation/2026-10-23/readiness-report.md). No real GPU or public alpha validation is claimed.
+
 # Scheduler v2: best-effort sub-hour inference
+
+See the [current readiness review](../microbatching-readiness.md) for exact implementation/default/test state, HTTP-overlap versus GPU-batching evidence, optional read-only provider contracts and the manually approved Runpod comparison. The [editable diagram](scheduler-v2.mmd) now shows CapacityPlanner as an operator-report side calculation rather than an automatic dispatch-to-provisioning step. Planner slot assumptions follow registered/configured hard capacity, including the four-sequence 4090 experiment; hardware calibration remains false.
 
 ## Gap analysis and baseline
 

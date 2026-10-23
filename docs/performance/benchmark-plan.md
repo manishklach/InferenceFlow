@@ -1,4 +1,8 @@
+> October23 verification: see [current readiness package](../validation/2026-10-23/readiness-report.md). No real GPU or public alpha validation is claimed.
+
 # Reproducible scheduling and GPU validation
+
+The current [baseline/adaptive Runpod procedure](../microbatching-readiness.md#first-manually-approved-runpod-comparison-exact-sequence) defines paired 10/100/1,000-request runs, a separately gated interruption phase, exact request timing/billing audits and the output comparison command. It supersedes the earlier single-policy test ordering below. No paid execution is authorized by this document; keep provisioning disabled.
 
 ## Offline experiment
 

@@ -2,7 +2,7 @@ from collections.abc import Iterable
 from prometheus_client.core import GaugeMetricFamily, Metric
 from prometheus_client.registry import Collector
 from sqlalchemy import select, func
-from packages.common.db import Session, Work, Worker, Instance, Delivery, Job, now
+from packages.common.db import Session, Work, Worker, Instance, Delivery, Job, ExecutionAttempt, now
 from packages.common.service import reconcile
 
 
@@ -34,6 +34,7 @@ class PlatformCollector(Collector):
                 "inferenceflow_active_instances": s.scalar(
                     select(func.count()).select_from(Instance).where(Instance.terminated.is_(False))
                 ),
+                "inferenceflow_dispatched_attempts": s.scalar(select(func.count()).select_from(ExecutionAttempt)),
             }
             from packages.common.performance import operations_report
             report = operations_report(s)
@@ -54,6 +55,18 @@ class PlatformCollector(Collector):
             for metric_name, field in [
                 ("inferenceflow_gpu_utilization", "gpu_utilization"),
                 ("inferenceflow_kv_cache_usage", "kv_cache_usage"),
+                ("inferenceflow_worker_http_inflight", "worker_http_inflight"),
+                ("inferenceflow_worker_http_peak_inflight", "worker_http_peak_inflight"),
+                ("inferenceflow_worker_http_overlap_seconds", "worker_http_overlap_seconds"),
+                ("inferenceflow_engine_running", "engine_running"),
+                ("inferenceflow_engine_waiting", "engine_waiting"),
+                ("inferenceflow_engine_prompt_tokens_total", "engine_prompt_tokens_total"),
+                ("inferenceflow_engine_output_tokens_total", "engine_output_tokens_total"),
+                ("inferenceflow_gpu_memory_used_mib", "gpu_memory_used_mib"),
+                ("inferenceflow_gpu_memory_total_mib", "gpu_memory_total_mib"),
+                ("inferenceflow_worker_http_idle_seconds", "worker_http_idle_seconds"),
+                ("inferenceflow_worker_observed_input_tokens_per_second", "observed_input_tokens_per_second"),
+                ("inferenceflow_worker_observed_output_tokens_per_second", "observed_output_tokens_per_second"),
             ]:
                 gauge = GaugeMetricFamily(metric_name, metric_name, labels=["worker"])
                 for worker in workers:

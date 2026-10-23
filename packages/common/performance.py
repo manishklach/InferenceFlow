@@ -102,10 +102,22 @@ def operations_report(s):
     for w in s.scalars(select(Worker)):
         data, fresh = telemetry(w, stamp)
         worker_rows.append({"id": w.id, "mode": w.execution_mode, "telemetry_fresh": fresh,
+                            "provider_instance_id": w.provider_instance_id,
+                            "http_overlap": {k: v for k, v in data.items() if k.startswith("worker_")} if fresh else {},
                             "gpu_utilization": data.get("gpu_utilization") if fresh else None,
                             "kv_cache_usage": data.get("kv_cache_usage") if fresh else None,
                             "engine_running": data.get("engine_running") if fresh else None,
                             "engine_waiting": data.get("engine_waiting") if fresh else None,
                             "dispatch_limit": available_limit(w, stamp), "hard_limit": w.capacity})
-    return {"performance": performance_report(s, stamp=stamp), "capacity": capacity_report(s, stamp),
+    from packages.common.config import settings
+    c = settings()
+    return {"configuration": {"public_beta_enabled": c.public_beta_enabled,
+                              "stripe_enabled": c.stripe_enabled,
+                              "reviewed_gpu_experiment_enabled": c.reviewed_gpu_experiment_enabled,
+                              "scheduler_v2_enabled": c.scheduler_v2_enabled,
+                              "adaptive_dispatch_enabled": c.adaptive_dispatch_enabled,
+                              "max_inflight": c.max_inflight, "execution_mode": c.execution_mode,
+                              "provisioning_enabled": c.provisioning_enabled,
+                              "estimator_calibrated": c.estimator_calibrated},
+            "performance": performance_report(s, stamp=stamp), "capacity": capacity_report(s, stamp),
             "economics": economics_report(s, stamp), "workers": worker_rows}

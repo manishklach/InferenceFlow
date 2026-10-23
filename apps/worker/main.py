@@ -24,7 +24,7 @@ async def main():
             json={
                 "id": os.getenv("WORKER_ID", "local-worker"),
                 "model": "qwen3-4b",
-                "capacity": 16,
+                "capacity": cfg.worker_capacity,
                 # Operator records actual engine load time from startup logs; canary time is not model load time.
                 "model_loading_seconds": float(os.getenv("WORKER_MODEL_LOADING_SECONDS", "0")),
                 **model_identity(),
@@ -79,7 +79,7 @@ async def main():
             while True:
                 if heartbeat.done():
                     await heartbeat
-                free = 16 - len(tasks)
+                free = cfg.worker_capacity - len(tasks)
                 if free <= 0:
                     await asyncio.sleep(0.25)
                     continue

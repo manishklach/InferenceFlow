@@ -1,4 +1,8 @@
+> Current readiness and approval gate: [2026-10-23 validation](validation/2026-10-23/readiness-report.md). That report supersedes older quotes, two-arm commands and beta-gate instructions below. No GPU or Site fix deployment is authorized yet.
+
 # First real GPU experiment — approval proposal
+
+> Historical Secure Cloud L40S proposal. The user's subsequent hardware/tier choice is now captured by the [RTX 4090 Community Cloud experiment](rtx4090-community-experiment.md). The shared proposed payload/launcher now target that new experiment; do not execute this older proposal. No resource was provisioned under either proposal.
 
 Prepared 2026-10-23. Nothing in this proposal was deployed or provisioned. Maximum proposed total expense: **$10**, including compute, storage and applicable taxes/fees. This supersedes the older illustrative $5/30-minute proposal for this experiment only.
 

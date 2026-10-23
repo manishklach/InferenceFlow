@@ -17,6 +17,8 @@ class Settings(BaseSettings):
     encryption_legacy_secret: str = ""
     execution_mode: str = "mock"
     mock_latency_seconds: float = Field(default=0.01, ge=0, le=30)
+    worker_trace_path: str = ""
+    worker_capacity: int = Field(default=16, ge=1, le=16)
     model_revision: str = "mock-v1"
     model_repo: str = "Qwen/Qwen3-4B"
     input_rate: int = 100000
@@ -61,6 +63,7 @@ class Settings(BaseSettings):
     oidc_redirect_uri: str = "http://localhost:3000/api/auth/oidc/callback"
     otel_exporter_otlp_endpoint: str = ""
     public_beta_enabled: bool = False
+    reviewed_gpu_experiment_enabled: bool = False
 
     def validate_runtime(self):
         if any(not key or ":" in key for key in self.encryption_keys):
@@ -84,8 +87,12 @@ class Settings(BaseSettings):
                 raise ValueError("Configure a high entropy SECRET_KEY")
             if not self.oidc_issuer or not self.oidc_audience or not self.oidc_jwks_url:
                 raise ValueError("OIDC configuration required")
-        if self.execution_mode != "mock" and (len(self.model_revision) != 40 or not self.public_beta_enabled):
-            raise ValueError("Real mode requires exact model SHA and reviewed rate/license beta gate")
+        if self.execution_mode != "mock" and (
+            len(self.model_revision) != 40
+            or any(ch not in "0123456789abcdef" for ch in self.model_revision)
+            or not (self.public_beta_enabled or self.reviewed_gpu_experiment_enabled)
+        ):
+            raise ValueError("Real mode requires exact model SHA and reviewed private experiment or beta gate")
         if self.stripe_enabled and not self.stripe_secret_key.startswith("sk_test_"):
             raise ValueError("Only Stripe test credentials accepted")
 

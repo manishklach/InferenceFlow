@@ -1,0 +1,134 @@
+{
+  "observed_at": "2026-10-23T18:53:03Z",
+  "source": "RunPod MCP get_gpu_type; POD, one GPU, minCudaVersion 12.8",
+  "quotes": [
+    {
+      "cloud": "COMMUNITY",
+      "availability": "NONE",
+      "community": true,
+      "cudaVersions": [
+        {
+          "available": false,
+          "version": "12.8"
+        },
+        {
+          "available": false,
+          "version": "12.9"
+        },
+        {
+          "available": false,
+          "version": "13.0"
+        },
+        {
+          "available": false,
+          "version": "13.2"
+        },
+        {
+          "available": false,
+          "version": "13.4"
+        }
+      ],
+      "id": "NVIDIA GeForce RTX 4090",
+      "manufacturer": "NVIDIA",
+      "maxCount": {
+        "community": 8,
+        "secure": 8
+      },
+      "memory": 24,
+      "name": "RTX 4090",
+      "pool": "ADA_24",
+      "price": {
+        "community": 0.34,
+        "secure": 0.89,
+        "serverless": 1.1
+      },
+      "secure": true
+    },
+    {
+      "cloud": "SECURE",
+      "availability": "LOW",
+      "community": false,
+      "cudaVersions": [
+        {
+          "available": true,
+          "version": "13.2"
+        }
+      ],
+      "dataCenters": [
+        {
+          "availability": "LOW",
+          "id": "EU-RO-1",
+          "name": "EU-RO-1"
+        },
+        {
+          "availability": "LOW",
+          "id": "US-MO-2",
+          "name": "US-MO-2"
+        }
+      ],
+      "id": "NVIDIA L4",
+      "manufacturer": "NVIDIA",
+      "maxCount": {
+        "community": 1,
+        "secure": 9
+      },
+      "memory": 24,
+      "name": "L4",
+      "pool": "AMPERE_24",
+      "price": {
+        "community": 0.44,
+        "secure": 0.59,
+        "serverless": 0.69
+      },
+      "secure": true
+    },
+    {
+      "cloud": "SECURE",
+      "availability": "LOW",
+      "community": true,
+      "cudaVersions": [
+        {
+          "available": true,
+          "version": "13.2"
+        }
+      ],
+      "dataCenters": [
+        {
+          "availability": "LOW",
+          "id": "EUR-IS-2",
+          "name": "EUR-IS-2"
+        },
+        {
+          "availability": "LOW",
+          "id": "US-NC-1",
+          "name": "US-NC-1"
+        },
+        {
+          "availability": "LOW",
+          "id": "US-TX-3",
+          "name": "US-TX-3"
+        },
+        {
+          "availability": "LOW",
+          "id": "US-TX-4",
+          "name": "US-TX-4"
+        }
+      ],
+      "id": "NVIDIA L40S",
+      "manufacturer": "NVIDIA",
+      "maxCount": {
+        "community": 8,
+        "secure": 8
+      },
+      "memory": 48,
+      "name": "L40S",
+      "pool": "ADA_48_PRO",
+      "price": {
+        "community": 0.79,
+        "secure": 1.09,
+        "serverless": 1.75
+      },
+      "secure": true
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+[
+  {
+    "path": "/",
+    "status": 200,
+    "bytes": 18918,
+    "canonical": null
+  },
+  {
+    "path": "/blog/",
+    "status": 200,
+    "bytes": 4811,
+    "canonical": "https://inferenceflow-execution.abc123xyza.chatgpt.site/blog/"
+  },
+  {
+    "path": "/blog/what-if-ai-inference-didnt-have-to-be-instant/",
+    "status": 200,
+    "bytes": 19692,
+    "canonical": "https://inferenceflow-execution.abc123xyza.chatgpt.site/blog/what-if-ai-inference-didnt-have-to-be-instant/"
+  },
+  {
+    "path": "/assets/favicon.svg",
+    "status": 200,
+    "bytes": 262
+  },
+  {
+    "path": "/style.css",
+    "status": 200,
+    "bytes": 35911
+  },
+  {
+    "path": "/app.js",
+    "status": 200,
+    "bytes": 10719
+  },
+  {
+    "path": "/",
+    "status": 200,
+    "bytes": 18918
+  },
+  {
+    "path": "/blog/",
+    "status": 200,
+    "bytes": 4811
+  },
+  {
+    "path": "/assets/walkthrough/execution-evidence.json",
+    "status": 200,
+    "bytes": 11262
+  },
+  {
+    "path": "/assets/walkthrough/01-sign-in.jpg",
+    "status": 200,
+    "bytes": 36978
+  },
+  {
+    "path": "/assets/integration-guide.md",
+    "status": 200,
+    "bytes": 18742
+  },
+  {
+    "path": "/blog.css",
+    "status": 200,
+    "bytes": 4198
+  },
+  {
+    "path": "/blog.js",
+    "status": 200,
+    "bytes": 416
+  },
+  {
+    "path": "/blog/what-if-ai-inference-didnt-have-to-be-instant/",
+    "status": 200,
+    "bytes": 19692
+  },
+  {
+    "path": "/assets/blog/aggregation.svg",
+    "status": 200,
+    "bytes": 2657
+  },
+  {
+    "path": "/assets/blog/responsibilities.svg",
+    "status": 200,
+    "bytes": 1735
+  },
+  {
+    "path": "/robots.txt",
+    "status": 404,
+    "bytes": 0
+  },
+  {
+    "path": "/sitemap.xml",
+    "status": 404,
+    "bytes": 0
+  }
+]

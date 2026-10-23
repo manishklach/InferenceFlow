@@ -1,0 +1,77 @@
+[
+  {
+    "path": "/assets/blog/aggregation.svg",
+    "status": 200,
+    "bytes": 2657
+  },
+  {
+    "path": "/assets/blog/responsibilities.svg",
+    "status": 200,
+    "bytes": 1735
+  },
+  {
+    "path": "/assets/blog/social-card.png",
+    "status": 200,
+    "bytes": 30200
+  },
+  {
+    "path": "/assets/blog/social-card.svg",
+    "status": 200,
+    "bytes": 1050
+  },
+  {
+    "path": "/assets/favicon.svg",
+    "status": 200,
+    "bytes": 262
+  },
+  {
+    "path": "/assets/integration-guide.md",
+    "status": 200,
+    "bytes": 18742
+  },
+  {
+    "path": "/assets/walkthrough/01-sign-in.jpg",
+    "status": 200,
+    "bytes": 36978
+  },
+  {
+    "path": "/assets/walkthrough/02-funded-workspace.jpg",
+    "status": 200,
+    "bytes": 93634
+  },
+  {
+    "path": "/assets/walkthrough/03-queued-reservation.jpg",
+    "status": 200,
+    "bytes": 99585
+  },
+  {
+    "path": "/assets/walkthrough/04-worker-running.jpg",
+    "status": 200,
+    "bytes": 99566
+  },
+  {
+    "path": "/assets/walkthrough/05-completed-billing.jpg",
+    "status": 200,
+    "bytes": 100136
+  },
+  {
+    "path": "/assets/walkthrough/06-result-retrieval.jpg",
+    "status": 200,
+    "bytes": 148119
+  },
+  {
+    "path": "/assets/walkthrough/07-ledger-and-sdk.jpg",
+    "status": 200,
+    "bytes": 186538
+  },
+  {
+    "path": "/assets/walkthrough/execution-evidence.json",
+    "status": 200,
+    "bytes": 11262
+  },
+  {
+    "path": "/assets/walkthrough/sdk-results.jsonl",
+    "status": 200,
+    "bytes": 828
+  }
+]
