@@ -6,7 +6,7 @@ from packages.common.db import Tenant, Wallet, Ledger, Key, Job, Work, Worker, U
 from packages.common.security import digest, token, encrypt, decrypt
 from packages.common.config import settings
 from packages.common.tokenizer import count_prompt, cost
-from packages.common.db import ModelVersion, ModelPrice, User, Membership
+from packages.common.db import ModelVersion, ModelPrice, User, Membership, ExecutionAttempt
 from sqlalchemy.dialects.postgresql import insert
 
 TERMINAL = {"succeeded", "failed", "canceled", "expired"}
@@ -89,9 +89,11 @@ def submit(s, tenant, body, idem):
         reserve = cost(n, settings().input_rate) + cost(item.max_output_tokens, settings().output_rate)
         prepared.append((data, n, reserve))
     w = lock_wallet(s, tenant)
-    fingerprint = hashlib.sha256(
-        json.dumps(body.model_dump(), sort_keys=True, separators=(",", ":")).encode()
-    ).hexdigest()
+    canonical = body.model_dump()
+    # Preserve pre-v0.3 idempotency fingerprints for the unchanged default policy.
+    if body.admission_policy == "best_effort":
+        canonical.pop("admission_policy")
+    fingerprint = hashlib.sha256(json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
     old = s.scalar(select(Job).where(Job.tenant_id == tenant, Job.idempotency_key == idem))
     if old:
         if old.body_hash != fingerprint:
@@ -108,6 +110,18 @@ def submit(s, tenant, body, idem):
     if pending + len(body.requests) > settings().max_pending:
         raise Problem(429, "pending_quota")
     cfg = settings()
+    seconds = body.deadline_seconds or (cfg.default_completion_target_seconds if cfg.scheduler_v2_enabled
+                                       else (1800 if body.tier == "standard" else 86400))
+    prediction = None
+    if cfg.scheduler_v2_enabled:
+        # Serialize estimates with concurrent accepts; no cross-tenant wallet locks.
+        s.execute(text("SELECT pg_advisory_xact_lock(1081844)"))
+        from packages.common.scheduling import admission
+        prediction = admission(s, prepared, seconds)
+        if body.admission_policy == "reject_if_at_risk" and (prediction["at_risk"] or not prediction["calibrated"]):
+            raise Problem(503, "deadline_not_feasible", "Target cannot be confidently met; retry with best_effort, a longer deadline, or attached calibrated capacity. No credits reserved.")
+    elif body.admission_policy == "reject_if_at_risk":
+        raise Problem(503, "deadline_estimator_disabled", "Enable SCHEDULER_V2_ENABLED or use admission_policy=best_effort.")
     version_id = hashlib.sha256((cfg.model_repo + cfg.model_revision + cfg.execution_mode).encode()).hexdigest()
     price_id = hashlib.sha256(
         (version_id + ":" + str(cfg.input_rate) + ":" + str(cfg.output_rate)).encode()
@@ -137,7 +151,6 @@ def submit(s, tenant, body, idem):
     )
     if w.available < sum(x[2] for x in prepared):
         raise Problem(402, "insufficient_credits")
-    seconds = body.deadline_seconds or (1800 if body.tier == "standard" else 86400)
     j = Job(
         tenant_id=tenant,
         idempotency_key=idem,
@@ -145,6 +158,7 @@ def submit(s, tenant, body, idem):
         model=body.model,
         tier=body.tier,
         target=now() + timedelta(seconds=seconds),
+        admission=json.dumps(prediction) if prediction else None,
     )
     s.add(j)
     s.flush()
@@ -222,6 +236,7 @@ def view(s, j):
         else None,
         "target_completion_at": j.target,
         "deadline_is_guaranteed": False,
+        "admission": json.loads(j.admission) if j.admission else {"outcome": "best_effort", "source": "legacy_scheduler", "calibrated": False},
         "late": any(r.late for r in rows),
         "estimated_max_charge_micro_usd": sum(r.reservation for r in rows),
         "reserved_micro_usd": sum(r.reservation - r.captured - r.released for r in rows),
@@ -251,6 +266,16 @@ def terminal(s, r, state, error=None):
     r.status = state
     r.error = error
     r.completed_at = now()
+    finish_attempt(s, r, state)
+
+
+def finish_attempt(s, r, outcome, input_tokens=0, output_tokens=0):
+    attempt = s.get(ExecutionAttempt, (r.id, r.epoch))
+    if attempt and attempt.ended_at is None:
+        attempt.ended_at = now()
+        attempt.outcome = outcome
+        attempt.input_tokens = input_tokens
+        attempt.output_tokens = output_tokens
 
 
 def cancel(s, j):
@@ -289,6 +314,7 @@ def finalize(s, worker, rid, body):
         if instance:
             instance.last_busy = now()
     if body.error:
+        finish_attempt(s, r, body.error)
         if body.error == "transient" and r.attempts < settings().max_attempts and not j.cancel:
             r.status = "queued"
             r.worker_id = None
@@ -306,6 +332,7 @@ def finalize(s, worker, rid, body):
     ):
         # Preserve reservation for explicit audited reconciliation; no guessed customer charge.
         r.status = "billing_pending"
+        finish_attempt(s, r, "usage_mismatch")
         r.error = "usage_mismatch"
         r.output = encrypt(body.output_text)
         s.add(Audit(kind="billing_pending", reference=r.id))
@@ -322,6 +349,7 @@ def finalize(s, worker, rid, body):
     r.late = now() > j.target
     r.error = None
     s.add(Usage(request_id=r.id, input_tokens=r.input_tokens, output_tokens=r.output_tokens, charge=charge))
+    finish_attempt(s, r, "succeeded", r.input_tokens, r.output_tokens)
 
 
 def schedule(s):
@@ -359,6 +387,7 @@ def schedule(s):
             if r.status in {"leased", "running"} and (node is None or r.worker_generation != node.generation):
                 r.lease_until = now() - timedelta(seconds=1)
             if r.status in {"leased", "running"} and r.lease_until < now():
+                finish_attempt(s, r, "lease_lost")
                 if j.cancel:
                     terminal(s, r, "canceled")
                 elif r.attempts >= settings().max_attempts:
@@ -367,7 +396,7 @@ def schedule(s):
                     r.status = "queued"
                     r.worker_id = None
                     r.eligible_at = now() + timedelta(seconds=2**r.attempts)
-            if r.status in {"queued", "leased"} and j.target < now():
+            if r.status in {"queued", "leased"} and j.target <= now():
                 terminal(s, r, "expired")
     s.flush()
     workers = list(
@@ -378,6 +407,8 @@ def schedule(s):
             .with_for_update(skip_locked=True)
         )
     )
+    from packages.common.scheduling import context
+    estimator = context(s)[0] if settings().scheduler_v2_enabled else None
     for worker in workers:
         active = s.scalar(
             select(func.count())
@@ -424,8 +455,10 @@ def schedule(s):
             )
             for tid in tenants
         }
-        telemetry = json.loads(worker.telemetry or "{}")
-        effective_capacity = 0 if telemetry.get("kv_cache_usage", 0) >= 0.9 else worker.capacity
+        from packages.common.scheduling import available_limit, AdaptiveDispatch, DispatchPolicy
+        effective_capacity = available_limit(worker, now())
+        if settings().adaptive_dispatch_enabled:
+            effective_capacity = AdaptiveDispatch.update(worker, now(), bool(candidates))
         while candidates and active < effective_capacity:
             candidates = [r for r in candidates if loads[r.tenant_id] < settings().max_inflight]
             if not candidates:
@@ -434,6 +467,9 @@ def schedule(s):
             def score(r):
                 j = s.get(Job, r.job_id)
                 age = (now() - j.created_at).total_seconds()
+                if estimator is not None:
+                    return DispatchPolicy.score(served[r.tenant_id], j.tier, age, (j.target - now()).total_seconds(),
+                                                estimator.duration(r.prompt_tokens, r.max_output), r.ordinal)
                 return (
                     served[r.tenant_id] / (4 if j.tier == "standard" or age >= 300 else 1) - age / 60,
                     j.target,
@@ -443,6 +479,7 @@ def schedule(s):
             r = min(candidates, key=score)
             candidates.remove(r)
             r.status = "leased"
+            r.first_dispatched_at = r.first_dispatched_at or now()
             r.worker_id = worker.id
             r.worker_generation = worker.generation
             r.epoch += 1
@@ -524,3 +561,7 @@ def reconcile_request(s, rid, input_tokens, output_tokens, reference, release_on
     r.late = now() > s.get(Job, r.job_id).target
     s.add(Usage(request_id=r.id, input_tokens=input_tokens, output_tokens=output_tokens, charge=charge))
     s.add(Audit(kind="billing_reconciled", reference=f"{r.id}:{reference}:actual={actual}:charged={charge}"))
+    attempt = s.get(ExecutionAttempt, (r.id, r.epoch))
+    if attempt:
+        attempt.outcome = "succeeded_reconciled"
+        attempt.input_tokens, attempt.output_tokens = input_tokens, output_tokens

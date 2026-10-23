@@ -25,6 +25,8 @@ async def main():
                 "id": os.getenv("WORKER_ID", "local-worker"),
                 "model": "qwen3-4b",
                 "capacity": 16,
+                # Operator records actual engine load time from startup logs; canary time is not model load time.
+                "model_loading_seconds": float(os.getenv("WORKER_MODEL_LOADING_SECONDS", "0")),
                 **model_identity(),
                 "provider_instance_id": os.getenv("PROVIDER_INSTANCE_ID"),
             },

@@ -31,7 +31,7 @@ async def lifespan(app):
 
 app = FastAPI(
     title="InferenceFlow",
-    version="0.2.0",
+    version="0.3.0",
     lifespan=lifespan,
     description="Prepaid asynchronous inference. Local mode uses deterministic mock execution and test-only rates. Targets are best effort; completed running work may be billed after cancellation.",
 )
@@ -371,6 +371,21 @@ def wallet(request: Request, t=Depends(customer), s=Depends(db)):
     )
 
 
+@app.get("/v1/performance")
+def performance(request: Request, t=Depends(customer), s=Depends(db)):
+    from packages.common.performance import performance_report
+    return result(request, performance_report(s, tenant=t))
+
+
+@app.get("/internal/scheduling/report")
+def scheduling_report(request: Request, authorization: str = Header(default=""), s=Depends(db)):
+    expected = settings().metrics_token
+    if not expected or not secrets.compare_digest(authorization, "Bearer " + expected):
+        raise svc.Problem(401, "metrics_unauthorized")
+    from packages.common.performance import operations_report
+    return result(request, operations_report(s))
+
+
 @app.get("/v1/wallet/transactions")
 def transactions(
     request: Request,
@@ -485,6 +500,11 @@ def register(request: Request, body: Registration, authorization: str = Header(d
     ):
         raise svc.Problem(422, "model_identity_mismatch")
     w.generation = uid()
+    w.telemetry = None
+    w.telemetry_at = None
+    w.adaptive_limit = min(body.capacity, settings().adaptive_initial_slots)
+    w.adaptive_changed_at = None
+    w.model_loading_seconds = int(body.model_loading_seconds)
     w.revision = body.revision
     w.repo = body.repo
     w.tokenizer_revision = body.tokenizer_revision
@@ -509,7 +529,16 @@ def heartbeat(request: Request, body: Telemetry | None = None, wid=Depends(worke
     w = s.scalar(select(Worker).where(Worker.id == wid).with_for_update().execution_options(populate_existing=True))
     w.heartbeat = now()
     if body is not None:
+        from packages.common.db import GpuObservation
+        # Count only covered heartbeat intervals; a long outage is unknown, never idle.
+        elapsed = min(settings().telemetry_stale_seconds, max(0, int((now() - w.telemetry_at).total_seconds()))) if w.telemetry_at else 0
+        previous = json.loads(w.telemetry or "{}")
+        active_before = bool(previous.get("active")) or previous.get("engine_running", 0) > 0
+        if elapsed:
+            s.add(GpuObservation(worker_id=wid, instance_id=w.provider_instance_id, mode=w.execution_mode,
+                                 active_seconds=elapsed if active_before else 0, idle_seconds=0 if active_before else elapsed))
         w.telemetry = body.model_dump_json(exclude_none=True)
+        w.telemetry_at = now()
     canceled = []
     active = {(lease.id, lease.epoch) for lease in (body.active if body else [])}
     for r in s.scalars(
@@ -554,11 +583,16 @@ def poll(request: Request, body: Poll | None = None, wid=Depends(worker_auth), s
         if s.get(Tenant, r.tenant_id).frozen:
             svc.terminal(s, r, "canceled", "account_frozen")
             continue
-        if s.get(Job, r.job_id).target < now():
+        if s.get(Job, r.job_id).target <= now():
             svc.terminal(s, r, "expired")
             continue
         r.status = "running"
         r.started_at = r.started_at or now()
+        from packages.common.db import ExecutionAttempt
+        from packages.common.scheduling import worker_identity
+        s.add(ExecutionAttempt(request_id=r.id, epoch=r.epoch, worker_id=wid,
+                               instance_id=node.provider_instance_id, identity=worker_identity(node), mode=node.execution_mode,
+                               started_at=now()))
         price = s.get(svc.ModelPrice, r.price_id)
         version = s.get(svc.ModelVersion, price.model_version_id)
         out.append(

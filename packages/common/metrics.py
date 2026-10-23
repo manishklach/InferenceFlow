@@ -1,4 +1,3 @@
-import json
 from collections.abc import Iterable
 from prometheus_client.core import GaugeMetricFamily, Metric
 from prometheus_client.registry import Collector
@@ -36,6 +35,21 @@ class PlatformCollector(Collector):
                     select(func.count()).select_from(Instance).where(Instance.terminated.is_(False))
                 ),
             }
+            from packages.common.performance import operations_report
+            report = operations_report(s)
+            perf, plan, econ = report["performance"], report["capacity"], report["economics"]
+            for name in ("queue_backlog_requests", "estimated_deadline_risk_jobs", "successful_within_60_minutes",
+                         "successful_deadline_misses", "deadline_attainment", "sub_hour_attainment",
+                         "tokens_per_second_wall_clock_24h"):
+                if perf[name] is not None:
+                    metrics["inferenceflow_scheduling_" + name] = perf[name]
+            for p, value in perf["end_to_end_seconds"].items():
+                if value is not None:
+                    metrics["inferenceflow_job_latency_seconds_" + p] = value
+            metrics["inferenceflow_capacity_recommended_gpus"] = plan["required_gpus_estimate"]
+            metrics["inferenceflow_gpu_estimated_cost_micro_usd"] = econ["estimated_cost_micro_usd"]
+            for field in ("observed_active_seconds", "observed_idle_seconds"):
+                metrics["inferenceflow_gpu_" + field] = sum(r[field] for r in econ["instances"])
             workers = list(s.scalars(select(Worker)))
             for metric_name, field in [
                 ("inferenceflow_gpu_utilization", "gpu_utilization"),
@@ -43,8 +57,10 @@ class PlatformCollector(Collector):
             ]:
                 gauge = GaugeMetricFamily(metric_name, metric_name, labels=["worker"])
                 for worker in workers:
-                    value = json.loads(worker.telemetry or "{}").get(field)
-                    if value is not None:
+                    from packages.common.scheduling import telemetry
+                    data, fresh = telemetry(worker, now())
+                    value = data.get(field)
+                    if value is not None and fresh:
                         gauge.add_metric([worker.id], value)
                 yield gauge
             capacity = sum(w.capacity for w in workers if (now() - w.heartbeat).total_seconds() < 90)
@@ -59,6 +75,8 @@ class PlatformCollector(Collector):
                 ((now() - w.heartbeat).total_seconds() for w in workers), default=0
             )
             for name, value in metrics.items():
-                gauge = GaugeMetricFamily(name, name)
-                gauge.add_metric([], float(value or 0))
+                scheduling_metric = name.startswith(("inferenceflow_scheduling_", "inferenceflow_job_latency_", "inferenceflow_capacity_", "inferenceflow_gpu_estimated_", "inferenceflow_gpu_observed_"))
+                modes = ",".join(perf["measurement_modes"]) or "no_observations"
+                gauge = GaugeMetricFamily(name, name, labels=["measurement_modes"] if scheduling_metric else [])
+                gauge.add_metric([modes] if scheduling_metric else [], float(value or 0))
                 yield gauge

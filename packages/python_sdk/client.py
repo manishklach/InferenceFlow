@@ -54,6 +54,9 @@ class InferenceFlowClient:
     def get_wallet(self):
         return self._call("GET", "/v1/wallet")
 
+    def get_performance(self):
+        return self._call("GET", "/v1/performance")
+
     def close(self):
         self.client.close()
 

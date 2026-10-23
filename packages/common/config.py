@@ -25,6 +25,21 @@ class Settings(BaseSettings):
     max_inflight: int = 16
     lease_seconds: int = 60
     max_attempts: int = 3
+    scheduler_v2_enabled: bool = False
+    adaptive_dispatch_enabled: bool = False
+    default_completion_target_seconds: int = Field(default=3600, ge=1, le=86400)
+    estimator_input_tokens_per_second: float = Field(default=100, gt=0)
+    estimator_output_tokens_per_second: float = Field(default=20, gt=0)
+    estimator_uncertainty_margin: float = Field(default=1.5, ge=1, le=10)
+    estimator_calibrated: bool = False
+    estimator_min_samples: int = Field(default=20, ge=1)
+    gpu_startup_seconds: int = Field(default=180, ge=0)
+    model_loading_seconds: int = Field(default=120, ge=0)
+    telemetry_stale_seconds: int = Field(default=45, ge=1, le=90)
+    adaptive_initial_slots: int = Field(default=2, ge=1, le=16)
+    adaptive_cooldown_seconds: int = Field(default=30, ge=1)
+    planning_hourly_micro_usd: int = Field(default=1000000, ge=0)
+    provider_billing_increment_seconds: int = Field(default=60, ge=1)
     retention_days: int = 7
     provisioning_enabled: bool = False
     max_active_gpus: int = 1

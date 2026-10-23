@@ -95,6 +95,7 @@ class Job(Base):
     target: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
     notified: Mapped[bool] = mapped_column(Boolean, default=False)
+    admission: Mapped[str | None] = mapped_column(Text)
     __table_args__ = (UniqueConstraint("tenant_id", "idempotency_key"),)
 
 
@@ -149,6 +150,7 @@ class Work(Base):
     finish_reason: Mapped[str | None] = mapped_column(String)
     error: Mapped[str | None] = mapped_column(String)
     late: Mapped[bool] = mapped_column(Boolean, default=False)
+    first_dispatched_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     __table_args__ = (UniqueConstraint("job_id", "ordinal"), UniqueConstraint("job_id", "custom_id"))
 
 
@@ -168,6 +170,10 @@ class Worker(Base):
     served: Mapped[int] = mapped_column(Integer, default=0)
     provider_instance_id: Mapped[str | None] = mapped_column(String)
     telemetry: Mapped[str | None] = mapped_column(Text)
+    telemetry_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    adaptive_limit: Mapped[int] = mapped_column(Integer, default=2)
+    adaptive_changed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    model_loading_seconds: Mapped[int] = mapped_column(Integer, default=0)
 
 
 class Usage(Base):
@@ -217,6 +223,46 @@ class RateBucket(Base):
     tenant_id: Mapped[str] = mapped_column(ForeignKey("tenants.id"), primary_key=True)
     window: Mapped[int] = mapped_column(BigInteger)
     hits: Mapped[int] = mapped_column(Integer)
+
+
+class ExecutionAttempt(Base):
+    """Operational observations, never a source of customer charges."""
+    __tablename__ = "execution_attempts"
+    request_id: Mapped[str] = mapped_column(ForeignKey("job_requests.id"), primary_key=True)
+    epoch: Mapped[int] = mapped_column(Integer, primary_key=True)
+    worker_id: Mapped[str] = mapped_column(String, index=True)
+    instance_id: Mapped[str | None] = mapped_column(String)
+    identity: Mapped[str] = mapped_column(String, index=True)
+    mode: Mapped[str] = mapped_column(String)
+    started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    ended_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    outcome: Mapped[str | None] = mapped_column(String)
+    input_tokens: Mapped[int] = mapped_column(Integer, default=0)
+    output_tokens: Mapped[int] = mapped_column(Integer, default=0)
+
+
+class GpuObservation(Base):
+    __tablename__ = "gpu_observations"
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=uid)
+    worker_id: Mapped[str] = mapped_column(String, index=True)
+    instance_id: Mapped[str | None] = mapped_column(String, index=True)
+    mode: Mapped[str] = mapped_column(String)
+    observed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now, index=True)
+    active_seconds: Mapped[int] = mapped_column(Integer)
+    idle_seconds: Mapped[int] = mapped_column(Integer)
+
+
+class GpuCostProfile(Base):
+    __tablename__ = "gpu_cost_profiles"
+    instance_id: Mapped[str] = mapped_column(ForeignKey("provider_instances.id"), primary_key=True)
+    provider: Mapped[str] = mapped_column(String)
+    gpu_type: Mapped[str] = mapped_column(String)
+    billing_increment_seconds: Mapped[int] = mapped_column(Integer)
+    startup_seconds: Mapped[int] = mapped_column(Integer, default=0)
+    invoiced_micro_usd: Mapped[int | None] = mapped_column(BigInteger)
+    invoice_reference: Mapped[str | None] = mapped_column(String)
+    invoiced_through: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    __table_args__ = (CheckConstraint("billing_increment_seconds > 0 AND startup_seconds >= 0 AND (invoiced_micro_usd IS NULL OR invoiced_micro_usd >= 0)"),)
 
 
 class Audit(Base):

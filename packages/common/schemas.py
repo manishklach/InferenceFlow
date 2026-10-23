@@ -23,6 +23,7 @@ class Submit(Strict):
     model: Literal["qwen3-4b"] = "qwen3-4b"
     tier: Literal["standard", "economy"] = "standard"
     deadline_seconds: int | None = Field(default=None, ge=1, le=86400)
+    admission_policy: Literal["best_effort", "reject_if_at_risk"] = "best_effort"
     requests: list[Item] = Field(min_length=1, max_length=100)
     webhook_url: str | None = None
 
@@ -51,6 +52,7 @@ class Registration(Strict):
     id: str = Field(min_length=1, max_length=100)
     model: Literal["qwen3-4b"] = "qwen3-4b"
     capacity: int = Field(default=16, ge=1, le=16)
+    model_loading_seconds: float = Field(default=0, ge=0, le=86400)
 
 
 class NamedKey(Strict):
@@ -76,3 +78,7 @@ class Telemetry(Strict):
     gpu_utilization: float | None = Field(default=None, ge=0, le=1)
     engine_running: int | None = Field(default=None, ge=0)
     engine_waiting: int | None = Field(default=None, ge=0)
+    recent_error_rate: float | None = Field(default=None, ge=0, le=1)
+    latency_ratio: float | None = Field(default=None, ge=0)
+    observed_input_tokens_per_second: float | None = Field(default=None, ge=0)
+    observed_output_tokens_per_second: float | None = Field(default=None, ge=0)

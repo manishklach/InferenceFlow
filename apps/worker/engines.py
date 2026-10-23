@@ -1,6 +1,9 @@
 import asyncio
 import hashlib
 import os
+import time
+from collections import deque
+from statistics import median
 import httpx
 from packages.common.identity import served_model_name
 from packages.common.config import settings
@@ -28,6 +31,7 @@ class MockInferenceEngine:
 
 class VllmInferenceEngine:
     def __init__(self):
+        self.samples: deque[tuple[float, float, int, int, int]] = deque(maxlen=128)
         self.client = httpx.AsyncClient(
             base_url=os.getenv("VLLM_URL", "http://127.0.0.1:8000"),
             headers={"Authorization": "Bearer " + os.getenv("VLLM_API_KEY", "")},
@@ -60,6 +64,13 @@ class VllmInferenceEngine:
         from prometheus_client.parser import text_string_to_metric_families
 
         values = {}
+        recent = [s for s in self.samples if time.monotonic() - s[0] <= 60]
+        if recent:
+            values["recent_error_rate"] = sum(s[2] for s in recent) / len(recent)
+            values["observed_input_tokens_per_second"] = sum(s[3] for s in recent) / 60
+            values["observed_output_tokens_per_second"] = sum(s[4] for s in recent) / 60
+            if len(recent) >= 16:
+                values["latency_ratio"] = median(s[1] for s in recent[-8:]) / max(.001, median(s[1] for s in recent[-16:-8]))
         try:
             response = await self.client.get("/metrics", timeout=5)
             response.raise_for_status()
@@ -88,6 +99,17 @@ class VllmInferenceEngine:
         return values
 
     async def execute(self, item):
+        start = time.monotonic()
+        try:
+            result = await self._execute(item)
+        except Exception:
+            self.samples.append((time.monotonic(), time.monotonic() - start, 1, 0, 0))
+            raise
+        self.samples.append((time.monotonic(), time.monotonic() - start, 0,
+                             result.get("input_tokens") or 0, result.get("output_tokens") or 0))
+        return result
+
+    async def _execute(self, item):
         p = item["payload"]
         r = await self.client.post(
             "/v1/chat/completions",
