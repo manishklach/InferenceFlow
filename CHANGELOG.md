@@ -32,3 +32,7 @@ See [detailed release notes](docs/releases/v0.1.0.md).
 - Private real-GPU experiment gate separated from public beta; safer watchdog ownership checks, extended engine/hardware telemetry.
 - Optional provider discovery, simulation-only workload cost ranking, sequential/fixed/adaptive experiment preparation and offline full-cost economics.
 - Exact-pod independent termination guard and private-alpha readiness checklist; no paid resources or benchmark claims.
+
+## v0.3.0 prerelease — 2026-10-23
+
+Packages opt-in scheduling, the engineering blog, multi-provider discovery, telemetry, private experiment safety and the full readiness report. Final validation:113 passed,1 real-GPU test skipped. See [detailed notes](docs/releases/v0.3.0.md). No GPU benchmark, production-readiness or savings claim; Site fixes remain unpublished.
