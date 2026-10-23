@@ -1,0 +1,384 @@
+{
+  "recorded_at": "2026-10-23T06:03:13.529103+00:00",
+  "mode": "mock",
+  "mock_latency_seconds": 10,
+  "seed_micro_usd": 10000000,
+  "dashboard_jobs": [
+    {
+      "id": "job_26f77ad9b956483983bb530818dbeba9",
+      "status": "succeeded",
+      "model": "qwen3-4b",
+      "tier": "standard",
+      "total": 1,
+      "request_count": 1,
+      "completed": 1,
+      "failed": 0,
+      "queued": 0,
+      "running": 0,
+      "created_at": "2026-10-22T23:02:26.735568-07:00",
+      "started_at": "2026-10-22T23:02:41.311182-07:00",
+      "completed_at": "2026-10-22T23:02:51.377092-07:00",
+      "target_completion_at": "2026-10-22T23:32:26.733572-07:00",
+      "deadline_is_guaranteed": false,
+      "late": false,
+      "estimated_max_charge_micro_usd": 54,
+      "reserved_micro_usd": 0,
+      "captured_micro_usd": 36,
+      "released_micro_usd": 18,
+      "usage": {
+        "input_tokens": 150,
+        "output_tokens": 69
+      },
+      "error_summary": []
+    }
+  ],
+  "sdk_job": {
+    "id": "job_1d7e3d9ab09f4e2eafcd38a34dc89bba",
+    "status": "succeeded",
+    "model": "qwen3-4b",
+    "tier": "standard",
+    "total": 3,
+    "request_count": 3,
+    "completed": 3,
+    "failed": 0,
+    "queued": 0,
+    "running": 0,
+    "created_at": "2026-10-22T23:03:02.055519-07:00",
+    "started_at": "2026-10-22T23:03:02.271869-07:00",
+    "completed_at": "2026-10-22T23:03:12.387812-07:00",
+    "target_completion_at": "2026-10-22T23:33:02.054534-07:00",
+    "deadline_is_guaranteed": false,
+    "late": false,
+    "estimated_max_charge_micro_usd": 142,
+    "reserved_micro_usd": 0,
+    "captured_micro_usd": 88,
+    "released_micro_usd": 54,
+    "usage": {
+      "input_tokens": 235,
+      "output_tokens": 207
+    },
+    "error_summary": [],
+    "request_id": "req_3f3706dd6bfc458fa1bd2983d8cb9fc3"
+  },
+  "sdk_results": {
+    "job_id": "job_1d7e3d9ab09f4e2eafcd38a34dc89bba",
+    "items": [
+      {
+        "ordinal": 0,
+        "custom_id": "0",
+        "status": "succeeded",
+        "output_text": "MOCK 6b1da2b13d53188fc21d0d6379014d372b737ecf8111f946fc1f2031b90b4307",
+        "finish_reason": "stop",
+        "usage": {
+          "input_tokens": 85,
+          "output_tokens": 69
+        },
+        "charge_micro_usd": 30,
+        "error": null,
+        "late": false
+      },
+      {
+        "ordinal": 1,
+        "custom_id": "1",
+        "status": "succeeded",
+        "output_text": "MOCK ab8ed6582954c2e16a60ee190dc1ff5e5cbf46dc1d9d465459b189314f5cff08",
+        "finish_reason": "stop",
+        "usage": {
+          "input_tokens": 76,
+          "output_tokens": 69
+        },
+        "charge_micro_usd": 29,
+        "error": null,
+        "late": false
+      },
+      {
+        "ordinal": 2,
+        "custom_id": "2",
+        "status": "succeeded",
+        "output_text": "MOCK 07ea1399b32204e17a2bfd89322384cc5520eb04d784d7a0077e3eab82280d81",
+        "finish_reason": "stop",
+        "usage": {
+          "input_tokens": 74,
+          "output_tokens": 69
+        },
+        "charge_micro_usd": 29,
+        "error": null,
+        "late": false
+      }
+    ],
+    "next_cursor": null,
+    "complete": true,
+    "request_id": "req_5ba919373b8d4045a4135de177160e28"
+  },
+  "idempotent_replay_same_job": true,
+  "canceled_job": {
+    "id": "job_87c9b11970094d77be39eb35a2fc2f8c",
+    "status": "canceled",
+    "model": "qwen3-4b",
+    "tier": "standard",
+    "total": 1,
+    "request_count": 1,
+    "completed": 0,
+    "failed": 0,
+    "queued": 0,
+    "running": 0,
+    "created_at": "2026-10-22T23:03:13.429617-07:00",
+    "started_at": null,
+    "completed_at": "2026-10-23T06:03:13.476851+00:00",
+    "target_completion_at": "2026-10-22T23:03:14.429617-07:00",
+    "deadline_is_guaranteed": false,
+    "late": false,
+    "estimated_max_charge_micro_usd": 48,
+    "reserved_micro_usd": 0,
+    "captured_micro_usd": 0,
+    "released_micro_usd": 48,
+    "usage": {
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    "error_summary": [],
+    "request_id": "req_b9e01be92ae24819a00b8edc8ac3cbf1"
+  },
+  "wallet_before_sdk": {
+    "available_micro_usd": 9999964,
+    "reserved_micro_usd": 0,
+    "debt_micro_usd": 0,
+    "total_balance_micro_usd": 9999964,
+    "frozen": false,
+    "request_id": "req_58c15aafe9294443af77b0a8bc9bc5b8"
+  },
+  "wallet_after": {
+    "available_micro_usd": 9999876,
+    "reserved_micro_usd": 0,
+    "debt_micro_usd": 0,
+    "total_balance_micro_usd": 9999876,
+    "frozen": false,
+    "request_id": "req_a458f58a60164df69996c95ed4361137"
+  },
+  "ledger": [
+    {
+      "id": "bd974ba3a8f444c4a52fc4ce9979cb3f",
+      "kind": "topup",
+      "available_delta": 10000000,
+      "reserved_delta": 0,
+      "debt_delta": 0,
+      "source": "walkthrough-seed:e4f80122a6f54b0dae9a88b52d1990aa",
+      "created_at": "2026-10-22T23:01:13.445639-07:00"
+    },
+    {
+      "id": "cf9317bc919b41d4837f88c8cc07d593",
+      "kind": "reservation",
+      "available_delta": -54,
+      "reserved_delta": 54,
+      "debt_delta": 0,
+      "source": "94c6eb629f0e4d2a94c6f8ad16b45205:reserve",
+      "created_at": "2026-10-22T23:02:26.768565-07:00"
+    },
+    {
+      "id": "3fd0eb1752e341dd8f0b25eff7ebb2fd",
+      "kind": "capture",
+      "available_delta": 0,
+      "reserved_delta": -36,
+      "debt_delta": 0,
+      "source": "94c6eb629f0e4d2a94c6f8ad16b45205:capture",
+      "created_at": "2026-10-22T23:02:51.366096-07:00"
+    },
+    {
+      "id": "35458b7ef67841dc81218db299bf0390",
+      "kind": "release",
+      "available_delta": 18,
+      "reserved_delta": -18,
+      "debt_delta": 0,
+      "source": "94c6eb629f0e4d2a94c6f8ad16b45205:release",
+      "created_at": "2026-10-22T23:02:51.373082-07:00"
+    },
+    {
+      "id": "4ba1c0208a65458b9d87604cd985fdad",
+      "kind": "reservation",
+      "available_delta": -48,
+      "reserved_delta": 48,
+      "debt_delta": 0,
+      "source": "337c94582db8449b92be4e8a165bd1bf:reserve",
+      "created_at": "2026-10-22T23:03:02.061873-07:00"
+    },
+    {
+      "id": "7749de777a184cf1b018e1151307e380",
+      "kind": "reservation",
+      "available_delta": -47,
+      "reserved_delta": 47,
+      "debt_delta": 0,
+      "source": "dafa877b559b4bc69bd4c8b1bdc26c72:reserve",
+      "created_at": "2026-10-22T23:03:02.068607-07:00"
+    },
+    {
+      "id": "22cdd0d049c840ab911c0b7b7651527e",
+      "kind": "reservation",
+      "available_delta": -47,
+      "reserved_delta": 47,
+      "debt_delta": 0,
+      "source": "799db143a77c4303b054f218ddcd2c92:reserve",
+      "created_at": "2026-10-22T23:03:02.079618-07:00"
+    },
+    {
+      "id": "555f75ae672e4eb8b2641802b803f3d1",
+      "kind": "capture",
+      "available_delta": 0,
+      "reserved_delta": -29,
+      "debt_delta": 0,
+      "source": "799db143a77c4303b054f218ddcd2c92:capture",
+      "created_at": "2026-10-22T23:03:12.326343-07:00"
+    },
+    {
+      "id": "3af7178a7cf14c4280ce832069acfd28",
+      "kind": "release",
+      "available_delta": 18,
+      "reserved_delta": -18,
+      "debt_delta": 0,
+      "source": "799db143a77c4303b054f218ddcd2c92:release",
+      "created_at": "2026-10-22T23:03:12.330337-07:00"
+    },
+    {
+      "id": "b84b34449048477e9de40aeb82a86b0b",
+      "kind": "capture",
+      "available_delta": 0,
+      "reserved_delta": -30,
+      "debt_delta": 0,
+      "source": "337c94582db8449b92be4e8a165bd1bf:capture",
+      "created_at": "2026-10-22T23:03:12.353013-07:00"
+    },
+    {
+      "id": "9fa0a8cc75884f079b067c54de0629fd",
+      "kind": "release",
+      "available_delta": 18,
+      "reserved_delta": -18,
+      "debt_delta": 0,
+      "source": "337c94582db8449b92be4e8a165bd1bf:release",
+      "created_at": "2026-10-22T23:03:12.358010-07:00"
+    },
+    {
+      "id": "683b9e88838847e083973a539dbc0bb4",
+      "kind": "capture",
+      "available_delta": 0,
+      "reserved_delta": -29,
+      "debt_delta": 0,
+      "source": "dafa877b559b4bc69bd4c8b1bdc26c72:capture",
+      "created_at": "2026-10-22T23:03:12.379506-07:00"
+    },
+    {
+      "id": "d4ae370ab8d74b18a591e608be474591",
+      "kind": "release",
+      "available_delta": 18,
+      "reserved_delta": -18,
+      "debt_delta": 0,
+      "source": "dafa877b559b4bc69bd4c8b1bdc26c72:release",
+      "created_at": "2026-10-22T23:03:12.384505-07:00"
+    },
+    {
+      "id": "358cefbd28f843608bb4cac89ca4f8bf",
+      "kind": "reservation",
+      "available_delta": -48,
+      "reserved_delta": 48,
+      "debt_delta": 0,
+      "source": "791bc10b01d84d229c36b50f43b24dd0:reserve",
+      "created_at": "2026-10-22T23:03:13.434614-07:00"
+    },
+    {
+      "id": "d73c7e733c7b40499b9ffc4f982ffdf7",
+      "kind": "capture",
+      "available_delta": 0,
+      "reserved_delta": 0,
+      "debt_delta": 0,
+      "source": "791bc10b01d84d229c36b50f43b24dd0:capture",
+      "created_at": "2026-10-22T23:03:13.469852-07:00"
+    },
+    {
+      "id": "fe9f7b7bebb04e1589edabb0f36d9ecb",
+      "kind": "release",
+      "available_delta": 48,
+      "reserved_delta": -48,
+      "debt_delta": 0,
+      "source": "791bc10b01d84d229c36b50f43b24dd0:release",
+      "created_at": "2026-10-22T23:03:13.473855-07:00"
+    }
+  ],
+  "real_gpu_used": false,
+  "stripe_called": false,
+  "provider_called": false,
+  "ledger_reconciliation_drift": [],
+  "worker_identity": {
+    "id": "walkthrough-worker",
+    "model": "qwen3-4b",
+    "repo": "Qwen/Qwen3-4B",
+    "revision": "mock-v1",
+    "tokenizer_revision": "mock-v1",
+    "execution_mode": "mock",
+    "capacity": 16
+  },
+  "request_accounting": [
+    {
+      "custom_id": "0",
+      "status": "succeeded",
+      "attempts": 1,
+      "epoch": 1,
+      "prompt_tokens": 85,
+      "input_tokens": 85,
+      "output_tokens": 69,
+      "reservation": 48,
+      "captured": 30,
+      "released": 18,
+      "worker_id": "walkthrough-worker"
+    },
+    {
+      "custom_id": "1",
+      "status": "succeeded",
+      "attempts": 1,
+      "epoch": 1,
+      "prompt_tokens": 76,
+      "input_tokens": 76,
+      "output_tokens": 69,
+      "reservation": 47,
+      "captured": 29,
+      "released": 18,
+      "worker_id": "walkthrough-worker"
+    },
+    {
+      "custom_id": "2",
+      "status": "succeeded",
+      "attempts": 1,
+      "epoch": 1,
+      "prompt_tokens": 74,
+      "input_tokens": 74,
+      "output_tokens": 69,
+      "reservation": 47,
+      "captured": 29,
+      "released": 18,
+      "worker_id": "walkthrough-worker"
+    },
+    {
+      "custom_id": "sample",
+      "status": "succeeded",
+      "attempts": 1,
+      "epoch": 1,
+      "prompt_tokens": 150,
+      "input_tokens": 150,
+      "output_tokens": 69,
+      "reservation": 54,
+      "captured": 36,
+      "released": 18,
+      "worker_id": "walkthrough-worker"
+    },
+    {
+      "custom_id": "0",
+      "status": "canceled",
+      "attempts": 0,
+      "epoch": 0,
+      "prompt_tokens": 85,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "reservation": 48,
+      "captured": 0,
+      "released": 48,
+      "worker_id": null
+    }
+  ]
+}
