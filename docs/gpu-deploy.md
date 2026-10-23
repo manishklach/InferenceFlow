@@ -43,3 +43,17 @@ Runpod adapter uses REST v2 (`https://api.runpod.io/v2`), checked against offici
 Official references: https://docs.runpod.io/api-reference-v2/pods/create-a-pod ; https://docs.vllm.ai/en/stable/serving/online_serving/ ; https://huggingface.co/Qwen/Qwen3-4B .
 
 Exact source artifacts resolved from official Hugging Face/Docker Registry APIs are recorded in `infra/model-lock.json`; resolution is not GPU validation.
+
+## v0.3 first attachment and experiment controls
+
+This section prepares an experiment; it does not authorize GPU spending or a public deployment. Obtain explicit approval for provider, machine, verified hourly/minimum/fee costs, total budget and duration first. Keep the control plane private/VPN-accessible. Use the pinned vLLM/worker commands above after confirming the chosen image's actual flags and hardware compatibility.
+
+1. Keep `PROVISIONING_ENABLED=false`, `STRIPE_ENABLED=false`, `MAX_ACTIVE_GPUS=1` and `ESTIMATOR_CALIBRATED=false`. Set approved daily/session limits and independent provider alerts. Automatic capacity recommendations do not rent GPUs.
+2. After approved manual rental, record actual provider identity, quote and start using `python -m packages.common.cli gpu-attach` as documented in [unit economics](economics/unit-economics.md). This command only records metadata. It never provisions a machine.
+3. Apply migration 0006 on the control plane and restart API/scheduler/worker together. For the new scheduling experiment set `SCHEDULER_V2_ENABLED=true`, `DEFAULT_COMPLETION_TARGET_SECONDS=3600`. Start with `ADAPTIVE_DISPATCH_ENABLED=false` for a fixed-cap baseline; enable it only for a matched comparison.
+4. On the GPU host, export `PROVIDER_INSTANCE_ID=YOUR_TRACKED_PROVIDER_ID`. Set `WORKER_MODEL_LOADING_SECONDS` to weight-loading duration measured from engine startup logs. The separate `GPU_STARTUP_SECONDS` and `MODEL_LOADING_SECONDS` are conservative planning assumptions, not observations. Run the worker command above. It needs worker/engine credentials and model identity, never DB/Stripe/provider secrets.
+5. Verify readiness and exact registered identity; inspect `python -m packages.common.cli scheduling-report` on the control plane. At least 20 matching real observations are necessary for observed-throughput estimates, and manual calibration approval is still required. Unknown, stale or incomplete telemetry prevents adaptive expansion; KV >=90% pauses dispatch.
+6. Execute `RUN_GPU_E2E=1 python -m pytest tests/test_gpu.py -q` only after configuring an approved real-mode control plane/tenant. Run `python examples/batch.py`, inspect actual output/token usage and restart recovery, then `python -m packages.common.cli reconcile`. The isolated GPU test settings must match the deployed real model identity; do not infer live validation from a skipped test.
+7. Follow the [experiment plan](performance/benchmark-plan.md) for matched workload mixes, duration and acceptance gates. Stop at the provider and confirm billing has stopped before `gpu-record-stop`; import the actual invoice with coverage/reference. Check no orphan remains at the provider. Disable both new scheduling flags to restore baseline behavior without touching financial history.
+
+A short smoke establishes attachment/recovery/accounting, not an hour-long SLA. A separately approved sustained load test and actual invoices are required to assess sub-hour reliability and economics. AMD, further providers and unattended autoscaling remain deferred.

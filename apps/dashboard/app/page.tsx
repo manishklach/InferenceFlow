@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
+import SchedulingPerformance, { type Performance } from "./performance";
 type Job = {
   id: string;
   status: string;
@@ -20,6 +21,7 @@ export default function Dashboard() {
     reserved_micro_usd: 0,
   });
   const [jobs, setJobs] = useState<Job[]>([]);
+  const [performance, setPerformance] = useState<Performance | null>(null);
   const [keys, setKeys] = useState<ApiKey[]>([]);
   const [ledger, setLedger] = useState<unknown[]>([]);
   const [newKey, setNewKey] = useState("");
@@ -44,16 +46,18 @@ export default function Dashboard() {
   );
   const refresh = useCallback(async () => {
     try {
-      const [w, j, k, l] = await Promise.all([
+      const [w, j, k, l, p] = await Promise.all([
         api("/v1/wallet"),
         api("/v1/jobs"),
         api("/v1/keys"),
         api("/v1/wallet/transactions"),
+        api("/v1/performance"),
       ]);
       setWallet(w);
       setJobs(j.items);
       setKeys(k.items);
       setLedger(l.items);
+      setPerformance(p);
     } catch (e) {
       setError(String(e));
     }
@@ -183,7 +187,7 @@ export default function Dashboard() {
           <div className="grid">
             <section>
               <h2>Submit inference</h2>
-              <p>Qwen3 4B · standard tier · best effort 30 minute target</p>
+              <p>Qwen3 4B · standard tier · best-effort configured target. See the accepted job for its estimate.</p>
               <label>
                 Prompt
                 <textarea
@@ -264,6 +268,7 @@ export default function Dashboard() {
               </p>
             </section>
           </div>
+          <SchedulingPerformance data={performance} />
           <section>
             <h2>Inference jobs</h2>
             <div className="scroll">

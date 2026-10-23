@@ -3,7 +3,7 @@
   "info": {
     "title": "InferenceFlow",
     "description": "Prepaid asynchronous inference. Local mode uses deterministic mock execution and test-only rates. Targets are best effort; completed running work may be billed after cancellation.",
-    "version": "0.1.0"
+    "version": "0.3.0"
   },
   "paths": {
     "/auth/config": {
@@ -138,12 +138,34 @@
       "get": {
         "summary": "Metrics",
         "operationId": "metrics_metrics_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Authorization"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -761,6 +783,82 @@
         }
       }
     },
+    "/v1/performance": {
+      "get": {
+        "summary": "Performance",
+        "operationId": "performance_v1_performance_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/scheduling/report": {
+      "get": {
+        "summary": "Scheduling Report",
+        "operationId": "scheduling_report_internal_scheduling_report_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/wallet/transactions": {
       "get": {
         "summary": "Transactions",
@@ -1055,6 +1153,23 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/Poll"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -1137,6 +1252,25 @@
   },
   "components": {
     "schemas": {
+      "ActiveLease": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "epoch": {
+            "type": "integer",
+            "title": "Epoch"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "epoch"
+        ],
+        "title": "ActiveLease"
+      },
       "Checkout": {
         "properties": {
           "amount_usd": {
@@ -1325,12 +1459,45 @@
         "type": "object",
         "title": "NamedKey"
       },
+      "Poll": {
+        "properties": {
+          "available_slots": {
+            "type": "integer",
+            "maximum": 16.0,
+            "minimum": 0.0,
+            "title": "Available Slots",
+            "default": 16
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "Poll"
+      },
       "Registration": {
         "properties": {
           "revision": {
             "type": "string",
             "title": "Revision",
             "default": "mock-v1"
+          },
+          "repo": {
+            "type": "string",
+            "title": "Repo",
+            "default": "Qwen/Qwen3-4B"
+          },
+          "tokenizer_revision": {
+            "type": "string",
+            "title": "Tokenizer Revision",
+            "default": "mock-v1"
+          },
+          "execution_mode": {
+            "type": "string",
+            "enum": [
+              "mock",
+              "vllm"
+            ],
+            "title": "Execution Mode",
+            "default": "mock"
           },
           "provider_instance_id": {
             "anyOf": [
@@ -1361,6 +1528,13 @@
             "minimum": 1.0,
             "title": "Capacity",
             "default": 16
+          },
+          "model_loading_seconds": {
+            "type": "number",
+            "maximum": 86400.0,
+            "minimum": 0.0,
+            "title": "Model Loading Seconds",
+            "default": 0
           }
         },
         "additionalProperties": false,
@@ -1400,6 +1574,15 @@
             ],
             "title": "Deadline Seconds"
           },
+          "admission_policy": {
+            "type": "string",
+            "enum": [
+              "best_effort",
+              "reject_if_at_risk"
+            ],
+            "title": "Admission Policy",
+            "default": "best_effort"
+          },
           "requests": {
             "items": {
               "$ref": "#/components/schemas/Item"
@@ -1430,6 +1613,14 @@
       },
       "Telemetry": {
         "properties": {
+          "active": {
+            "items": {
+              "$ref": "#/components/schemas/ActiveLease"
+            },
+            "type": "array",
+            "maxItems": 16,
+            "title": "Active"
+          },
           "kv_cache_usage": {
             "anyOf": [
               {
@@ -1479,6 +1670,55 @@
               }
             ],
             "title": "Engine Waiting"
+          },
+          "recent_error_rate": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recent Error Rate"
+          },
+          "latency_ratio": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latency Ratio"
+          },
+          "observed_input_tokens_per_second": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observed Input Tokens Per Second"
+          },
+          "observed_output_tokens_per_second": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observed Output Tokens Per Second"
           }
         },
         "additionalProperties": false,

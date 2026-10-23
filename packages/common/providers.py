@@ -7,7 +7,8 @@ from typing import Protocol
 import httpx
 from sqlalchemy import select, text, func
 from packages.common.config import settings
-from packages.common.db import Instance, Audit, Session, now
+from packages.common.db import Instance, Audit, Session, GpuCostProfile, now
+from packages.common.economics import quoted_cost
 
 
 @dataclass
@@ -141,12 +142,11 @@ class RunpodProvider:
             tracked = list(s.scalars(select(Instance)))
             day = now().replace(hour=0, minute=0, second=0, microsecond=0)
             spend = sum(
-                max(0, int(((i.terminated_at or now()) - max(i.created_at, day)).total_seconds()))
-                * i.hourly_micro_usd
-                // 3600
+                quoted_cost(max(0, ((i.terminated_at or now()) - max(i.created_at, day)).total_seconds()),
+                            i.hourly_micro_usd, cfg.provider_billing_increment_seconds)
                 for i in tracked
             )
-            worst = spec.hourly_micro_usd * cfg.max_gpu_session_minutes // 60
+            worst = quoted_cost(cfg.max_gpu_session_minutes * 60, spec.hourly_micro_usd, cfg.provider_billing_increment_seconds)
             if spend + worst > cfg.max_daily_gpu_spend_usd * 1000000:
                 raise NotConfigured("Daily budget admission cap")
             s.add(Instance(id="intent_" + source, source=source, hourly_micro_usd=spec.hourly_micro_usd))
@@ -171,6 +171,9 @@ class RunpodProvider:
             if i.terminated:
                 raise NotConfigured("Creation expired during provisioning; reconcile provider inventory")
             i.id = pod["id"]
+            s.flush()
+            s.add(GpuCostProfile(instance_id=i.id, provider="runpod", gpu_type=spec.gpu_type,
+                                 billing_increment_seconds=cfg.provider_billing_increment_seconds))
         return pod
 
 
@@ -185,9 +188,8 @@ def watchdog(provider):
         stamp = now()
         day = stamp.replace(hour=0, minute=0, second=0, microsecond=0)
         spend = sum(
-            max(0, int(((i.terminated_at or stamp) - max(i.created_at, day)).total_seconds()))
-            * i.hourly_micro_usd
-            // 3600
+            quoted_cost(max(0, ((i.terminated_at or stamp) - max(i.created_at, day)).total_seconds()),
+                        i.hourly_micro_usd, cfg.provider_billing_increment_seconds)
             for i in history
         )
         for pod in inventory:

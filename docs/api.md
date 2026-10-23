@@ -42,3 +42,12 @@ Worker enrollment includes repo, revision, tokenizer_revision and execution_mode
 GET /metrics requires a separate METRICS_TOKEN bearer credential and is excluded from the dashboard proxy. Dashboard sessions and API keys share a database-backed fixed-window rate limit of 120 authenticated requests per tenant per UTC minute. Wallets expose debt_micro_usd; ledger entries expose debt_delta. Stripe webhooks use the API origin directly, never the dashboard proxy.
 
 Worker poll accepts an optional JSON body `{ "available_slots": 0..16 }` and returns at most that many leased items. Workers subtract all still-running physical attempts from capacity, including stale attempts awaiting a finalization response. Active attempts are tracked by request ID plus epoch so an old completion cannot remove renewal for a newer attempt.
+
+
+## v0.3 opt-in scheduling additions
+
+`POST /v1/jobs` accepts `admission_policy` (`best_effort`, default; or `reject_if_at_risk`). With v2 enabled, omitted deadlines use `DEFAULT_COMPLETION_TARGET_SECONDS=3600`; explicit deadlines and existing accepted targets remain. The response adds persisted `admission` metadata: outcome, estimated seconds or null, target seconds, warm slots, backlog request count, risk, calibration/source, reasons, prediction time and startup/load assumptions. `deadline_is_guaranteed` stays false.
+
+Strict admission returns 503 `deadline_not_feasible` before reservation if uncalibrated, without warm capacity, or estimated beyond target. If v2 is disabled it returns `deadline_estimator_disabled`. Increase target, attach approved calibrated capacity, or choose best effort. Normal idempotent retry returns the original prediction; legacy default-policy body hashes remain compatible.
+
+`GET /v1/performance` uses normal tenant authentication and returns only that tenant's lifecycle/queue/deadline aggregates. `InferenceFlowClient.get_performance()` wraps it. `GET /internal/scheduling/report` uses the separate metrics bearer credential and returns platform capacity/economics and workers; tenant keys/sessions are denied. Dashboard operator access forwards a supplied credential to this single read-only path without storing it. See the scheduler architecture for windows, percentile denominators and provenance.

@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.3.0 — Unreleased review candidate
+
+Opt-in deadline estimation/admission, bounded fairness/urgency, adaptive request dispatch, recommendation-only GPU capacity planning, internal quoted/invoiced unit economics, per-attempt/activity observations, tenant/operator dashboards, and deterministic six-scenario simulations. Migration 0006 is additive. Both new scheduling flags default false; no automatic paid provisioning, live payments or public deployment. See [review release notes](docs/releases/v0.3.0.md).
+
 ## v0.2.0 — 2026-10-23 — Hardened MVP prerelease
 
 Audit fixes for stale workers, artifact identity, refunds/debt, provider recovery, callback transactions, scheduler locking, shared rate limits, metrics/proxy access, production secrets, and key rotation. Adds the recorded integration walkthrough, seven browser captures, SDK evidence, and the complete deployed Sites showcase source.
