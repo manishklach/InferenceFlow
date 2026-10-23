@@ -1,0 +1,19 @@
+{
+  "status": "not_executed",
+  "real_gpu_validated": false,
+  "input_tokens": null,
+  "output_tokens": null,
+  "gpu_runtime_seconds": null,
+  "gpu_idle_seconds": null,
+  "startup_seconds": null,
+  "provider_invoice_usd": null,
+  "total_experiment_usd": null,
+  "input_normalized_cpm_usd": null,
+  "output_normalized_cpm_usd": null,
+  "blended_cpm_usd": null,
+  "effective_gpu_utilization": null,
+  "cost_per_completed_job_usd": null,
+  "deadline_attainment": null,
+  "cost_advantage": null,
+  "reason": "No GPU provisioning approval; stock, private HTTPS staging, full cost and independent termination credentials remain unverified."
+}

@@ -1,4 +1,6 @@
 # API v1
+
+The authenticated `/internal/scheduling/report` now includes nonsecret API policy configuration, provider instance identity and fresh worker HTTP-overlap telemetry. It remains protected by the separate metrics credential; tenant API keys cannot read platform-wide data. Optional worker heartbeat fields add in-flight/peak HTTP calls, integrated overlap/request/observed seconds, completion/error counts and trace-write errors. These are not GPU kernel/sequence measurements; retain vLLM and hardware samples separately. See [the readiness report](microbatching-readiness.md) and regenerated `docs-openapi.json` for the measurement boundaries.
 Interactive schemas: `/docs`; machine-readable `/openapi.json`. Requests/responses are JSON with `X-Request-ID`; JSON envelopes include `request_id`. TLS is required outside local development. Bearer API keys grant inference access. Dashboard uses HttpOnly SameSite cookies and a separate CSRF token for mutations. API keys cannot create keys.
 
 | Method | Path | Purpose |

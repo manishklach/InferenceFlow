@@ -35,3 +35,7 @@ Published October 23, 2026, by The InferenceFlow Team. Full editorial source: `c
 No build step is needed. For repeatable checks, install `beautifulsoup4 markdown playwright`, then `python -m playwright install chromium`. Start the preview on port 8095 (`python -m http.server 8095 --bind 127.0.0.1 --directory dist`), then run `python tests/check_blog.py`. Screenshots go into ignored `.qa/`. Checks cover full source paragraph fidelity, eight main sections, local links/assets, metadata, desktop/mobile layout, image loading, navigation, single/batch replay, walkthrough dialog and language tabs/copy.
 
 The article distinguishes the engineering vision from measured results: real GPU benchmarks remain pending, the 60-minute target is not an SLA, and vLLM owns continuous batching. No backend, billing or GPU configuration is changed by this publication.
+
+## Pending validation fixes
+
+The October23 follow-up adds canonical/social metadata, explicit prototype copy, stronger label contrast and private indexing directives. These changes are prepared, not deployed; publication requires the user confirmation requested by that task. Live source remains managed Sites commit809105c135da7388b49c5aa743693876d04b7724. See the repository [validation report](../../docs/validation/2026-10-23/website-report.md). GitHub commits do not publish Sites.

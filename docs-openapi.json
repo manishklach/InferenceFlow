@@ -1613,6 +1613,164 @@
       },
       "Telemetry": {
         "properties": {
+          "worker_http_inflight": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 16.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Worker Http Inflight"
+          },
+          "worker_http_peak_inflight": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 16.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Worker Http Peak Inflight"
+          },
+          "worker_http_completed": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Worker Http Completed"
+          },
+          "worker_http_errors": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Worker Http Errors"
+          },
+          "worker_http_overlap_seconds": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Worker Http Overlap Seconds"
+          },
+          "worker_http_request_seconds": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Worker Http Request Seconds"
+          },
+          "worker_http_observed_seconds": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Worker Http Observed Seconds"
+          },
+          "worker_http_idle_seconds": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Worker Http Idle Seconds"
+          },
+          "engine_prompt_tokens_total": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Engine Prompt Tokens Total"
+          },
+          "engine_output_tokens_total": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Engine Output Tokens Total"
+          },
+          "gpu_memory_used_mib": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gpu Memory Used Mib"
+          },
+          "gpu_memory_total_mib": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gpu Memory Total Mib"
+          },
+          "worker_trace_write_errors": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Worker Trace Write Errors"
+          },
           "active": {
             "items": {
               "$ref": "#/components/schemas/ActiveLease"

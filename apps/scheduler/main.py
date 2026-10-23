@@ -1,4 +1,6 @@
 import time
+import json
+from packages.common.config import settings
 from packages.common.db import Session
 from packages.common.service import schedule, purge, reconcile
 from packages.common.webhooks import enqueue
@@ -16,6 +18,10 @@ def tick():
 
 
 def main():
+    c = settings()
+    print(json.dumps({"component": "scheduler_policy_configuration", "scheduler_v2_enabled": c.scheduler_v2_enabled,
+                      "adaptive_dispatch_enabled": c.adaptive_dispatch_enabled, "max_inflight": c.max_inflight,
+                      "provisioning_enabled": c.provisioning_enabled}), flush=True)
     while True:
         try:
             tick()

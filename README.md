@@ -1,26 +1,36 @@
 # InferenceFlow
 
+[Download v0.3.0 prerelease and read the detailed release notes](https://github.com/manishklach/InferenceFlow/releases/tag/v0.3.0).
+
+## October 23 readiness validation
+
+**NOT READY — BLOCKERS REMAIN.** Final local validation: **113 tests passed, 1 real-GPU test skipped**. See [the complete live-site, scheduling, provider and GPU approval report](docs/validation/2026-10-23/readiness-report.md), [website screenshots and issue register](docs/validation/2026-10-23/website-report.md), [provider architecture](docs/architecture/providers.md), [first-GPU economics](docs/economics/first-gpu-economics.md) and [future private-alpha checklist](docs/releases/private-alpha-checklist.md). Website fixes are prepared but unpublished pending confirmation. Real GPU inference, actual savings, remote staging connectivity and independent teardown credentials remain unverified. No paid GPU was created.
+
+Private experimental real mode now has a separate `REVIEWED_GPU_EXPERIMENT_ENABLED` gate; public beta, Stripe and auto provisioning remain off. Worker metrics include cumulative engine tokens, overlap/idle and hardware memory. Provider selection remains simulation-only; optional providers cannot create/terminate or execute. Customer wallet/settlement algorithms are unchanged.
+
 **Submit inference batches. Track execution. Pay for completed tokens.**
 
 A prepaid asynchronous text-inference platform built with FastAPI, PostgreSQL, a durable scheduler, outbound GPU workers, vLLM, and Next.js.
 
 [![CI](https://github.com/manishklach/inferenceflow/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/manishklach/inferenceflow/actions/workflows/test.yml)
-![Release](https://img.shields.io/badge/release-v0.2.0--MVP-blue)
+![Release](https://img.shields.io/badge/release-v0.3.0--prerelease-blue)
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1)
 
-[Quickstart](#quickstart) · [Architecture](#architecture) · [API and SDK](#api-and-sdk) · [Testing](#testing-and-validation) · [GPU deployment](docs/gpu-deploy.md) · [Release notes](docs/releases/v0.2.0.md)
+[Quickstart](#quickstart) · [Architecture](#architecture) · [API and SDK](#api-and-sdk) · [Testing](#testing-and-validation) · [GPU deployment](docs/gpu-deploy.md) · [Release notes](docs/releases/v0.3.0.md)
 
 > **MVP prerelease:** local execution and accounting have been validated with deterministic mock inference. The real vLLM adapter and pinned source configuration are included. Rented-GPU execution and external payment/provider/OIDC flows still need validation. No GPU performance, pricing advantage, or production-readiness claim is made.
 
 ## v0.3 on main: sub-hour scheduling
 
-V0.3 adds an **opt-in 60-minute best-effort objective**, explicit admission predictions, adaptive concurrency, recommendation-only capacity planning, and internal GPU economics. It preserves the existing queue, worker fences, idempotency and wallet ledger. [PR #3](https://github.com/manishklach/InferenceFlow/pull/3) is merged into `main`. No paid capacity or public deployment is activated. The latest published release remains v0.2.0; v0.3 release publication is still pending.
+The [multi-provider and batching readiness report](docs/microbatching-readiness.md) distinguishes implemented/tested behavior from enabled features and gives the exact manual Runpod baseline/adaptive comparison procedure. Current prepared changes add worker HTTP-overlap traces, engine-sequence/queue/throughput metrics, a four-slot worker cap for the 4090 experiment, scoped read-only timing/billing audits, and deterministic optional Vast.ai/Lambda discovery contracts. **Runpod remains the only selectable execution provider; optional-provider paid mutations, automatic failover and provisioning remain disabled.** No real GPU batching, sub-hour performance or cost advantage has been established.
+
+V0.3 adds an **opt-in 60-minute best-effort objective**, explicit admission predictions, adaptive concurrency, recommendation-only capacity planning, and internal GPU economics. It preserves the existing queue, worker fences, idempotency and wallet ledger. [PR #3](https://github.com/manishklach/InferenceFlow/pull/3) is merged into `main`. No paid capacity or public deployment is activated. The v0.3.0 prerelease packages this scheduling foundation together with the engineering blog and GPU readiness work. The blog/readiness pull requests remain open; the release tag identifies the complete reviewed source snapshot, including changes not yet merged into `main`.
 
 - [Scheduler architecture and gap analysis](docs/architecture/scheduler-v2.md) · [editable Mermaid diagram](docs/architecture/scheduler-v2.mmd)
 - [Simulation comparison](docs/performance/simulation-results.md) · [raw seeded results](docs/performance/simulation-v0.3-seed42.json) · [real-GPU experiment plan](docs/performance/benchmark-plan.md)
 - [GPU unit economics](docs/economics/unit-economics.md) · [product objective and limits](docs/product/60-minute-inference.md)
-- [Why we're building InferenceFlow](docs/blog/why-we-built-inferenceflow.md) · [v0.3 review notes](docs/releases/v0.3.0.md)
+- [Why we're building InferenceFlow](docs/blog/why-we-built-inferenceflow.md) · [v0.3 release notes](docs/releases/v0.3.0.md)
 
 Apply migration 0006 and restart API/scheduler/worker together. To try v2 locally, add the following to `.env` before starting Compose or the native services:
 
@@ -50,6 +60,10 @@ The [implementation report and file manifest](docs/implementation-v0.3.md) recor
 The six-scenario comparison is synthetic: some changes regress some metrics. Actual GPU throughput, sub-hour reliability, model fit and cost advantage still require approved hardware and provider invoices. Follow the [benchmark plan](docs/performance/benchmark-plan.md) before real-GPU calibration or spending.
 
 ## First real GPU experiment — prepared, awaiting approval
+
+For the current six-run baseline/adaptive 10/100/1,000 comparison and optional worker-interruption gate, follow [the readiness report](docs/microbatching-readiness.md#first-manually-approved-runpod-comparison-exact-sequence). Its policy-verified instructions supersede the earlier single-policy sequence. Customer wallet/rate/settlement behavior is unchanged; physical inference may retry while customer usage/capture must remain unique. All new real-mode commands require explicit approval, valid private credentials and independent provider teardown within the $10 ceiling.
+
+**Current selection:** [RTX 4090 24 GB on Community Cloud](docs/rtx4090-community-experiment.md). The Community-scoped check returned **no available capacity** at the $0.34/hour catalog compute rate. With the proposed 80 GB ephemeral disk, the derived estimate is ~$0.35096/hour before applicable taxes/fees (730-hour monthly conversion); an exact machine quote remains required. The experiment caps engine concurrency at four and retains the 10,240-token API context limit, pending hardware fit validation. Gated workload/telemetry tools are in `scripts/gpu_experiment.py`; CPU-only checks run with `python -m unittest tests.test_gpu_experiment_tools -v`. The [current runbook](docs/rtx4090-community-experiment.md) supersedes the historical L40S selection below. No wallet/billing implementation was changed.
 
 The [first-GPU runbook](docs/first-gpu-experiment.md) records the repository review, dated RunPod stock/price snapshot, pinned model/container checks, worker connection instructions, staged 10/100/1,000-request test plan, measurement definitions, budget controls and complete termination procedure.
 

@@ -73,6 +73,19 @@ class ActiveLease(Strict):
 
 
 class Telemetry(Strict):
+    worker_http_inflight: int | None = Field(default=None, ge=0, le=16)
+    worker_http_peak_inflight: int | None = Field(default=None, ge=0, le=16)
+    worker_http_completed: int | None = Field(default=None, ge=0)
+    worker_http_errors: int | None = Field(default=None, ge=0)
+    worker_http_overlap_seconds: float | None = Field(default=None, ge=0)
+    worker_http_request_seconds: float | None = Field(default=None, ge=0)
+    worker_http_observed_seconds: float | None = Field(default=None, ge=0)
+    worker_http_idle_seconds: float | None = Field(default=None, ge=0)
+    engine_prompt_tokens_total: float | None = Field(default=None, ge=0)
+    engine_output_tokens_total: float | None = Field(default=None, ge=0)
+    gpu_memory_used_mib: float | None = Field(default=None, ge=0)
+    gpu_memory_total_mib: float | None = Field(default=None, ge=0)
+    worker_trace_write_errors: int | None = Field(default=None, ge=0)
     active: list[ActiveLease] = Field(default_factory=list, max_length=16)
     kv_cache_usage: float | None = Field(default=None, ge=0, le=1)
     gpu_utilization: float | None = Field(default=None, ge=0, le=1)

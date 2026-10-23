@@ -1,3 +1,5 @@
+> October23 verification: see [current readiness package](../validation/2026-10-23/readiness-report.md). No real GPU or public alpha validation is claimed.
+
 # Internal GPU unit economics
 
 These reports do not alter customer prices, prepaid reservations or ledger settlement. Amounts use integer micro-USD (1 USD = 1,000,000). Quoted cost rounds uptime upward to the provider billing increment, then money upward with Decimal arithmetic. A quote is not a verified bill.

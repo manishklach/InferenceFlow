@@ -344,7 +344,7 @@ def test_provider_killswitch_and_orphans():
     fake = FakeProvider()
     fake.create_instance(GpuSpec("GPU", "US", "image", 1000000), "test")
     watchdog(fake)
-    assert fake.list_instances() == []
+    assert len(fake.list_instances()) == 1  # Untracked names are audited, never deleted.
 
 
 def test_ttl_keeps_ledger(client, headers):
