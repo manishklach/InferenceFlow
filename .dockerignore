@@ -2,6 +2,7 @@
 .git
 **/node_modules
 **/.next
+**/.next-walkthrough
 .env
 __pycache__
 .pytest_cache

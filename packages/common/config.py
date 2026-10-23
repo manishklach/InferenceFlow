@@ -1,4 +1,5 @@
 from functools import lru_cache
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -15,6 +16,7 @@ class Settings(BaseSettings):
     encryption_active_key: str = ""
     encryption_legacy_secret: str = ""
     execution_mode: str = "mock"
+    mock_latency_seconds: float = Field(default=0.01, ge=0, le=30)
     model_revision: str = "mock-v1"
     model_repo: str = "Qwen/Qwen3-4B"
     input_rate: int = 100000

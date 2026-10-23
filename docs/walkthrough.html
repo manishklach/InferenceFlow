@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>InferenceFlow · Recorded execution walkthrough</title>
+  <style>
+    :root{color-scheme:dark;font:16px/1.6 system-ui,sans-serif;background:#0a111f;color:#e4ecf6}
+    *{box-sizing:border-box}body{margin:0}main{max-width:1240px;margin:auto;padding:32px 24px 60px}
+    header{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.brand{background:#78dfc4;color:#102a28;padding:14px;border-radius:16px;font-weight:800}
+    h1{font-size:clamp(24px,4vw,36px);line-height:1.2;margin:0}p{color:#b8c7dc}.tag{font-size:12px;letter-spacing:1px;color:#78dfc4}
+    a{color:#78dfc4}nav{display:flex;gap:16px;flex-wrap:wrap;margin:20px 0}.notice{border:1px solid #6c6042;background:#302b1c;border-radius:12px;padding:14px 18px}
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}.metrics div{background:#121e30;border:1px solid #26354a;border-radius:12px;padding:16px}.metrics strong{display:block;font-size:24px}.metrics small{color:#a6bad1}
+    .controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:24px 0 12px}button{font:inherit;border:1px solid #34495e;border-radius:8px;background:#152439;color:#e4ecf6;padding:9px 14px;cursor:pointer}button:hover,button:focus-visible{border-color:#78dfc4}button[aria-current=true],#play{background:#78dfc4;color:#102a28;border-color:#78dfc4}button:disabled{opacity:.4;cursor:default}
+    #steps{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.step{font-size:13px;padding:7px 12px}#counter{margin-left:auto;color:#a6bad1}
+    .caption{background:#121e30;border:1px solid #26354a;border-radius:12px;padding:18px 22px;margin-bottom:16px}.caption h2{margin:0;font-size:22px}.caption p{margin:8px 0 0}
+    .frame{max-height:80vh;overflow:auto;border:1px solid #26354a;border-radius:14px;background:#0a111f}img{display:block;width:100%;height:auto}
+    footer{margin-top:20px;color:#a6bad1;font-size:14px}.links{display:flex;gap:18px;flex-wrap:wrap;margin:14px 0}code{color:#c9e9e3}
+    @media(max-width:620px){main{padding:24px 14px}.metrics{grid-template-columns:1fr}.metrics strong{font-size:20px}#counter{margin-left:0}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+<main>
+  <header><div class="brand" aria-hidden="true">IF</div><div><div class="tag">RECORDED LOCAL EXECUTION · MOCK MODE</div><h1>From submission to settlement</h1></div></header>
+  <p>Seven actual browser captures trace the working dashboard, durable queue, worker, results and usage ledger.</p>
+  <nav aria-label="Documentation"><a href="execution-walkthrough.md">Integration and reproduction guide</a><a href="media/walkthrough/execution-evidence.json">Execution evidence JSON</a><a href="media/walkthrough/sdk-results.jsonl">SDK result JSONL</a></nav>
+  <div class="notice">No GPUs rented. No Stripe calls. $10 of seeded development credit and deterministic mock output. A deliberate ten-second mock delay makes execution visible. This is a screenshot recording, not a continuous video or GPU benchmark.</div>
+  <div class="metrics"><div><small>Successful requests</small><strong>4 completed + 1 canceled</strong></div><div><small>Total synthetic usage charge</small><strong>$0.000124</strong></div><div><small>Final reserved credit / debt</small><strong>$0 / $0</strong></div></div>
+  <div class="controls"><button id="previous" type="button">← Previous</button><button id="play" type="button" aria-pressed="false">Play captures</button><button id="next" type="button">Next →</button><span id="counter"></span></div>
+  <div id="steps" role="navigation" aria-label="Recorded steps"></div>
+  <section class="caption" aria-live="polite"><h2 id="title"></h2><p id="description"></p></section>
+  <div class="frame" id="frame"><img id="capture" alt=""></div>
+  <div class="links"><a id="fullsize" target="_blank" rel="noopener">Open full-size capture</a><a href="execution-walkthrough.md#3-what-happens-between-submission-and-settlement">API and scheduling sequence</a></div>
+  <footer>Frames are unaltered browser screenshots. Only synthetic data and truncated key prefixes are shown; the temporary SDK credential was revoked on shutdown. The ledger reconciled with no drift. Real GPU, Stripe, OIDC and provider integrations require separate validation.</footer>
+</main>
+<script>
+  const scenes = [
+    ['01-sign-in.jpg','Sign in','Local workspace sign-in','A synthetic email opens a development session. Production uses managed OIDC with PKCE; local email login is disabled outside development.'],
+    ['02-funded-workspace.jpg','Fund','Seeded prepaid workspace','$10.000000 of development credit, zero reserved credit and no jobs. No payment was made. The API-access panel shows only a prefix.'],
+    ['03-queued-reservation.jpg','Queue','API admission → durable queue','The submitted request remains queued while the worker is paused. Admission reserves 54 microUSD, reducing available credit without capturing a charge.'],
+    ['04-worker-running.jpg','Execute','Scheduler lease → worker execution','The scheduler matches model identity and leases the request. The outbound worker polls and reports active request epochs while the mock adapter executes.'],
+    ['05-completed-billing.jpg','Settle','Usage → capture and release','150 synthetic input units and 69 output units produce a 36 microUSD charge. The other 18 microUSD is released. Reserved credit returns to zero.'],
+    ['06-result-retrieval.jpg','Results','Authenticated result retrieval','The Results action returns ordered output, usage and the actual charge. MOCK output makes the execution mode explicit. The SDK jobs are also visible in this later capture.'],
+    ['07-ledger-and-sdk.jpg','Verify','SDK integration and journal evidence','Three SDK requests cost 88 microUSD. Idempotent replay returns the same job; a separate canceled request costs zero. Total captured: 124 microUSD. Remaining credit: $9.999876. Ledger drift: none.']
+  ];
+  let current=0, timer=null;
+  const el=id=>document.getElementById(id);
+  function pause(){clearInterval(timer);timer=null;el('play').textContent='Play captures';el('play').setAttribute('aria-pressed','false')}
+  function render(index){
+    current=index; const scene=scenes[index];
+    el('title').textContent=`${index+1}. ${scene[2]}`;el('description').textContent=scene[3];
+    el('capture').src=`media/walkthrough/${scene[0]}`;el('capture').alt=scene[2];
+    el('fullsize').href=el('capture').src;el('counter').textContent=`${index+1} / ${scenes.length}`;
+    el('previous').disabled=index===0;el('next').disabled=index===scenes.length-1;el('frame').scrollTop=0;
+    [...el('steps').children].forEach((button,i)=>button.setAttribute('aria-current',String(i===index)));
+  }
+  scenes.forEach((scene,i)=>{const button=document.createElement('button');button.type='button';button.className='step';button.textContent=`${i+1} ${scene[1]}`;button.onclick=()=>{pause();render(i)};el('steps').append(button)});
+  el('previous').onclick=()=>{pause();render(Math.max(0,current-1))};el('next').onclick=()=>{pause();render(Math.min(scenes.length-1,current+1))};
+  el('play').onclick=()=>{if(timer){pause();return}if(current===scenes.length-1)render(0);el('play').textContent='Pause';el('play').setAttribute('aria-pressed','true');timer=setInterval(()=>{if(current===scenes.length-1){pause();return}render(current+1)},4500)};
+  document.addEventListener('keydown',event=>{if(event.key==='ArrowRight'){pause();render(Math.min(scenes.length-1,current+1))}if(event.key==='ArrowLeft'){pause();render(Math.max(0,current-1))}});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)pause()});
+  render(0);
+</script>
+</body>
+</html>

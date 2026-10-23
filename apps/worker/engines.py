@@ -3,6 +3,7 @@ import hashlib
 import os
 import httpx
 from packages.common.identity import served_model_name
+from packages.common.config import settings
 
 
 class MockInferenceEngine:
@@ -13,7 +14,7 @@ class MockInferenceEngine:
         return True
 
     async def execute(self, item):
-        await asyncio.sleep(0.01)
+        await asyncio.sleep(settings().mock_latency_seconds)
         data = item["payload"]
         content = " ".join(m["content"] for m in data["messages"])
         text = ("MOCK " + hashlib.sha256(content.encode()).hexdigest())[: data["max_output_tokens"]]

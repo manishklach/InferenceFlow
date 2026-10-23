@@ -29,6 +29,14 @@ Customers submit independent chat-generation requests, receive a job ID immediat
 | Operations | Provider kill switch/caps, watchdog, Prometheus, optional OTLP, content retention |
 | Tools | Next.js dashboard, Python SDK, OpenAPI, Compose, CI, tests and runbooks |
 
+## Watch the execution flow
+
+The [recorded walkthrough](docs/execution-walkthrough.md) follows sign-in → prepaid reservation → queued job → worker execution → results → metering and billing, with seven real browser captures, the actual SDK/JSONL evidence, integration diagrams, and commands to reproduce it locally. An [interactive screenshot player](docs/walkthrough.html) is included (serve `docs/` locally to play it).
+
+![A completed mock inference job with usage and settled credits](docs/media/walkthrough/05-completed-billing.jpg)
+
+This local recording completed four requests and canceled one: 124 microUSD total synthetic charge, zero remaining reservations/debt, and no reconciliation drift. It used seeded credits and mock inference; no GPU capacity or Stripe payments were used. The guide separately explains real GPU, OIDC, Stripe and callback integration.
+
 ## Quickstart
 
 Requires Git, a running Docker Engine with Compose v2, and free local ports **3000**, **8080**, and **55432**. Mock mode requires no GPU or external service account.
