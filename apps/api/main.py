@@ -31,7 +31,7 @@ async def lifespan(app):
 
 app = FastAPI(
     title="InferenceFlow",
-    version="0.1.0",
+    version="0.2.0",
     lifespan=lifespan,
     description="Prepaid asynchronous inference. Local mode uses deterministic mock execution and test-only rates. Targets are best effort; completed running work may be billed after cancellation.",
 )

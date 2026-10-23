@@ -5,11 +5,11 @@
 A prepaid asynchronous text-inference platform built with FastAPI, PostgreSQL, a durable scheduler, outbound GPU workers, vLLM, and Next.js.
 
 [![CI](https://github.com/manishklach/inferenceflow/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/manishklach/inferenceflow/actions/workflows/test.yml)
-![Release](https://img.shields.io/badge/release-v0.1.0--MVP-blue)
+![Release](https://img.shields.io/badge/release-v0.2.0--MVP-blue)
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1)
 
-[Quickstart](#quickstart) · [Architecture](#architecture) · [API and SDK](#api-and-sdk) · [Testing](#testing-and-validation) · [GPU deployment](docs/gpu-deploy.md) · [Release notes](docs/releases/v0.1.0.md)
+[Quickstart](#quickstart) · [Architecture](#architecture) · [API and SDK](#api-and-sdk) · [Testing](#testing-and-validation) · [GPU deployment](docs/gpu-deploy.md) · [Release notes](docs/releases/v0.2.0.md)
 
 > **MVP prerelease:** local execution and accounting have been validated with deterministic mock inference. The real vLLM adapter and pinned source configuration are included. Rented-GPU execution and external payment/provider/OIDC flows still need validation. No GPU performance, pricing advantage, or production-readiness claim is made.
 
@@ -28,6 +28,20 @@ Customers submit independent chat-generation requests, receive a job ID immediat
 | Callbacks | Registered HTTPS, HMAC, IP pinning, SSRF/rebinding protection, durable retries |
 | Operations | Provider kill switch/caps, watchdog, Prometheus, optional OTLP, content retention |
 | Tools | Next.js dashboard, Python SDK, OpenAPI, Compose, CI, tests and runbooks |
+
+## Live showcase
+
+[Open the deployed InferenceFlow Site](https://inferenceflow-execution.abc123xyza.chatgpt.site/) — currently owner-private. Making this repository public does not grant access to the hosted Site.
+
+The responsive showcase includes an interactive execution replay, seven actual dashboard captures, Python/cURL integration examples, and downloadable evidence. Its [complete static source](sites/inferenceflow/) is included here. The replay uses recorded mock data; the Site does not host the API, database, GPU workers, or payment services.
+
+Preview the Site locally from the repository root:
+
+~~~bash
+python -m http.server 8093 --bind 127.0.0.1 --directory sites/inferenceflow/dist
+~~~
+
+Open http://127.0.0.1:8093. Hosting identity is preserved in `sites/inferenceflow/.openai/hosting.json`; pushing to GitHub does not automatically redeploy Sites.
 
 ## Watch the execution flow
 
@@ -350,7 +364,7 @@ docs/                     Contracts, deployment, runbooks, release notes
 - [Architecture](docs/architecture.md), [API](docs/api.md), [OpenAPI](docs-openapi.json)
 - [Billing](docs/billing.md), [GPU deployment](docs/gpu-deploy.md), [security](docs/security.md), [operations](docs/ops.md)
 - [Internal pricing experiment](docs/pricing-experiment.md)
-- [Changelog](CHANGELOG.md) and [release notes](docs/releases/v0.1.0.md)
+- [Changelog](CHANGELOG.md) and [release notes](docs/releases/v0.2.0.md)
 - [Product specification](inferenceflow_mvp_spec.md) and [implementation brief](codex_inferenceflow_prompt.md)
 
 ## Scope and launch gates
