@@ -1,0 +1,2 @@
+# Shell commands must survive Windows checkouts without introducing CRLF into Bash.
+infra/first-gpu/*.sh text eol=lf

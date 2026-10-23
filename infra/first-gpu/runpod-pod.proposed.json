@@ -1,0 +1,34 @@
+{
+  "name": "inferenceflow-first-gpu-review-required",
+  "cloud": "SECURE",
+  "image": "vllm/vllm-openai@sha256:6cf9808ca8810fc6c3fd0451c2e7784fb224590d81f7db338e7eaf3c02a33d33",
+  "gpu": {
+    "id": "NVIDIA L40S",
+    "count": 1,
+    "minCudaVersion": "12.8",
+    "minRamPerGpu": 32,
+    "minVcpuCountPerGpu": 8
+  },
+  "dataCenterIds": [
+    "US-TX-4"
+  ],
+  "disk": 80,
+  "ports": [],
+  "entrypoint": [
+    "/bin/bash",
+    "-lc"
+  ],
+  "cmd": [
+    "set -euo pipefail\npython3 -c 'import importlib.metadata as m; assert m.version(\"vllm\") == \"0.8.5\"'\nmkdir -p /opt/inferenceflow\ncd /opt/inferenceflow\ngit init -q\ngit remote add origin https://github.com/manishklach/InferenceFlow.git\ngit fetch --depth 1 origin c62386b2b6347f2555375fbd448d14769d852646\ngit checkout --detach FETCH_HEAD\npython3 -m venv /opt/inferenceflow-worker\n/opt/inferenceflow-worker/bin/python -m pip install --no-cache-dir -r requirements.lock\n/opt/inferenceflow-worker/bin/python -m pip install --no-deps -e .\n\n#!/bin/bash\n# REVIEW ONLY: this runs INSIDE a paid Pod after explicit authorization.\n# No Docker-in-Docker, inbound vLLM port, database credential or provider key needed.\nset -euo pipefail\n: \"${CONTROL_PLANE_URL:?Set the approved reachable private HTTPS control plane}\"\n: \"${WORKER_BOOTSTRAP_TOKEN:?Set a separate experiment bootstrap credential}\"\n[[ \"$CONTROL_PLANE_URL\" == https://* ]] || exit 2\n[[ \"${WORKER_BOOTSTRAP_TOKEN}\" != REPLACE_* ]] || exit 2\nexport EXECUTION_MODE=vllm PUBLIC_BETA_ENABLED=true\nexport MODEL_REPO=Qwen/Qwen3-4B\nexport MODEL_REVISION=1cfa9a7208912126459214e8b04321603b3df60c\nexport VLLM_URL=http://127.0.0.1:8000 VLLM_USE_V1=1\nexport HF_HOME=/opt/hf-cache PYTHONUNBUFFERED=1\nexport WORKER_ID=\"first-gpu-${RUNPOD_POD_ID:?Run inside Runpod}\"\nexport PROVIDER_INSTANCE_ID=\"$RUNPOD_POD_ID\"\nexport VLLM_API_KEY\nVLLM_API_KEY=$(python3 -c 'import secrets; print(secrets.token_urlsafe(48))')\ncd /opt/inferenceflow\nworker_python=/opt/inferenceflow-worker/bin/python\nexport SERVED_MODEL_NAME\nSERVED_MODEL_NAME=$($worker_python -m packages.common.identity)\nengine_pid= worker_pid= telemetry_pid=\ncleanup() {\n  for child in \"$worker_pid\" \"$telemetry_pid\" \"$engine_pid\"; do\n    if [[ -n \"$child\" ]]; then kill \"$child\" 2>/dev/null || true; fi\n  done\n}\ntrap cleanup EXIT\ntrap 'exit 143' TERM INT\nstarted=$SECONDS\npython3 -m vllm.entrypoints.openai.api_server \\\n  --host 127.0.0.1 --port 8000 \\\n  --model \"$MODEL_REPO\" --revision \"$MODEL_REVISION\" \\\n  --tokenizer-revision \"$MODEL_REVISION\" --served-model-name \"$SERVED_MODEL_NAME\" \\\n  --dtype bfloat16 --max-model-len 10240 --max-num-seqs 16 \\\n  --gpu-memory-utilization 0.85 --api-key \"$VLLM_API_KEY\" \\\n  --generation-config vllm --disable-log-requests --no-enable-prefix-caching &\nengine_pid=$!\nuntil curl --silent --fail --max-time 5 http://127.0.0.1:8000/health >/dev/null; do\n  kill -0 \"$engine_pid\" 2>/dev/null || exit 3\n  if (( SECONDS - started > 900 )); then echo 'Engine readiness timeout; TERMINATE POD at provider'; exit 4; fi\n  sleep 5\ndone\n# Startup-to-health includes downloads and initialization. It is not weight-load\n# time; keep the loading observation unknown until measured from engine logs.\necho \"engine_start_to_health_seconds=$((SECONDS - started))\"\nexport WORKER_MODEL_LOADING_SECONDS=0\n# Hardware sampling is independent of the worker's 15-second heartbeat.\nnvidia-smi --query-gpu=timestamp,uuid,name,utilization.gpu,utilization.memory,memory.used,memory.total,power.draw \\\n  --format=csv -l 5 &\ntelemetry_pid=$!\n$worker_python -m apps.worker.main &\nworker_pid=$!\nwait -n \"$engine_pid\" \"$worker_pid\"\necho 'Engine/worker exited; export evidence and TERMINATE POD at provider'\nexit 5\n"
+  ],
+  "env": {
+    "CONTROL_PLANE_URL": "https://REPLACE_WITH_APPROVED_PRIVATE_CONTROL_PLANE",
+    "WORKER_BOOTSTRAP_TOKEN": "REPLACE_WITH_SCOPED_EXPERIMENT_SECRET",
+    "PROVISIONING_ENABLED": "false",
+    "STRIPE_ENABLED": "false",
+    "IF_OWNER": "inferenceflow",
+    "IF_ENVIRONMENT": "experiment",
+    "IF_CREATED_BY": "operator-approval-required",
+    "IF_JOB_GROUP": "first-real-gpu"
+  }
+}

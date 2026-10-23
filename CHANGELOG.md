@@ -1,6 +1,10 @@
 # Changelog
 
-## v0.3.0 — Unreleased review candidate
+## Unreleased — First GPU experiment preparation
+
+Adds a dated RunPod GPU availability/pricing review, pinned model/image compatibility evidence, a proposed zero-inbound-port Pod payload and launcher, control-plane environment overlay, 10/100/1,000-request test stages, measurement definitions, $10 all-in/120-minute limits, explicit approval scope and full teardown instructions. Records preparation checks and unresolved database/restart-supervision preflight work. No paid infrastructure or deployment was created.
+
+## v0.3.0 — Merged to main; release unpublished
 
 Opt-in deadline estimation/admission, bounded fairness/urgency, adaptive request dispatch, recommendation-only GPU capacity planning, internal quoted/invoiced unit economics, per-attempt/activity observations, tenant/operator dashboards, and deterministic six-scenario simulations. Migration 0006 is additive. Both new scheduling flags default false; no automatic paid provisioning, live payments or public deployment. See [review release notes](docs/releases/v0.3.0.md).
 

@@ -54,4 +54,8 @@ Baseline before v0.3: 56 passed / one real-GPU test skipped; Ruff and mypy passe
 
 Final verification: 78 Python regression tests (including 22 new scheduling/economics cases) and one opt-in real-GPU test; the exact completed run is confirmed in the implementation report. The 31 existing platform tests also pass with SCHEDULER_V2_ENABLED=true. Ruff/mypy pass across 32 source modules; normal and isolated QA Next.js production builds pass; Docker Compose configuration validates. Two complete 18-run seed-42 simulations reproduce byte-for-byte. Browser QA confirmed tenant performance, authenticated operator reporting, zero registered real GPUs in mock mode, missing-cost labels and cleared operator input, with no browser errors. Unmodified captures are in docs/media/v03/.
 
-This is a review candidate: do not infer a formal SLA, production readiness or verified economics. Prepare v0.3 release notes only; merge and release publication await review.
+PR #3 is merged into main. The v0.3 release remains unpublished; do not infer a formal SLA, production readiness or verified economics.
+
+## First GPU experiment preparation — 2026-10-23
+
+The dated review in `docs/first-gpu-experiment.md` includes RunPod catalog evidence, immutable artifact checks, inert deployment files in `infra/first-gpu/`, staged test/measurement instructions, and a proposed $10 all-in/120-minute ceiling. No GPU provisioning, inference test, paid resource or deployment was executed. Bash syntax/payload field checks and two directly invoked mocked HTTP checks passed; four focused pytest cases stopped at PostgreSQL fixture setup. Private control-plane routing, independent provider termination, worker-only restart supervision and database test connectivity remain preflight requirements. Provisioning and Stripe stay disabled pending explicit expense authorization.

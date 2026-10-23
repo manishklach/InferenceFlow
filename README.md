@@ -13,9 +13,9 @@ A prepaid asynchronous text-inference platform built with FastAPI, PostgreSQL, a
 
 > **MVP prerelease:** local execution and accounting have been validated with deterministic mock inference. The real vLLM adapter and pinned source configuration are included. Rented-GPU execution and external payment/provider/OIDC flows still need validation. No GPU performance, pricing advantage, or production-readiness claim is made.
 
-## v0.3 review candidate: sub-hour scheduling
+## v0.3 on main: sub-hour scheduling
 
-V0.3 adds an **opt-in 60-minute best-effort objective**, explicit admission predictions, adaptive concurrency, recommendation-only capacity planning, and internal GPU economics. It preserves the existing queue, worker fences, idempotency and wallet ledger. No paid capacity or public deployment is activated. The latest published release remains v0.2.0 until review.
+V0.3 adds an **opt-in 60-minute best-effort objective**, explicit admission predictions, adaptive concurrency, recommendation-only capacity planning, and internal GPU economics. It preserves the existing queue, worker fences, idempotency and wallet ledger. [PR #3](https://github.com/manishklach/InferenceFlow/pull/3) is merged into `main`. No paid capacity or public deployment is activated. The latest published release remains v0.2.0; v0.3 release publication is still pending.
 
 - [Scheduler architecture and gap analysis](docs/architecture/scheduler-v2.md) · [editable Mermaid diagram](docs/architecture/scheduler-v2.mmd)
 - [Simulation comparison](docs/performance/simulation-results.md) · [raw seeded results](docs/performance/simulation-v0.3-seed42.json) · [real-GPU experiment plan](docs/performance/benchmark-plan.md)
@@ -48,6 +48,18 @@ python -m scripts.benchmark_scheduler --seed 42 --count 240 --output .runtime/be
 The [implementation report and file manifest](docs/implementation-v0.3.md) records validation and remaining work. [View the unmodified scheduling dashboard capture](docs/media/v03/scheduling-full.png).
 
 The six-scenario comparison is synthetic: some changes regress some metrics. Actual GPU throughput, sub-hour reliability, model fit and cost advantage still require approved hardware and provider invoices. Follow the [benchmark plan](docs/performance/benchmark-plan.md) before real-GPU calibration or spending.
+
+## First real GPU experiment — prepared, awaiting approval
+
+The [first-GPU runbook](docs/first-gpu-experiment.md) records the repository review, dated RunPod stock/price snapshot, pinned model/container checks, worker connection instructions, staged 10/100/1,000-request test plan, measurement definitions, budget controls and complete termination procedure.
+
+The October 23, 2026 snapshot recommended one Secure Cloud **L40S 48 GB at $1.09/hour compute** because the final reads showed no L4 or RTX 4090 stock. This is a historical quote, not reserved capacity or a verified performance-per-dollar advantage. Price, stock and placement must be checked again before any approved creation.
+
+Review the [proposed RunPod v2 payload](infra/first-gpu/runpod-pod.proposed.json), [in-Pod launcher](infra/first-gpu/launch.sh), and [control-plane environment overlay](infra/first-gpu/control-plane.env.example). They request one GPU, 80 GB ephemeral disk, no persistent volumes and no exposed inbound ports. Keep `PROVISIONING_ENABLED=false` and `STRIPE_ENABLED=false`. Replace connection/credential placeholders securely only after approval; never commit a rendered credential-bearing payload.
+
+The proposed ceiling is **$10 all-in and 120 minutes maximum**, with independent provider termination required before rental. Two hours at the recorded compute/storage rates estimates about $2.20 before applicable tax/fees. Platform budget settings exclude storage/tax and are not a guaranteed provider hard cap. The runbook identifies remaining preflight work: private control-plane routing, independent teardown, worker-only restart supervision, and local PostgreSQL test connectivity. No GPU request, paid resource, payment or deployment has been executed for this proposal.
+
+Preparation checks passed for Bash syntax, payload field names and two directly invoked mocked HTTP checks. The four-test focused pytest run stopped at database fixture setup; real-GPU validation remains unrun. See the runbook for the exact evidence and limits.
 
 ## What it does
 

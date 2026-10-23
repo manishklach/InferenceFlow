@@ -28,6 +28,8 @@ Use the README Docker/native quickstart with `SCHEDULER_V2_ENABLED=true`, `ADAPT
 
 ## First real NVIDIA experiment (approval required; not executed here)
 
+The concrete [first-GPU experiment proposal](../first-gpu-experiment.md) supersedes this section's illustrative $5/30-minute budget for that experiment only. It specifies a $10 all-in ceiling, a maximum 120-minute rental including setup/cleanup, dated RunPod quotes, and 10/100/1,000-request stages. No spending or provisioning is authorized by either document.
+
 1. Obtain written operator approval specifying provider, machine, price, maximum total expense and time. Confirm model license/rates and hardware/image compatibility. Use one approved 24–48GB NVIDIA host as the existing deployment guide's starting hypothesis, not a validated fit claim. Record exact model/tokenizer SHA, engine image digest, GPU type/driver, context/KV settings, quantization and decoding.
 2. Keep `PROVISIONING_ENABLED=false`, `STRIPE_ENABLED=false`, `MAX_ACTIVE_GPUS=1`, `ESTIMATOR_CALIBRATED=false`. For a small proposed experiment, use an independently approved $5 ceiling and 30-minute session cap **only if the confirmed quote, minimum charge and fees fit**. Install provider-side budget alerts and an independent shutdown path. Do not rely on the platform budget alone. No automatic GPU creation is required.
 3. Follow [the exact attachment runbook](../gpu-deploy.md) for loopback-only vLLM, readiness canary, pinned identity and outbound worker. Use a private/VPN-accessible HTTPS control plane; these instructions do not authorize a public deployment. Record actual start in `gpu-attach`, provider ID on worker, and observed load time as `WORKER_MODEL_LOADING_SECONDS`. Set realistic startup/load planning assumptions separately.

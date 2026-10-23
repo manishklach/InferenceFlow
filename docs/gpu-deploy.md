@@ -1,4 +1,6 @@
 # Rented NVIDIA deployment
+For the first approved experiment, use the [dated RunPod readiness review and 10/100/1,000-request plan](first-gpu-experiment.md), including its proposed payload, $10 all-in ceiling, preflight gaps and teardown requirements. The generic commands below describe a conventional Docker-capable GPU host; do not run Docker-in-Docker inside a RunPod Pod. Preparing or pushing these files does not authorize rental or execution.
+
 No GPU was rented during implementation. These commands are a deployment path requiring a GPU smoke test; throughput/VRAM fit are unmeasured. Obtain explicit expense approval before renting anything. Prefer manually attached capacity first; PROVISIONING_ENABLED stays false.
 
 1. CPU control plane: deploy API/scheduler/PostgreSQL behind HTTPS, restrict DB access, install managed OIDC settings, configure independent session, credential-HMAC and versioned encryption keys, and rotate the worker bootstrap token (see the audit remediation guide). Set EXECUTION_MODE=vllm, MODEL_REVISION to a reviewed 40-character Qwen/Qwen3-4B commit SHA, PUBLIC_BETA_ENABLED=true only after license/rate review. The same tokenizer revision must be installed on the CPU API. Install `.[gpu]`.
