@@ -8,6 +8,7 @@ __pycache__/
 node_modules/
 .next/
 .next-walkthrough/
+.next-*/
 
 .runtime/
 audit.json

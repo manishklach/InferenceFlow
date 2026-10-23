@@ -3,6 +3,7 @@
 **/node_modules
 **/.next
 **/.next-walkthrough
+**/.next-*
 .env
 __pycache__
 .pytest_cache
