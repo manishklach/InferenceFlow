@@ -5,12 +5,18 @@ import random
 from pathlib import Path
 from datetime import datetime, timezone, timedelta
 from types import SimpleNamespace
+from decimal import Decimal, ROUND_FLOOR
+from fractions import Fraction
 from packages.common.scheduling import DeadlineEstimator, DispatchPolicy, AdaptiveDispatch
 from packages.common.performance import percentiles
 from packages.common.config import settings
 from packages.common.economics import quoted_cost
 
 SCENARIOS = ("low", "bursty", "sustained", "mixed", "outage", "capacity_change")
+# Integer micro-service units avoid platform/libm drift in remaining-work boundaries.
+SLOT_PROGRESS = {n: int((Decimal(min(n, 8)) ** Decimal(".65") * 1000000 /
+                         (1 + Decimal(max(0, n - 8)) * Decimal(".08")) / n).to_integral_value(rounding=ROUND_FLOOR))
+                 for n in range(1, 17)}
 
 
 def workload(seed, scenario, count):
@@ -24,7 +30,7 @@ def workload(seed, scenario, count):
         out = rng.choice([16, 64, 256, 1024])
         items.append({"id": i, "tenant": i % 8, "tier": "standard" if i % 3 else "economy",
                       "arrival": arrival, "deadline": arrival + (rng.choice([120, 300, 3600]) if scenario == "mixed" else 3600),
-                      "input": inp, "output": out, "remaining": inp / 500 + out / 80,
+                      "input": inp, "output": out, "remaining": inp * 2000 + out * 12500,
                       "attempts": 0, "eligible": arrival, "started": None, "ended": None, "status": "pending"})
     return items
 
@@ -53,7 +59,7 @@ def simulate(seed=42, scenario="mixed", variant="baseline", count=240):
                 workers.pop(wid, None)
                 for r in active.pop(wid):
                     failed_attempts += 1
-                    r["remaining"] = r["input"] / 500 + r["output"] / 80
+                    r["remaining"] = r["input"] * 2000 + r["output"] * 12500
                     r["status"] = "queued" if r["attempts"] < 3 else "failed"
                     r["eligible"] = tick + 2 ** r["attempts"]
                     if r["status"] == "failed":
@@ -100,9 +106,8 @@ def simulate(seed=42, scenario="mixed", variant="baseline", count=240):
             busy_slot_seconds += n
             if n:
                 # Hypothetical saturation curve, identical in all variants, NOT a vLLM model.
-                aggregate_speed = min(n, 8) ** .65 / (1 + max(0, n - 8) * .08)
                 for r in list(running):
-                    r["remaining"] -= aggregate_speed / n
+                    r["remaining"] -= SLOT_PROGRESS[n]
                     if r["remaining"] <= 0:
                         r["status"], r["ended"] = "succeeded", tick + 1
                         running.remove(r)
@@ -111,8 +116,8 @@ def simulate(seed=42, scenario="mixed", variant="baseline", count=240):
     done = [r for r in items if r["status"] == "succeeded"]
     tokens = sum(r["input"] + r["output"] for r in done)
     cost = sum(quoted_cost(seconds, 1000000, 60) for seconds in rented_by_gpu.values())
-    tenant_rates = [sum(r["status"] == "succeeded" for r in items if r["tenant"] == tenant) /
-                    max(1, sum(r["tenant"] == tenant for r in items)) for tenant in range(8)]
+    tenant_rates = [Fraction(sum(r["status"] == "succeeded" for r in items if r["tenant"] == tenant),
+                            max(1, sum(r["tenant"] == tenant for r in items))) for tenant in range(8)]
     fairness = sum(tenant_rates) ** 2 / (8 * sum(r * r for r in tenant_rates)) if sum(tenant_rates) else None
     return {"scenario": scenario, "variant": variant, "seed": seed, "requests": count,
             "successful": len(done), "expired": sum(r["status"] == "expired" for r in items),
@@ -122,7 +127,7 @@ def simulate(seed=42, scenario="mixed", variant="baseline", count=240):
             "completion_seconds": percentiles([r["ended"] - r["arrival"] for r in done]),
             "deadline_attainment_success_only": sum(r["ended"] <= r["deadline"] for r in done) / len(done) if done else None,
             "accepted_success_within_target_fraction": sum(r["ended"] <= r["deadline"] for r in done) / count,
-            "tenant_completion_fairness_jain": fairness,
+            "tenant_completion_fairness_jain": float(fairness) if fairness is not None else None,
             "gpu_utilization_slot_proxy": busy_slot_seconds / max(1, 16 * rented_seconds),
             "estimated_gpu_cost_micro_usd": cost,
             "estimated_cost_per_million_total_tokens_micro_usd": cost * 1000000 / tokens if tokens else None}
@@ -141,6 +146,10 @@ def main():
     c.adaptive_dispatch_enabled = True
     c.adaptive_initial_slots = 2
     c.adaptive_cooldown_seconds = 30
+    c.telemetry_stale_seconds = 45
+    c.estimator_input_tokens_per_second = 100
+    c.estimator_output_tokens_per_second = 20
+    c.estimator_uncertainty_margin = 1.5
     result = {"kind": "simulation_not_real_gpu", "seed": args.seed,
               "assumptions": {"prefill_tokens_per_second": 500, "decode_tokens_per_second": 80,
                               "hourly_quote_micro_usd": 1000000, "cold_start_seconds": 120,
@@ -149,7 +158,7 @@ def main():
                           for variant in ("baseline", "deadline", "adaptive")]}
     path = Path(args.output)
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    path.write_bytes((json.dumps(result, indent=2) + "\n").encode("utf-8"))
     print(f"Wrote {path}: {len(result['results'])} deterministic simulation runs; not GPU measurements.")
 
 

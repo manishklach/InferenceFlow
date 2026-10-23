@@ -284,7 +284,7 @@
       },
       "deadline_attainment_success_only": 0.8923076923076924,
       "accepted_success_within_target_fraction": 0.725,
-      "tenant_completion_fairness_jain": 0.9954188481675391,
+      "tenant_completion_fairness_jain": 0.9954188481675392,
       "gpu_utilization_slot_proxy": 0.8037709497206704,
       "estimated_gpu_cost_micro_usd": 200000,
       "estimated_cost_per_million_total_tokens_micro_usd": 585452.6720059951
@@ -312,7 +312,7 @@
       },
       "deadline_attainment_success_only": 0.8333333333333334,
       "accepted_success_within_target_fraction": 0.6875,
-      "tenant_completion_fairness_jain": 0.9960365853658535,
+      "tenant_completion_fairness_jain": 0.9960365853658537,
       "gpu_utilization_slot_proxy": 0.806241426611797,
       "estimated_gpu_cost_micro_usd": 216667,
       "estimated_cost_per_million_total_tokens_micro_usd": 617496.0100319197
@@ -340,7 +340,7 @@
       },
       "deadline_attainment_success_only": 0.9339622641509434,
       "accepted_success_within_target_fraction": 0.825,
-      "tenant_completion_fairness_jain": 0.9943362831858408,
+      "tenant_completion_fairness_jain": 0.9943362831858407,
       "gpu_utilization_slot_proxy": 0.4375,
       "estimated_gpu_cost_micro_usd": 183334,
       "estimated_cost_per_million_total_tokens_micro_usd": 491670.2424372452
