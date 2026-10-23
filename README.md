@@ -13,6 +13,42 @@ A prepaid asynchronous text-inference platform built with FastAPI, PostgreSQL, a
 
 > **MVP prerelease:** local execution and accounting have been validated with deterministic mock inference. The real vLLM adapter and pinned source configuration are included. Rented-GPU execution and external payment/provider/OIDC flows still need validation. No GPU performance, pricing advantage, or production-readiness claim is made.
 
+## v0.3 review candidate: sub-hour scheduling
+
+V0.3 adds an **opt-in 60-minute best-effort objective**, explicit admission predictions, adaptive concurrency, recommendation-only capacity planning, and internal GPU economics. It preserves the existing queue, worker fences, idempotency and wallet ledger. No paid capacity or public deployment is activated. The latest published release remains v0.2.0 until review.
+
+- [Scheduler architecture and gap analysis](docs/architecture/scheduler-v2.md) · [editable Mermaid diagram](docs/architecture/scheduler-v2.mmd)
+- [Simulation comparison](docs/performance/simulation-results.md) · [raw seeded results](docs/performance/simulation-v0.3-seed42.json) · [real-GPU experiment plan](docs/performance/benchmark-plan.md)
+- [GPU unit economics](docs/economics/unit-economics.md) · [product objective and limits](docs/product/60-minute-inference.md)
+- [Why we're building InferenceFlow](docs/blog/why-we-built-inferenceflow.md) · [v0.3 review notes](docs/releases/v0.3.0.md)
+
+Apply migration 0006 and restart API/scheduler/worker together. To try v2 locally, add the following to `.env` before starting Compose or the native services:
+
+~~~dotenv
+SCHEDULER_V2_ENABLED=true
+ADAPTIVE_DISPATCH_ENABLED=true
+DEFAULT_COMPLETION_TARGET_SECONDS=3600
+ESTIMATOR_CALIBRATED=false
+PROVISIONING_ENABLED=false
+STRIPE_ENABLED=false
+~~~
+
+Both new flags default **false**. Disabling them restores prior scheduling/default-target behavior; existing accepted targets and rates remain intact. Missing mock GPU telemetry conservatively limits adaptive dispatch to two slots. vLLM retains token-level continuous batching.
+
+New submissions return `admission` with best-effort outcome, estimated duration (or unknown), calibration status, source and reasons. Set `admission_policy="reject_if_at_risk"` to receive an actionable 503 **before credit reservation** if the requested target cannot be confidently supported. Uncalibrated estimates cannot satisfy strict admission. This is not an SLA.
+
+The dashboard shows tenant queue/risk/latency/attainment measures. Its separate operator panel requires the metrics credential for capacity, GPU activity, cost and margin reports; tenant credentials cannot read other customers' data. The same report is available to trusted operators via `python -m packages.common.cli scheduling-report`. Quotes, invoices, sampled activity, mock data and missing coverage are distinguished.
+
+Run reproducible offline experiments without a GPU or database:
+
+~~~bash
+python -m scripts.benchmark_scheduler --seed 42 --count 240 --output .runtime/benchmark-v03.json
+~~~
+
+The [implementation report and file manifest](docs/implementation-v0.3.md) records validation and remaining work. [View the unmodified scheduling dashboard capture](docs/media/v03/scheduling-full.png).
+
+The six-scenario comparison is synthetic: some changes regress some metrics. Actual GPU throughput, sub-hour reliability, model fit and cost advantage still require approved hardware and provider invoices. Follow the [benchmark plan](docs/performance/benchmark-plan.md) before real-GPU calibration or spending.
+
 ## What it does
 
 Customers submit independent chat-generation requests, receive a job ID immediately, and retrieve ordered results while the platform owns queueing, execution, recovery, metering, and prepaid accounting. Workloads include document extraction, classification, enrichment, summaries, and synthetic-data batches that tolerate asynchronous completion.
@@ -238,7 +274,7 @@ Missing/inconsistent usage enters billing_pending, holds its reservation, and re
 | Prompt / output tokens | 8,192 / 2,048 |
 | Pending / in-flight per tenant | 2,000 / 16 |
 | Lease TTL / attempts | 60 seconds / 3 |
-| Standard / economy target | 30 minutes / 24 hours, best effort |
+| Standard / economy target | Legacy: 30 minutes / 24 hours; opt-in v2: configurable 60 minutes, best effort |
 | Content retention / GPUs | 7 days / 1 active GPU |
 
 Read [billing invariants and reconciliation](docs/billing.md) before enabling payments.
@@ -275,7 +311,9 @@ Real GPU testing requires approved spending and attached infrastructure. RUN_GPU
 
 | Check | Recorded result |
 |---|---|
-| Native PostgreSQL suite after audit fixes | **56 passed; 1 GPU test skipped** |
+| v0.3 native PostgreSQL suite | **78 passed; 1 GPU test skipped** |
+| Existing platform suite with v2 enabled | **31 passed** |
+| Pre-v0.3 audit baseline | **56 passed; 1 GPU test skipped** |
 | Earlier v0.1.0 Python 3.12 Docker suite | **32 passed; 1 GPU test skipped** (before audit fixes) |
 | Native + Docker 100-request HTTP smoke | Succeeded; zero ledger drift |
 | Ruff / mypy | Passed |
@@ -369,6 +407,6 @@ docs/                     Contracts, deployment, runbooks, release notes
 
 ## Scope and launch gates
 
-One model is enabled. The optional second model, advanced throughput prediction, organization UI, and invoice ingestion are outside this implementation. Reservations/idempotency/leases are consolidated into durable rows; encrypted PostgreSQL columns replace object storage.
+One model is enabled. The optional second model, learned throughput prediction, organization UI, and automatic invoice ingestion are outside this implementation. Reservations/idempotency/leases are consolidated into durable rows; encrypted PostgreSQL columns replace object storage.
 
 Before limited prepaid beta, validate GPU inference/recovery, actual OIDC/Stripe/provider flows, callback TLS/egress, backups, measured margins, model licensing, and security/legal/accounting requirements. Mock results and synthetic rates do not establish GPU performance or savings.

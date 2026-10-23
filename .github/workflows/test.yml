@@ -21,6 +21,15 @@ jobs:
       - run: pip install -e '.[dev]'
       - run: alembic upgrade head
       - run: make test lint typecheck
+      - name: Existing platform regressions with scheduler v2 enabled
+        env:
+          SCHEDULER_V2_ENABLED: 'true'
+        run: python -m pytest tests/test_platform.py -q
+      - name: Reproduce offline scheduler simulation
+        run: |
+          python -m scripts.benchmark_scheduler --seed 42 --count 240 --output .runtime/benchmark-1.json
+          python -m scripts.benchmark_scheduler --seed 42 --count 240 --output .runtime/benchmark-2.json
+          python -c "from pathlib import Path; assert Path('.runtime/benchmark-1.json').read_bytes() == Path('.runtime/benchmark-2.json').read_bytes() == Path('docs/performance/simulation-v0.3-seed42.json').read_bytes()"
       - uses: actions/setup-node@v4
         with: {node-version: '22'}
       - run: npm ci && npm run build

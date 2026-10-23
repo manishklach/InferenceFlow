@@ -1,0 +1,17 @@
+flowchart LR
+    A[Customer API] --> Q[(Durable PostgreSQL Queue)]
+    Q --> E[DeadlineEstimator]
+    E --> D[DispatchPolicy and adaptive slots]
+    D --> C[CapacityPlanner recommendations]
+    D --> W[Warm GPU Workers]
+    C -. Operator approval only .-> W
+    W --> V[vLLM continuous batching]
+    V --> R[Results and exactly-once billing]
+    R --> Q
+    W --> T[Timestamped telemetry and attempt observations]
+    V --> T
+    T --> E
+    T --> D
+    T --> C
+    T --> O[Metrics and tenant / operator dashboard]
+    R --> O
