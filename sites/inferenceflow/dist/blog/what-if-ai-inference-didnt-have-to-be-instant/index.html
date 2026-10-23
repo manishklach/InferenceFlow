@@ -1,0 +1,122 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f7f8f2"><title>What If AI Inference Didn't Have to Be Instant? | InferenceFlow</title><meta name="description" content="Building a cost-optimized execution layer for asynchronous AI workloads. Our first engineering note on deadlines, shared GPU capacity, and what remains to be proven."><link rel="canonical" href="https://inferenceflow-execution.abc123xyza.chatgpt.site/blog/what-if-ai-inference-didnt-have-to-be-instant/"><meta property="og:type" content="article"><meta property="og:title" content="What If AI Inference Didn't Have to Be Instant?"><meta property="og:description" content="Building a cost-optimized execution layer for asynchronous AI workloads. Our first engineering note on deadlines, shared GPU capacity, and what remains to be proven."><meta property="og:url" content="https://inferenceflow-execution.abc123xyza.chatgpt.site/blog/what-if-ai-inference-didnt-have-to-be-instant/"><meta property="og:site_name" content="InferenceFlow"><meta property="og:image" content="https://inferenceflow-execution.abc123xyza.chatgpt.site/assets/blog/social-card.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="What If AI Inference Didn't Have to Be Instant?"><meta name="twitter:description" content="Building a cost-optimized execution layer for asynchronous AI workloads. Our first engineering note on deadlines, shared GPU capacity, and what remains to be proven."><meta name="twitter:image" content="https://inferenceflow-execution.abc123xyza.chatgpt.site/assets/blog/social-card.png"><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/blog.css"><script src="/blog.js" defer></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "What If AI Inference Didn't Have to Be Instant?", "description": "Building a cost-optimized execution layer for asynchronous AI workloads. Our first engineering note on deadlines, shared GPU capacity, and what remains to be proven.", "datePublished": "2026-10-23", "author": {"@type": "Organization", "name": "The InferenceFlow Team"}, "publisher": {"@type": "Organization", "name": "InferenceFlow"}, "mainEntityOfPage": "https://inferenceflow-execution.abc123xyza.chatgpt.site/blog/what-if-ai-inference-didnt-have-to-be-instant/", "image": "https://inferenceflow-execution.abc123xyza.chatgpt.site/assets/blog/social-card.png"}</script></head><body><a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="nav-shell">
+  <a class="wordmark" href="/" aria-label="InferenceFlow home"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 8h13l8 8-8 8H5l8-8-8-8Z" fill="currentColor"/><path d="m16 8 8 8-8 8" stroke="#f7f8f2" stroke-width="2"/></svg>InferenceFlow<span class="version">MVP</span></a>
+  <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navigation"><span></span><span></span></button>
+  <nav id="navigation" aria-label="Main navigation"><a href="/#how">The platform</a><a href="/#playground">Try the flow</a><a href="/#walkthrough">Walkthrough</a><a href="/#developers">Developers</a><a href="/blog/">Blog</a></nav>
+  <a class="nav-cta" href="https://github.com/manishklach/inferenceflow" target="_blank" rel="noopener">View source <span aria-hidden="true">↗</span></a>
+</div></header>
+<main id="main"><header class="article-hero wrap"><a class="back-blog" href="/blog/">← All engineering notes</a><div class="post-meta"><span class="category">ENGINEERING</span><time datetime="2026-10-23">October 23, 2026</time><span>7 min read</span></div><h1>What if AI inference<br>didn't have to be <em>instant?</em></h1><p class="article-subtitle">Building a cost-optimized execution layer for asynchronous AI workloads.</p><div class="byline"><span class="author-mark" aria-hidden="true">IF</span><span>The InferenceFlow Team<br><small>Building in the open · <a href="https://github.com/manishklach/InferenceFlow">Follow on GitHub ↗</a></small></span></div></header><div class="article-layout wrap"><aside><nav aria-label="On this page"><p class="eyebrow">IN THIS ARTICLE</p><a href="#the-hidden-economics-of-gpu-inference">The hidden economics of GPU inference</a><a href="#introducing-inferenceflow">Introducing InferenceFlow</a><a href="#batching-is-necessary-but-it-isnt-the-moat">Batching is necessary, but it isn't the moat</a><a href="#why-the-one-hour-window-matters">Why the one-hour window matters</a><a href="#the-opportunity-in-multi-provider-gpu-infrastructure">The opportunity in multi-provider GPU infrastructure</a><a href="#where-a-defensible-advantage-could-emerge">Where a defensible advantage could emerge</a><a href="#what-were-building-first">What we're building first</a><a href="#the-bigger-vision">The bigger vision</a></nav></aside><article class="prose" aria-label="What If AI Inference Didn't Have to Be Instant?"><div class="development-note"><strong>An engineering thesis, under evaluation.</strong><br>Active development. Real RunPod GPU benchmarks are pending. The 60-minute objective is not a guaranteed SLA; efficiency and savings remain hypotheses.</div><p>Most AI inference infrastructure is designed around one assumption: <strong>the user wants an answer immediately.</strong></p>
+<p>That makes sense for chatbots, coding assistants, voice applications, and interactive AI experiences. Latency matters. Every additional second can affect the user experience.</p>
+<p>But what about AI workloads where nobody is waiting for an immediate response?</p>
+<p>Consider a company processing 100,000 documents overnight. A developer classifying millions of records. A research team generating synthetic datasets. Or an application enriching thousands of customer records in the background.</p>
+<p>These workloads need reliable inference. They need predictable completion times. And they need competitive pricing.</p>
+<p>But they don't necessarily need results in milliseconds.</p>
+<p><strong>What if we optimized inference infrastructure around when the work needs to finish, rather than how quickly each individual request can start?</strong></p>
+<p>That's the idea behind InferenceFlow.</p>
+<h2 id="the-hidden-economics-of-gpu-inference">The hidden economics of GPU inference</h2>
+<p>GPUs are expensive computational resources. Their economics depend heavily on utilization.</p>
+<p>A GPU that spends significant time idle still incurs rental costs. A GPU serving fragmented workloads may fail to achieve the throughput possible with well-managed concurrency and batching.</p>
+<p>This creates an interesting opportunity.</p>
+<p>Imagine three customers, each submitting thousands of inference requests. Their jobs arrive at different times, and each customer has a different completion deadline.</p>
+<p>One needs results in 30 minutes. Another can wait 45 minutes. A third can wait an hour.</p>
+<p>If each customer independently provisions GPU infrastructure, they must manage capacity, model loading, scheduling, failures, and shutdowns.</p>
+<p>Instead, what if those workloads could be consolidated onto shared infrastructure?</p>
+<p>A scheduler could combine compatible demand, keep models warm, dispatch requests efficiently, and allocate capacity based on when jobs actually need to finish.</p>
+<p>The objective changes from minimizing the latency of every individual request to <strong>minimizing total execution cost while meeting completion deadlines</strong>.</p>
+<p>That's a different optimization problem.</p>
+<figure class="architecture"><img src="/assets/blog/aggregation.svg" alt="Shared compatible demand, different completion targets. Conceptual architecture; targets are not guaranteed SLAs." loading="lazy" width="920" height="480"><figcaption>Shared compatible demand, different completion targets. Conceptual architecture; targets are not guaranteed SLAs. <a href="/assets/blog/aggregation.svg">Open full-size editable SVG ↗ (swipe diagram on mobile)</a></figcaption></figure><h2 id="introducing-inferenceflow">Introducing InferenceFlow</h2>
+<p>InferenceFlow is an asynchronous AI inference platform built around a simple developer experience:</p>
+<p><strong>Submit your workload. Specify your completion target. Retrieve your results. Pay for the inference performed.</strong></p>
+<p>Developers shouldn't need to manage GPU instances, choose cloud providers, tune worker fleets, or coordinate model execution.</p>
+<p>Underneath that API, InferenceFlow is designed to manage several interconnected problems:</p>
+<ul>
+<li><strong>Workload aggregation:</strong> Consolidating compatible requests from multiple customers.</li>
+<li><strong>Deadline-aware scheduling:</strong> Prioritizing jobs according to completion targets, queue age, and available capacity.</li>
+<li><strong>GPU efficiency:</strong> Keeping models warm and feeding inference engines enough concurrent work to utilize available compute.</li>
+<li><strong>Capacity optimization:</strong> Determining when additional GPUs are economically justified.</li>
+<li><strong>Provider flexibility:</strong> Preparing to execute workloads across different GPU infrastructure providers.</li>
+<li><strong>Usage-based billing:</strong> Charging customers for completed inference rather than requiring them to rent dedicated infrastructure.</li>
+</ul>
+<p>Our initial focus is text inference using open-weight models.</p>
+<p>We're starting with a deliberately narrow goal: build a reliable execution platform for asynchronous workloads that can tolerate completion times of up to approximately one hour.</p>
+<p>This is a target, not yet a guaranteed service-level agreement.</p>
+<h2 id="batching-is-necessary-but-it-isnt-the-moat">Batching is necessary, but it isn't the moat</h2>
+<p>Modern inference engines already implement sophisticated optimizations.</p>
+<p>For example, vLLM supports continuous batching, allowing an inference server to efficiently process concurrent requests as sequences progress through token generation.</p>
+<p>That's valuable technology, but it isn't unique to InferenceFlow.</p>
+<p>We don't intend to reinvent token-level batching.</p>
+<p>Instead, we're building an orchestration layer above the inference engine.</p>
+<p>The interesting decisions happen before and around GPU execution.</p>
+<p>Should a request run immediately on an available worker? Should it be routed to a GPU where the required model is already loaded? Is the current backlog large enough to justify additional capacity? Would starting another GPU reduce deadline risk enough to justify the expense? Which provider offers the best expected economics for this particular workload?</p>
+<p>Those decisions require balancing cost, throughput, fairness, reliability, and completion time.</p>
+<p><strong>The inference engine optimizes how requests execute on a GPU. InferenceFlow aims to optimize how workloads execute across GPU capacity.</strong></p>
+<figure class="architecture"><img src="/assets/blog/responsibilities.svg" alt="InferenceFlow orchestrates workloads. vLLM supplies continuous batching and GPU model execution." loading="lazy" width="920" height="480"><figcaption>InferenceFlow orchestrates workloads. vLLM supplies continuous batching and GPU model execution. <a href="/assets/blog/responsibilities.svg">Open full-size editable SVG ↗ (swipe diagram on mobile)</a></figcaption></figure><h2 id="why-the-one-hour-window-matters">Why the one-hour window matters</h2>
+<p>We're particularly interested in workloads that need results within an hour but don't require interactive latency.</p>
+<p>This flexibility creates room for different scheduling decisions.</p>
+<p>A request with a generous completion target can potentially use available capacity more economically than a request requiring an immediate response.</p>
+<p>But there's an important nuance.</p>
+<p>We aren't proposing that every request should wait an hour.</p>
+<p>If a warm GPU has available capacity, executing immediately may be both faster and cheaper.</p>
+<p>The scheduling challenge is to avoid unnecessary waiting while retaining the flexibility to optimize overall capacity utilization.</p>
+<p>Our target is straightforward:</p>
+<p><strong>Complete eligible asynchronous inference workloads within 60 minutes, at the lowest sustainable execution cost we can achieve.</strong></p>
+<p>Reaching that target consistently will require accurate throughput estimates, capacity planning, and admission control. We won't promise completion times that our available infrastructure cannot realistically support.</p>
+<h2 id="the-opportunity-in-multi-provider-gpu-infrastructure">The opportunity in multi-provider GPU infrastructure</h2>
+<p>GPU capacity is available from a growing number of infrastructure providers.</p>
+<p>Different providers offer different hardware, prices, availability, and operational characteristics.</p>
+<p>The cheapest GPU per hour isn't necessarily the cheapest GPU for inference.</p>
+<p>A more expensive GPU might deliver substantially higher throughput. A cheaper GPU might incur longer startup delays. A provider with attractive pricing might not have capacity when a deadline-sensitive workload arrives.</p>
+<p>Ultimately, the metric that matters is not simply dollars per GPU-hour.</p>
+<p>It's <strong>the total cost of completing a workload within its required time window</strong>.</p>
+<p>InferenceFlow is being designed with provider-independent execution in mind.</p>
+<p>We're beginning with RunPod and preparing the architecture for additional providers, including Vast.ai and Lambda.</p>
+<p>Over time, we want the scheduler to make capacity decisions using measured performance, actual infrastructure costs, and workload requirements.</p>
+<p>That is more useful than selecting a GPU based solely on its advertised hourly price.</p>
+<h2 id="where-a-defensible-advantage-could-emerge">Where a defensible advantage could emerge</h2>
+<p>It's fair to ask: what stops another inference provider from doing the same thing?</p>
+<p>The answer is that infrastructure integrations, APIs, and batching algorithms alone aren't defensible.</p>
+<p>We believe a more durable advantage could emerge from three reinforcing capabilities.</p>
+<h3 id="1-scheduling-intelligence">1. Scheduling intelligence</h3>
+<p>The more accurately we can predict execution time and resource requirements, the better we can allocate work.</p>
+<p>That means understanding the relationship between model architecture, prompt length, output length, GPU hardware, concurrent requests, and actual throughput.</p>
+<p>A scheduler that consistently makes better decisions could deliver meaningful economic benefits.</p>
+<h3 id="2-real-world-performance-data">2. Real-world performance data</h3>
+<p>GPU specifications don't tell the entire story.</p>
+<p>What matters is measured performance under actual workloads.</p>
+<p>Over time, InferenceFlow could develop a detailed understanding of how different models perform across GPU types, providers, workload mixes, and concurrency levels.</p>
+<p>That information could improve capacity planning, scheduling, and cost prediction.</p>
+<h3 id="3-aggregated-customer-demand">3. Aggregated customer demand</h3>
+<p>Perhaps the most interesting opportunity is demand aggregation.</p>
+<p>As more customers submit compatible asynchronous workloads, a shared execution platform may be able to maintain higher utilization and spread infrastructure costs across a larger volume of work.</p>
+<p>Higher utilization could enable better pricing. Better pricing could attract additional workloads.</p>
+<p>This is a potential reinforcing advantage—but it only works if we attract sufficient compatible demand and execute more efficiently than existing alternatives.</p>
+<p>None of these advantages should be assumed. They must be demonstrated.</p>
+<h2 id="what-were-building-first">What we're building first</h2>
+<p>Our initial implementation includes a durable asynchronous job queue, a scheduler, GPU worker integration, token metering, prepaid accounting, and a developer-facing API.</p>
+<p>We're using vLLM as the initial inference engine and Qwen3-4B as our first model.</p>
+<p>The local execution pipeline has been tested using simulated inference.</p>
+<p>Our next milestone is validating the complete system on a rented NVIDIA GPU.</p>
+<p>We'll measure:</p>
+<ul>
+<li>End-to-end job completion time.</li>
+<li>Actual inference throughput.</li>
+<li>GPU utilization and idle time.</li>
+<li>Performance under concurrent workloads.</li>
+<li>Cost per million input and output tokens.</li>
+<li>Scheduling behavior under different arrival patterns.</li>
+<li>Reliability when workers restart or fail.</li>
+<li>The percentage of eligible jobs completed within our 60-minute target.</li>
+</ul>
+<p>We'll also compare baseline scheduling with more adaptive, deadline-aware policies.</p>
+<p>Only real measurements can establish whether our approach produces a meaningful cost advantage.</p>
+<h2 id="the-bigger-vision">The bigger vision</h2>
+<p>We believe developers should be able to think about AI inference as work to be completed, not infrastructure to be managed.</p>
+<p>For interactive applications, immediate responses will remain essential.</p>
+<p>But for a substantial class of background AI workloads, completion time is a flexible resource.</p>
+<p>That flexibility could be converted into better infrastructure utilization and lower costs.</p>
+<p>Our vision is an inference execution layer where developers specify the model, the workload, and when they need the results.</p>
+<p>InferenceFlow handles the scheduling, GPU selection, execution, recovery, and billing.</p>
+<p><strong>Give us your jobs and your deadline. We'll handle the GPUs.</strong></p>
+<p>That's what we're building.</p>
+<hr />
+<p><em>InferenceFlow is in active development. The scheduling and cost advantages described here are engineering hypotheses under evaluation, not established performance claims.</em></p>
+<p><strong>Project:</strong> <a href="https://github.com/manishklach/InferenceFlow">InferenceFlow on GitHub</a></p><a class="button primary" href="/blog/">← Back to the blog</a></article></div></main><footer class="site-footer wrap"><a class="wordmark" href="/">InferenceFlow</a><div><a href="/blog/">Engineering blog</a><a href="https://github.com/manishklach/InferenceFlow">GitHub ↗</a><span>ASYNCHRONOUS BY DESIGN</span></div></footer></body></html>
