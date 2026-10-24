@@ -44,6 +44,13 @@ See [GitHub Actions billing](https://docs.github.com/en/billing/concepts/product
 
 ## Remaining provisioning blockers
 
+Validation on 2026-10-24: full local PostgreSQL suite **137 passed, 1 real-GPU
+test skipped**; Ruff, mypy (34 source files), manual-only workflow structure
+and a scan of publishable files against local secrets passed. Nine new
+deterministic preflight cases cover read-only behavior, authentication/provider
+failures and malformed inventory. Independent live authentication remains
+pending secret entry and an approved workflow run.
+
 This workflow is a credential preflight, **not a running watchdog**. The existing
 `scripts/experiment_guard.py` requires an approved exact pod ID/name receipt,
 actual provider creation time and confirmed all-in hourly cost. It targets only
