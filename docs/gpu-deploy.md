@@ -1,4 +1,4 @@
-> Current readiness and approval gate: [2026-10-23 validation](validation/2026-10-23/readiness-report.md). That report supersedes older quotes, two-arm commands and beta-gate instructions below. No GPU or Site fix deployment is authorized yet.
+> Current backend evidence: [2026-10-24 local Docker/HTTPS validation](validation/2026-10-24/local-backend-report.md) and [rehearsal runbook](local-backend-rehearsal.md). Real-GPU approval requirements remain in [2026-10-23 validation](validation/2026-10-23/readiness-report.md); refresh stock and pricing before approval. Mock HTTPS connectivity does not resolve staging OIDC or independent teardown. No GPU creation is authorized.
 
 # Rented NVIDIA deployment
 Current experiment selection: [RTX 4090 Community Cloud](rtx4090-community-experiment.md), four resident engine sequences on 24 GB, $10 all-in maximum and final explicit approval required. Community stock is currently unavailable; do not substitute another tier/GPU or run the older L40S proposal. Its gated preparation/load/telemetry tools do not change customer financial behavior.

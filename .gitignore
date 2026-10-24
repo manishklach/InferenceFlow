@@ -1,5 +1,13 @@
 .venv/
 .env
+.env.*
+!.env.example
+*.env
+*.key
+*.pem
+local-private.json
+worker-private.json
+private.json
 __pycache__/
 *.egg-info/
 .pytest_cache/

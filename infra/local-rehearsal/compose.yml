@@ -1,0 +1,58 @@
+name: inferenceflow-local-rehearsal
+x-platform: &platform
+  image: inferenceflow-control:local-rehearsal
+  build:
+    context: ../..
+    dockerfile: infra/Dockerfile
+  env_file: ../../.runtime/local-rehearsal/control.env
+  restart: 'no'
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  logging:
+    driver: json-file
+    options: {max-size: 10m, max-file: '3'}
+services:
+  postgres:
+    image: postgres:16.9
+    env_file: ../../.runtime/local-rehearsal/postgres.env
+    restart: 'no'
+    ports: ['127.0.0.1:15434:5432']
+    volumes: [rehearsal-db:/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U if_rehearsal -d if_rehearsal']
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  migrate:
+    <<: *platform
+    command: alembic upgrade head
+    depends_on:
+      postgres: {condition: service_healthy}
+  api:
+    <<: *platform
+    command: uvicorn gateway:app --app-dir /opt/rehearsal --host 0.0.0.0 --port 8080 --no-access-log
+    volumes: ['./gateway.py:/opt/rehearsal/gateway.py:ro']
+    ports: ['127.0.0.1:18084:8080']
+    healthcheck:
+      test: [CMD, python, '-c', "import urllib.request; urllib.request.urlopen('http://localhost:8080/readyz',timeout=3)"]
+      interval: 3s
+      timeout: 4s
+      retries: 30
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+  scheduler:
+    <<: *platform
+    command: python -m apps.scheduler.main
+    depends_on:
+      api: {condition: service_healthy}
+  worker:
+    image: inferenceflow-control:local-rehearsal
+    env_file: ../../.runtime/local-rehearsal/worker.env
+    command: python -m apps.worker.main
+    restart: 'no'
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    depends_on:
+      api: {condition: service_healthy}
+volumes:
+  rehearsal-db:
