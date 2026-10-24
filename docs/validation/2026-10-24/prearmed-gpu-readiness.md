@@ -4,8 +4,8 @@ Prepared on 2026-10-24, approximately 13:25 PDT. **NO-GO for paid provisioning.*
 No GPU, endpoint or paid storage was created. Wallet/billing implementation,
 automatic provisioning, public beta and Stripe live payments are unchanged.
 
-Local verification: **157 tests passed, 1 real-GPU test skipped**, including
-20 new watchdog cases. Ruff, mypy (34 source files), manual-only protected
+Local verification: **162 tests passed, 1 real-GPU test skipped**, including
+25 new watchdog cases. Ruff, mypy (34 source files), manual-only protected
 workflow checks and the publishable-file secret scan passed. Tests simulate
 provider success/failure, pagination, identity rejection, deletion confirmation,
 retry, interruption and time/budget decisions; they do not prove live DELETE.
@@ -42,6 +42,14 @@ $0.10/GB/month. For 80 GB ephemeral disk, using a stated 730-hour/month estimate
 
 These exclude unverified taxes/fees and are not final quotes. Confirm selected
 machine resource constraints, disk proration and charges before approval.
+The undeployed console L4 hardware draft with 80 GB disk displayed GPU
+$0.59/hour, disk $0.011/hour and a rounded total $0.60/hour, billed per
+millisecond. It advertised 55 GB RAM and **6 vCPU**. That does not satisfy the
+existing 4090 payload's minimum 8-vCPU filter: a prospective L4 configuration
+must explicitly review a six-vCPU floor, never blindly reuse that payload.
+This hardware-price draft still selected the console's default PyTorch image,
+not our pinned vLLM image; no Deploy button was pressed and it is not a final
+application deployment configuration or an exact tax-inclusive quote.
 Avoid double-counting storage if the provider's pod `cost` already includes it.
 No persistent/network/global volumes, public ports or paid CPU host are planned.
 The $10 credit balance is not a guaranteed or configured hard spending cap.

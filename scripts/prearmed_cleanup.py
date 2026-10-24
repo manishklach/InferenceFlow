@@ -120,6 +120,14 @@ def cleanup(client, receipt):
     return terminate_verified(client, receipt)
 
 
+def cost_exceeds_quote(pod, plan):
+    try:
+        observed = Decimal(str(pod["cost"]))
+    except (KeyError, ArithmeticError):
+        return True
+    return not observed.is_finite() or observed < 0 or observed > Decimal(str(plan["all_in_hourly_usd"]))
+
+
 def emit(**values):
     print(json.dumps({"observed_at": datetime.now(timezone.utc).isoformat(), **values}), flush=True)
 
@@ -154,10 +162,13 @@ def run(client, plan, armed_at, receipt_path, clock=None, sleep=time.sleep, stop
                     emit(termination_confirmed=True)
                     return
                 response.raise_for_status()
-                verify_bound(response.json(), receipt)
+                observed = response.json()
+                verify_bound(observed, receipt)
                 current = state(plan, armed_at, stamp, receipt)
+                current["provider_cost_exceeds_quote"] = cost_exceeds_quote(observed, plan)
                 emit(**current)
-                if current["terminate"] or stopping() or current["stop_admissions_required"]:
+                if (current["terminate"] or stopping() or current["stop_admissions_required"]
+                        or current["provider_cost_exceeds_quote"]):
                     # There is no remote admission-pause endpoint. Delete instead
                     # of claiming a log flag prevents further customer execution.
                     if cleanup(client, receipt):

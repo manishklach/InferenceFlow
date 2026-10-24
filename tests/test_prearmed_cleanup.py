@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, timezone
 import httpx
 import pytest
 
-from scripts.prearmed_cleanup import bind_pod, cleanup, inventory, run, state, validate_plan
+from scripts.prearmed_cleanup import bind_pod, cleanup, cost_exceeds_quote, inventory, run, state, validate_plan
 
 
 START = datetime(2026, 10, 24, 20, 0, tzinfo=timezone.utc)
@@ -18,7 +18,7 @@ def plan():
 
 
 def pod():
-    return {"id": "exact-pod", "name": plan()["pod_name"],
+    return {"id": "exact-pod", "name": plan()["pod_name"], "cost": 0.6,
             "createdAt": (START + timedelta(minutes=1)).isoformat(),
             "env": {"IF_OWNER": "inferenceflow", "IF_EXPERIMENT_ID": IDENTITY}}
 
@@ -41,6 +41,11 @@ def test_plan_disallows_extra_fields_including_credentials():
     candidate["api_key"] = "not-a-real-key"
     with pytest.raises(ValueError):
         validate_plan(candidate)
+
+
+@pytest.mark.parametrize("cost,exceeds", [(0.6, False), (0, False), (0.7, True), (None, True), ("NaN", True)])
+def test_provider_price_overrun_or_invalid_price_requires_cleanup(cost, exceeds):
+    assert cost_exceeds_quote({"cost": cost}, plan()) is exceeds
 
 
 def test_budget_includes_fixed_cost_hour_rounding_and_early_deadline():

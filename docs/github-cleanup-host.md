@@ -87,6 +87,8 @@ rejects ambiguity and binds only a matching name/marker/owner whose provider
 creation timestamp falls within the arming window. It saves the exact ID and
 creation time on runner-local ephemeral disk. Fresh reads recheck identity
 before deletion. It logs heartbeat/cost state without inventory or secrets.
+An observed provider hourly cost above the approved ceiling, or an invalid
+cost field, also requests immediate cleanup of the verified identity.
 
 Budget estimates include supplied fixed costs and round compute/disk elapsed
 time up to whole hours. It starts DELETE at 110 minutes from arming (earlier
@@ -105,11 +107,11 @@ independent console access available; do not start an unattended experiment.
 
 ## Remaining provisioning blockers
 
-Validation on 2026-10-24: full local PostgreSQL suite **157 passed, 1 real-GPU
+Validation on 2026-10-24: full local PostgreSQL suite **162 passed, 1 real-GPU
 test skipped**; Ruff, mypy (34 source files), manual-only workflow structure
 and a scan of publishable files against local secrets passed. Nine new
 deterministic preflight cases cover read-only behavior, authentication/provider
-failures and malformed inventory; 20 additional controller cases exercise identity,
+failures and malformed inventory; 25 additional controller cases exercise identity,
 pagination, deadlines, cancellation, failures and verified deletion. Live authentication
 completed successfully in [the independent read-only run](https://github.com/manishklach/InferenceFlow/actions/runs/40128846861).
 
