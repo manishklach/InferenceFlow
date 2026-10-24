@@ -1,4 +1,4 @@
-> Current backend evidence: [2026-10-24 local Docker/HTTPS validation](validation/2026-10-24/local-backend-report.md) and [rehearsal runbook](local-backend-rehearsal.md). Real-GPU approval requirements remain in [2026-10-23 validation](validation/2026-10-23/readiness-report.md); refresh stock and pricing before approval. Mock HTTPS connectivity does not resolve staging OIDC or independent teardown. No GPU creation is authorized.
+> Current evidence: [staging OIDC validation](validation/2026-10-24/staging-auth-report.md) and [pre-armed cleanup readiness](validation/2026-10-24/prearmed-gpu-readiness.md). Genuine staging login passed; independent DELETE authority, watchdog arming, real-mode staging and final full-cost approval remain blocked. No GPU creation is authorized.
 
 # Rented NVIDIA deployment
 Current experiment selection: [RTX 4090 Community Cloud](rtx4090-community-experiment.md), four resident engine sequences on 24 GB, $10 all-in maximum and final explicit approval required. Community stock is currently unavailable; do not substitute another tier/GPU or run the older L40S proposal. Its gated preparation/load/telemetry tools do not change customer financial behavior.
@@ -21,7 +21,7 @@ docker run --gpus all --rm --name inferenceflow-vllm \
   vllm/vllm-openai@sha256:6cf9808ca8810fc6c3fd0451c2e7784fb224590d81f7db338e7eaf3c02a33d33 \
   --model Qwen/Qwen3-4B --revision "$MODEL_REVISION" \
   --tokenizer-revision "$MODEL_REVISION" --served-model-name "$SERVED_MODEL_NAME" \
-  --dtype bfloat16 --max-model-len 10240 --max-num-seqs 16 \
+  --dtype bfloat16 --max-model-len 10240 --max-num-seqs 4 \
   --gpu-memory-utilization 0.85 --api-key "$VLLM_API_KEY" \
   --generation-config vllm --disable-log-requests --no-enable-prefix-caching
 ```
@@ -39,7 +39,7 @@ export WORKER_ID=nvidia-1
 export VLLM_URL=http://127.0.0.1:8000
 python -m apps.worker.main
 ```
-The worker checks the revision-derived served alias and generates a canary before registration; a failed canary stops startup. This validates configured deployment identity, not the trustworthiness of a malicious GPU host. It issues up to 16 concurrent calls; vLLM batches continuously. Credentials expire hourly; worker renewal/restart procedures are described in ops.
+The worker checks the revision-derived served alias and generates a canary before registration; a failed canary stops startup. This validates configured deployment identity, not the trustworthiness of a malicious GPU host. For this experiment set `WORKER_CAPACITY=4` and `MAX_INFLIGHT=4` on the corresponding worker/control-plane configuration. vLLM can batch continuously; actual overlapping execution and efficiency remain unmeasured. Credentials expire hourly; worker renewal/restart procedures are described in ops.
 
 5. On a seeded/funded test tenant set INFERENCEFLOW_API_KEY, RUN_GPU_E2E=1; run `pytest tests/test_gpu.py -q`, then `python examples/batch.py`. Restart worker during 100-request load, confirm recovery and `cli reconcile` returns zero drift. Record actual GPU uptime and provider bill, then shut down rented pod at provider and confirm billing stopped.
 
