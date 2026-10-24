@@ -2,6 +2,8 @@
 
 **NO-GO for paid GPU provisioning; local Docker/HTTPS mock rehearsal validated.** No pod, VM, paid storage or other billable resource was created. No actual GPU utilization, vLLM batching, 60-minute completion rate or economic advantage has been measured.
 
+Subsequent [genuine staging OIDC validation](staging-auth-report.md) passed, including a real browser login and a protected wallet read. That report updates the authentication gate below; independent teardown and real-GPU approval remain unresolved.
+
 The first isolated native rehearsal passed 14 checks. It was replaced with an isolated Docker rehearsal using Docker Engine 29.9.2, Compose v5.6.1, the existing locked application Dockerfile and PostgreSQL 16.9. Its migrations completed and API/PostgreSQL health checks passed. A mock worker registered and executed through an outbound connection to a temporary Cloudflare HTTPS endpoint.
 
 The Docker run passed 14 checks: HTTPS health; mock-mode readiness; anonymous denial; invalid customer-key denial; blocked development login; blocked checkout; invalid worker-bootstrap denial; blocked cookie authentication; idempotent submission; 10 successful mock requests; wallet reconciliation; outbound worker registration; unique ledger sources; and one capture per request. The 10 synthetic requests captured 90 micro-USD from test credit. This is a mock ledger check, not a real GPU bill or an interruption/recovery experiment.
@@ -16,7 +18,7 @@ The reusable version is documented in [the local rehearsal runbook](../../local-
 |---|---|
 | Isolated API/PostgreSQL/scheduler/mock worker | Docker rehearsal passed |
 | Temporary authenticated HTTPS API and outbound worker | Mock checks passed; ephemeral and dependent on the local PC |
-| Genuine staging OIDC | Not configured/validated |
+| Genuine staging OIDC | Real owner login and protected session passed on isolated temporary staging; see subsequent report |
 | RunPod cleanup credential | Operator reports R/W enabled; prior authenticated read does not prove DELETE permission |
 | Independent armed watchdog | Not established; local supervisor cannot survive PC/network failure |
 | Current suitable GPU stock and all-in quote | Must be refreshed before final approval |
