@@ -1,5 +1,7 @@
 # InferenceFlow
 
+Independent cleanup preparation: the protected `gpu-experiment` GitHub environment now requires owner review and permits `main` only. The [cleanup host guide](docs/github-cleanup-host.md) explains secure secret entry and the manual read-only preflight. **This is not an armed watchdog or verified DELETE authority; GPU provisioning remains blocked.**
+
 [Download v0.3.0 prerelease and read the detailed release notes](https://github.com/manishklach/InferenceFlow/releases/tag/v0.3.0).
 
 ## October 24 local backend validation
