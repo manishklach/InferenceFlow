@@ -107,7 +107,9 @@ class ExperimentTools(unittest.TestCase):
                 return httpx.Response(200, json={"items": [], "next_cursor": None})
             if path == "/internal/scheduling/report":
                 return httpx.Response(200, json={"workers": [{"id": "unit", "mode": "vllm", "hard_limit": 4,
-                    "provider_instance_id": "unit-instance", "telemetry_fresh": True}],
+                    "provider_instance_id": "unit-instance", "telemetry_fresh": True},
+                    {"id": "historical", "mode": "vllm", "hard_limit": 4,
+                     "provider_instance_id": "terminated-pod", "telemetry_fresh": False}],
                     "configuration": {"public_beta_enabled": False, "stripe_enabled": False, "scheduler_v2_enabled": False,
                     "max_inflight": cap, "estimator_calibrated": False,
                     "adaptive_dispatch_enabled": False, "provisioning_enabled": False, "execution_mode": "vllm"}})
