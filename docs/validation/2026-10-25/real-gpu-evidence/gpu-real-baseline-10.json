@@ -1,0 +1,43 @@
+{
+  "policy": "baseline",
+  "accepted_requests": 10,
+  "successful_requests": 10,
+  "input_tokens": 3618,
+  "output_tokens": 352,
+  "elapsed_seconds": 18.016000000061467,
+  "audit": {
+    "scope": "selected_single_tenant_jobs",
+    "read_only": true,
+    "accepted_requests": 10,
+    "measurement_modes": [
+      "vllm"
+    ],
+    "statuses": {
+      "succeeded": 10
+    },
+    "errors": [],
+    "passed": true,
+    "request_e2e_seconds_successful_only": {
+      "p50": 5.701613,
+      "p95": 7.979651,
+      "p99": 7.979651
+    },
+    "accepted_to_last_terminal_seconds": 7.979651,
+    "submission_to_first_dispatch_seconds": {
+      "p50": 3.892124,
+      "p95": 5.987449,
+      "p99": 5.987449
+    },
+    "all_accepted_requests_successful_within_60_minutes": 1.0,
+    "attempt_outcomes": {
+      "succeeded": 10
+    },
+    "retried_attempts": 0,
+    "unique_usage_records": 10,
+    "unique_capture_sources": 10,
+    "captured_micro_usd": 475,
+    "input_tokens": 3618,
+    "output_tokens": 352,
+    "execution_semantics": "Inference may repeat; accepted customer usage/capture must not duplicate."
+  }
+}

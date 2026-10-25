@@ -1,0 +1,42 @@
+{
+  "real_gpu": true,
+  "partial_observability": true,
+  "complete_reconstructed_samples": 52,
+  "incomplete_samples_excluded": 8,
+  "invalid_prometheus_samples_excluded": 2,
+  "sample_window": [
+    "2026-10-25T08:09:31.986888+00:00",
+    "2026-10-25T08:11:31.912811+00:00"
+  ],
+  "sample_mean_gpu_utilization_percent": 64.90384615384616,
+  "peak_gpu_utilization_percent": 100.0,
+  "peak_active_sequences": 4.0,
+  "peak_engine_waiting": 0.0,
+  "full_lifecycle_time_weighted_gpu_utilization": null,
+  "warning": "Samples have gaps and cover mainly baseline load, not startup or full rented lifetime. Mean is sample-weighted, not an experiment utilization claim.",
+  "worker_cumulative_before_failure": {
+    "worker_http_inflight": 0,
+    "worker_http_peak_inflight": 4,
+    "worker_http_completed": 110,
+    "worker_http_errors": 0,
+    "worker_http_overlap_seconds": 47.514623932074755,
+    "worker_http_request_seconds": 160.17795238137478,
+    "worker_http_observed_seconds": 156.04763406701386,
+    "worker_http_idle_seconds": 100.38675405090908,
+    "worker_trace_write_errors": 0
+  },
+  "pod_id": "w70ukczutth1b4",
+  "created_at": "2026-10-25T08:03:43.438000+00:00",
+  "termination_confirmed_at": "2026-10-25T08:14:44.166177+00:00",
+  "rented_lifetime_upper_seconds": 660.728177,
+  "quoted_gpu_usd_per_hour": 0.59,
+  "quoted_disk_usd_per_hour": 0.011,
+  "estimated_lifetime_cost_usd": 0.11030489843805555,
+  "conservative_cost_at_ceiling_usd": 0.11929814306944445,
+  "actual_invoice_cost_usd": null,
+  "successful_input_tokens": 39888,
+  "successful_output_tokens": 3813,
+  "estimated_fully_loaded_provider_cost_per_million_successful_output_tokens": 28.928638457397206,
+  "remaining_console_credit_usd": 9.88,
+  "accepted_request_success_fraction": 0.5238095238095238
+}

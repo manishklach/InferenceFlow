@@ -1,0 +1,47 @@
+{
+  "observed_at": "2026-10-25 08:20:48 UTC",
+  "pod_id": "w70ukczutth1b4",
+  "get_pod_after_cleanup": {
+    "detail": "pod not found",
+    "status": 404,
+    "title": "Not Found",
+    "hint": "No such resource on this account: verify the id with the matching list- tool before retrying."
+  },
+  "pod_inventory_empty": true,
+  "network_volumes": {
+    "networkVolumes": [],
+    "pagination": {
+      "hasNextPage": false,
+      "nextCursor": null
+    }
+  },
+  "global_volumes": {
+    "globalVolumes": [],
+    "pagination": {
+      "hasNextPage": false,
+      "nextCursor": null
+    }
+  },
+  "posted_pod_billing": {
+    "metadata": {
+      "query": {
+        "bucketSize": "day",
+        "endTime": "2026-10-26T00:00:00Z",
+        "podId": "w70ukczutth1b4",
+        "startTime": "2026-10-25T00:00:00Z"
+      },
+      "recordCount": 0,
+      "totals": {
+        "cpuAmount": 0,
+        "diskAmount": 0,
+        "gpuAmount": 0,
+        "totalAmount": 0
+      },
+      "uniquePodCount": 0
+    },
+    "records": []
+  },
+  "cleanup_workflow": "https://github.com/manishklach/InferenceFlow/actions/runs/40174806205",
+  "finalizer_success": true,
+  "termination_confirmed_at": "2026-10-25T08:14:44.166177+00:00"
+}

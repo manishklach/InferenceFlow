@@ -1,3 +1,5 @@
+> Current evidence: [October 25 real L4 results](validation/2026-10-25/real-inference-report.md). Baseline 10/100 passed; transient reconnect failed during adaptive preparation. Pod terminated, no volumes remain. 1,000 requests, matched policy comparison, interruption recovery, invoice economics and full-lifetime GPU utilization remain unverified. Historical preparation statements below refer to their original dates. No public-beta or savings claim is supported.
+
 > Updated audit: [October23 readiness](validation/2026-10-23/readiness-report.md) supersedes the older two-arm plan and prior test counts below. The current runner adds sequential mode and rejects public beta/Stripe.
 
 # Multi-provider and continuous-batching readiness

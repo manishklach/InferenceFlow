@@ -1,3 +1,5 @@
+> Current evidence: [October 25 real L4 results](validation/2026-10-25/real-inference-report.md). Baseline 10/100 passed; transient reconnect failed during adaptive preparation. Pod terminated, no volumes remain. 1,000 requests, matched policy comparison, interruption recovery, invoice economics and full-lifetime GPU utilization remain unverified. Historical preparation statements below refer to their original dates. No public-beta or savings claim is supported.
+
 > Current evidence: [real-mode staging resumption](validation/2026-10-25/resumed-gpu-readiness.md) and [successful live teardown validation](validation/2026-10-25/teardown-validation.md). Independent GitHub cleanup removed one explicitly approved L4 validation pod. That run is complete; model execution remains untested, posted charges pending and a real inference pod requires new cost/budget review, a fresh armed guard and separate explicit approval.
 
 # Rented NVIDIA deployment

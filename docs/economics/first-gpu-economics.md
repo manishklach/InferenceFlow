@@ -1,3 +1,5 @@
+> Current evidence: [October 25 real L4 results](../validation/2026-10-25/real-inference-report.md). Baseline 10/100 passed; transient reconnect failed during adaptive preparation. Pod terminated, no volumes remain. 1,000 requests, matched policy comparison, interruption recovery, invoice economics and full-lifetime GPU utilization remain unverified. Historical preparation statements below refer to their original dates. No public-beta or savings claim is supported.
+
 # First GPU economics — no real measurements yet
 
 Status: NOT EXECUTED. Input/output tokens, paid GPU runtime, startup/idle time, utilization, completed jobs, provider invoice, CPM and deadline attainment are all unknown. A planning quote is not an observed result. No20–30% advantage has been demonstrated.
