@@ -23,7 +23,7 @@ def audit_run(session, job_ids, require_vllm=True):
     captures = {entry.source: entry for entry in session.scalars(select(Ledger).where(
         Ledger.tenant_id == jobs[0].tenant_id, Ledger.source.in_([rid + ":capture" for rid in ids])))}
     attempts = list(session.scalars(select(ExecutionAttempt).where(ExecutionAttempt.request_id.in_(ids))))
-    breakdown = {}
+    breakdown: dict[str, list[float | None]] = {}
     for row in rows:
         matching = [a for a in attempts if a.request_id == row.id]
         first = min(matching, key=lambda a: a.epoch) if matching else None
