@@ -1,5 +1,13 @@
 # Independent GitHub cleanup host
 
+Live update: [2026-10-25 teardown validation passed](validation/2026-10-25/teardown-validation.md).
+The exact approved L4 pod was removed through the independent GitHub cleanup
+credential/path after requested workflow cancellation. A fresh connector GET
+returned 404 and pod/volume inventories were empty. The overall run is cancelled
+by design; its final cleanup step succeeded. Automatic time/cost and outage
+paths were not live-tested. No inference pod or unattended provisioning is
+authorized; the historical preparation gates below must be read with this update.
+
 The operator approved GitHub Actions as the independent cleanup host and the
 `gpu-experiment` environment as the encrypted cleanup-secret destination on
 2026-10-24. This approval does **not** authorize GPU creation.
