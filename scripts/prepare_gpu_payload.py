@@ -4,7 +4,7 @@ import hashlib
 from pathlib import Path
 
 
-def main():
+def build_payload():
     root = Path(__file__).resolve().parents[1]
     folder = root / "infra/first-gpu"
     lock = json.loads((root / "infra/model-lock.json").read_text(encoding="utf-8"))
@@ -28,9 +28,15 @@ python3 -c 'import importlib.metadata as m; assert m.version("vllm") == "0.8.5"'
 mkdir -p /opt/inferenceflow
 cd /opt/inferenceflow
 git init -q
-git remote add origin https://github.com/manishklach/InferenceFlow.git
+if git remote get-url origin >/dev/null 2>&1; then
+  git remote set-url origin https://github.com/manishklach/InferenceFlow.git
+else
+  git remote add origin https://github.com/manishklach/InferenceFlow.git
+fi
 git fetch --depth 1 origin c62386b2b6347f2555375fbd448d14769d852646
-git checkout --detach FETCH_HEAD
+# Reapply the reviewed overlays below on every start, including a retained disk.
+# Only the known application checkout is reset; model cache/evidence stay intact.
+git checkout --detach --force FETCH_HEAD
 python3 -m venv /opt/inferenceflow-worker
 /opt/inferenceflow-worker/bin/python -m pip install --no-cache-dir -r requirements.lock
 /opt/inferenceflow-worker/bin/python -m pip install --no-deps -e .
@@ -49,7 +55,12 @@ python3 -m venv /opt/inferenceflow-worker
                        "IF_SOURCE_HASHES": json.dumps(hashes, sort_keys=True),
                        "IF_OWNER": "inferenceflow", "IF_ENVIRONMENT": "experiment",
                        "IF_CREATED_BY": "operator-approval-required", "IF_JOB_GROUP": "first-real-gpu"}}
-    path = folder / "runpod-pod.proposed.json"
+    return payload
+
+
+def main():
+    payload = build_payload()
+    path = Path(__file__).resolve().parents[1] / "infra/first-gpu/runpod-pod.proposed.json"
     path.write_bytes((json.dumps(payload, indent=2) + "\n").encode("utf-8"))
     print("Prepared inert Community Cloud payload; no resource created. Availability/placement/approval remain required.")
 
