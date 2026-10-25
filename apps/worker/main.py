@@ -75,6 +75,8 @@ async def main():
         failures: asyncio.Queue[BaseException] = asyncio.Queue()
 
         async def execute(item):
+            engine_started = time.monotonic()
+            start_delay = max(0, engine_started - item.get("_poll_received", engine_started))
             try:
                 if item["identity"] != model_identity():
                     raise ValueError("Control plane assigned an incompatible model identity")
@@ -88,6 +90,8 @@ async def main():
             except Exception:
                 payload = {"error": "transient"}
             payload["epoch"] = item["epoch"]
+            payload["worker_start_delay_seconds"] = start_delay
+            payload["worker_engine_seconds"] = max(0, time.monotonic() - engine_started)
             # A lost finalization response is safe: retries are fenced; recovery never double bills.
             await control_post(client, "/internal/workers/requests/" + item["id"] + "/finalize",
                                json=payload, accepted_statuses=(404, 409))
@@ -113,7 +117,14 @@ async def main():
                     await asyncio.sleep(0.25)
                     continue
                 r = await control_post(client, "/internal/workers/poll", json={"available_slots": free})
+                received = time.monotonic()
+                challenge = r.json().get("readiness_challenge")
+                if challenge and await engine.ready():
+                    await control_post(client, "/internal/workers/readiness", json={"challenge": challenge},
+                                       accepted_statuses=(409,))
+                    print('{"event":"worker_engine_readiness","ready":true}', flush=True)
                 for item in r.json()["items"]:
+                    item["_poll_received"] = received
                     active[(item["id"], item["epoch"])] = {"id": item["id"], "epoch": item["epoch"]}
                     task = asyncio.create_task(execute(item))
                     tasks.add(task)

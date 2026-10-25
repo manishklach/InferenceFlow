@@ -1,0 +1,41 @@
+{
+  "observed_at": "2026-10-25T12:17:26Z",
+  "source": "RunPod REST v2 list_pod_billing, whole UTC day, no inferred finalization flag",
+  "billing": {
+    "metadata": {
+      "query": {
+        "bucketSize": "day",
+        "endTime": "2026-10-26T00:00:00Z",
+        "startTime": "2026-10-25T00:00:00Z"
+      },
+      "recordCount": 2,
+      "totals": {
+        "cpuAmount": 0,
+        "diskAmount": 0.0018518518190830946,
+        "gpuAmount": 0.11559820966795087,
+        "totalAmount": 0.11745006148703396
+      },
+      "uniquePodCount": 2
+    },
+    "records": [
+      {
+        "cpuAmount": 0,
+        "diskAmount": 0,
+        "endTime": "2026-10-26T00:00:00Z",
+        "gpuAmount": 0.007365658413618803,
+        "podId": "3benkmzk749x9u",
+        "startTime": "2026-10-25T00:00:00Z",
+        "totalAmount": 0.007365658413618803
+      },
+      {
+        "cpuAmount": 0,
+        "diskAmount": 0.0018518518190830946,
+        "endTime": "2026-10-26T00:00:00Z",
+        "gpuAmount": 0.10823255125433207,
+        "podId": "w70ukczutth1b4",
+        "startTime": "2026-10-25T00:00:00Z",
+        "totalAmount": 0.11008440307341516
+      }
+    ]
+  }
+}

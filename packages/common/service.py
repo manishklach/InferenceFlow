@@ -77,7 +77,8 @@ def new_key(s, tenant, name):
     return {"id": k.id, "key": raw, "prefix": k.prefix, "name": name}
 
 
-def submit(s, tenant, body, idem):
+def submit(s, tenant, body, idem, readiness=None, received_at=None):
+    received_at = received_at or now()
     if not idem or len(idem) > 200:
         raise Problem(400, "idempotency_key_required")
     prepared = []
@@ -99,6 +100,9 @@ def submit(s, tenant, body, idem):
         if old.body_hash != fingerprint:
             raise Problem(409, "idempotency_conflict")
         return old
+    if settings().reviewed_gpu_experiment_enabled and settings().execution_mode == "vllm":
+        from packages.common.experiment_readiness import consume
+        consume(s, readiness)
     t = s.scalar(select(Tenant).where(Tenant.id == tenant).execution_options(populate_existing=True))
     if t.frozen or w.debt:
         raise Problem(403, "account_frozen")
@@ -152,6 +156,7 @@ def submit(s, tenant, body, idem):
     if w.available < sum(x[2] for x in prepared):
         raise Problem(402, "insufficient_credits")
     j = Job(
+        received_at=received_at,
         tenant_id=tenant,
         idempotency_key=idem,
         body_hash=fingerprint,
@@ -164,6 +169,7 @@ def submit(s, tenant, body, idem):
     s.flush()
     for i, (data, n, reserve) in enumerate(prepared):
         r = Work(
+            initial_eligible_at=now(),
             job_id=j.id,
             tenant_id=tenant,
             ordinal=i,
@@ -180,6 +186,7 @@ def submit(s, tenant, body, idem):
         s.add(r)
         s.flush()
         post(s, w, r.id + ":reserve", "reservation", -reserve, reserve)
+    j.accepted_at = now()
     return j
 
 
@@ -304,6 +311,10 @@ def finalize(s, worker, rid, body):
     )
     if worker_node is None or r.worker_generation != worker_node.generation:
         raise Problem(409, "stale_generation")
+    observation = s.get(ExecutionAttempt, (r.id, r.epoch))
+    if observation:
+        observation.worker_start_delay_seconds = body.worker_start_delay_seconds
+        observation.worker_engine_seconds = body.worker_engine_seconds
     if s.get(Tenant, tenant).frozen:
         terminal(s, r, "canceled", "account_frozen")
         return
@@ -379,6 +390,8 @@ def schedule(s):
         )
         for r in rows:
             j = s.get(Job, r.job_id)
+            if r.status == "queued" and r.eligible_at <= now() and r.eligibility_observed_at is None:
+                r.eligibility_observed_at = now()
             if s.get(Tenant, tid).frozen:
                 r.epoch += 1
                 terminal(s, r, "canceled", "account_frozen")
@@ -476,10 +489,12 @@ def schedule(s):
                     r.ordinal,
                 )
 
+            decision_at = now()
             r = min(candidates, key=score)
             candidates.remove(r)
             r.status = "leased"
             r.first_dispatched_at = r.first_dispatched_at or now()
+            r.lease_decision_at = r.lease_decision_at or decision_at
             r.worker_id = worker.id
             r.worker_generation = worker.generation
             r.epoch += 1

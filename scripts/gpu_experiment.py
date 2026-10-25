@@ -1,5 +1,6 @@
 """Explicitly gated real-GPU load/telemetry tools. Import/prepare never calls an API."""
 import argparse
+import hashlib
 import json
 import math
 import os
@@ -93,6 +94,22 @@ def require_execute(args):
         raise SystemExit("No execution authorized: add --execute only AFTER explicit provisioning/test approval")
 
 
+def live_readiness(client, metric_key, worker_id, timeout=35):
+    """A new engine canary/poll response, not a cached telemetry snapshot."""
+    headers = {"Authorization": "Bearer " + metric_key}
+    response = client.client.post("/internal/experiments/readiness", headers=headers, json={"worker_id": worker_id})
+    response.raise_for_status()
+    challenge = response.json()["challenge"]
+    end = time.monotonic() + timeout
+    while time.monotonic() < end:
+        response = client.client.get("/internal/experiments/readiness/" + challenge, headers=headers)
+        response.raise_for_status()
+        if response.json().get("ready") is True:
+            return challenge
+        time.sleep(.25)
+    raise RuntimeError("Fresh worker/engine readiness was not proven; no workload submitted")
+
+
 def live_run(args):
     require_execute(args)
     from packages.python_sdk import InferenceFlowClient
@@ -105,7 +122,10 @@ def live_run(args):
         raise SystemExit("Set INFERENCEFLOW_API_KEY securely")
     directory = Path(args.output)
     directory.mkdir(parents=True, exist_ok=False)
-    rows = workload(args.count, args.run_id)
+    workload_file = getattr(args, "workload_file", None)
+    rows = json.loads(Path(workload_file).read_text(encoding="utf-8")) if workload_file else workload(args.count, args.run_id)
+    if len(rows) != args.count or len({row["custom_id"] for row in rows}) != len(rows):
+        raise ValueError("Workload count and unique custom IDs must match the selected stage")
     # Payloads are synthetic. Persist IDs before submission for ambiguous-response recovery.
     (directory / "workload.json").write_text(json.dumps(rows, indent=2), encoding="utf-8")
     started = time.monotonic()
@@ -148,9 +168,11 @@ def live_run(args):
             if time.monotonic() >= deadline:
                 break
             idem = f"gpu-experiment-{args.run_id}-{index}"
+            proof = live_readiness(client, metric_key, inventory[0]["id"])
             append(directory / "observations.jsonl", {"event": "submission_intent", "idempotency_key": idem})
             # SDK retries preserve the same key. On ambiguity abort; never invent a new key.
             job = client.create_job(batch, idempotency_key=idem, deadline_seconds=3600,
+                                    experiment_readiness=proof,
                                     admission_policy="best_effort")
             jobs.append(job)
             append(directory / "observations.jsonl", {"event": "accepted", "job": job})
@@ -180,6 +202,7 @@ def live_run(args):
             append(directory / "observations.jsonl", {"event": "journal_page", "data": page})
             cursor = page["next_cursor"]
     report = {**summarize(jobs, results, time.monotonic() - started, args.cost_usd),
+              "workload_sha256": hashlib.sha256(json.dumps(rows, sort_keys=True, separators=(",", ":")).encode()).hexdigest(),
               "policy": policy, "server_configuration": config, "model": model, "workers": inventory}
     for name, data in (("jobs", jobs), ("results", results), ("summary", report)):
         (directory / (name + ".json")).write_text(json.dumps(data, indent=2), encoding="utf-8")
@@ -256,6 +279,7 @@ def main():
     sub = parser.add_subparsers(dest="command", required=True)
     prepare = sub.add_parser("prepare", help="Write synthetic workload only; no network or spend")
     run = sub.add_parser("run", help="Execute only after explicit approval; never provisions GPUs")
+    run.add_argument("--workload-file", help="Prepared identical synthetic workload shared across comparison arms")
     for command in (prepare, run):
         command.add_argument("--count", type=int, choices=[10, 100, 1000], required=True)
         command.add_argument("--run-id", required=True)

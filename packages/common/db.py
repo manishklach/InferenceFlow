@@ -96,6 +96,8 @@ class Job(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
     notified: Mapped[bool] = mapped_column(Boolean, default=False)
     admission: Mapped[str | None] = mapped_column(Text)
+    received_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    accepted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     __table_args__ = (UniqueConstraint("tenant_id", "idempotency_key"),)
 
 
@@ -151,6 +153,9 @@ class Work(Base):
     error: Mapped[str | None] = mapped_column(String)
     late: Mapped[bool] = mapped_column(Boolean, default=False)
     first_dispatched_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    eligibility_observed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    initial_eligible_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    lease_decision_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     __table_args__ = (UniqueConstraint("job_id", "ordinal"), UniqueConstraint("job_id", "custom_id"))
 
 
@@ -174,6 +179,19 @@ class Worker(Base):
     adaptive_limit: Mapped[int] = mapped_column(Integer, default=2)
     adaptive_changed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     model_loading_seconds: Mapped[int] = mapped_column(Integer, default=0)
+
+
+class WorkerProbe(Base):
+    """Short-lived operator challenge; not a prediction or a capacity guarantee."""
+    __tablename__ = "worker_probes"
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=uid)
+    worker_id: Mapped[str] = mapped_column(ForeignKey("worker_nodes.id"), index=True)
+    generation: Mapped[str] = mapped_column(String)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    delivered_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    consumed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
 class Usage(Base):
@@ -237,6 +255,8 @@ class ExecutionAttempt(Base):
     started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     ended_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     outcome: Mapped[str | None] = mapped_column(String)
+    worker_start_delay_seconds: Mapped[float | None] = mapped_column()
+    worker_engine_seconds: Mapped[float | None] = mapped_column()
     input_tokens: Mapped[int] = mapped_column(Integer, default=0)
     output_tokens: Mapped[int] = mapped_column(Integer, default=0)
 

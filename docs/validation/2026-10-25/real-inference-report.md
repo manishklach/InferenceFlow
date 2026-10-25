@@ -1,5 +1,7 @@
 # First real GPU inference: baseline passed, recovery blocked
 
+**Posted billing addendum, 05:17 PDT October 25:** RunPod now reports $0.1100844031 for this inference pod ($0.1082325513 GPU + $0.0018518518 disk), close to the $0.1103048984 quoted-rate estimate below. Posted output-normalized provider cost is $28.87/M successful output tokens. Including the teardown-only pod, posted account spend is $0.1174500615. [Raw day-bucket billing evidence](posted-runpod-bill.json) and the [second-experiment plan](../../experiments/second-gpu-experiment.md) supersede the original pending-bill status below. The API does not supply a finalization flag or tax-invoice attestation.
+
 Executed October 25, 2026, 08:03–08:14 UTC. These are real rented-GPU results, not mock measurements. **NO-GO for public beta or an economic-advantage claim.** The basic execution/accounting pipeline passed; a transient control-plane outage killed the worker during preparation of the adaptive comparison. Testing stopped and the pod was terminated. No second inference pod was created.
 
 ## Resource, compatibility and safeguards

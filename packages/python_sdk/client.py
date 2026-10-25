@@ -20,11 +20,14 @@ class InferenceFlowClient:
             time.sleep(min(8, 2**attempt))
         response.raise_for_status()
 
-    def create_job(self, requests, model="qwen3-4b", tier="standard", idempotency_key=None, **kwargs):
+    def create_job(self, requests, model="qwen3-4b", tier="standard", idempotency_key=None, experiment_readiness=None, **kwargs):
+        headers = {"Idempotency-Key": idempotency_key or str(uuid.uuid4())}
+        if experiment_readiness:
+            headers["X-Experiment-Readiness"] = experiment_readiness
         return self._call(
             "POST",
             "/v1/jobs",
-            headers={"Idempotency-Key": idempotency_key or str(uuid.uuid4())},
+            headers=headers,
             json={"model": model, "tier": tier, "requests": requests, **kwargs},
         )
 
