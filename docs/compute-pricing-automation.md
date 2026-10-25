@@ -1,6 +1,6 @@
 # GitHub-hosted hourly GPU and CPU price history
 
-The [hourly pricing workflow](../.github/workflows/compute-pricing.yml) runs on a standard GitHub-hosted Ubuntu runner, independent of the developer computer. It runs at minute 17 of each hour (UTC; minute 17 in PDT too) and can be started manually. GitHub schedules are best-effort and may be delayed; missed hours stay gaps. It does not rent compute or change RunPod resources.
+The [hourly pricing workflow](../.github/workflows/compute-pricing.yml) runs on a standard GitHub-hosted Ubuntu runner, independent of the developer computer. It runs at minute 43 of each hour (UTC; minute 43 in PDT too) and can be started manually. GitHub schedules are best-effort and may be delayed; missed hours stay gaps. It does not rent compute or change RunPod resources.
 
 ## Credential separation
 
@@ -36,4 +36,18 @@ gh run list --repo manishklach/InferenceFlow --workflow compute-pricing.yml --li
 
 Confirm the run succeeds, a bot commit reaches main, both JSONL histories contain the new matching UTC timestamp, earlier valid rows remain present, and website readback shows it. A dispatched or queued run alone is not proof of collection. Missing secrets, expired/read-disallowed keys, schema changes, network errors, disabled Actions or denied branch writes are failures, not zero prices. Review the failed run/artifact and fix the cause; never bypass protected environment approvals or substitute a more privileged key.
 
-The previous Codex local hourly follow-up is paused only after the first GitHub-hosted collection and website readback are verified. The GitHub schedule then continues when this computer is locked, sleeping or off. Its timing remains subject to [GitHub schedule semantics](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule).
+## Schedule incident: October 25, 2026
+
+The initial manual collections succeeded at 13:53 and 16:34 UTC, but no `schedule` runs were created through 18:27 UTC. The workflow was active, on the default branch `main`, with Actions enabled. Disabling and re-enabling it did not establish recovery. This isolates the observed failure to trigger creation, rather than a failing collector or missing RunPod secret; the underlying GitHub-side cause is unconfirmed.
+
+The recovery changes the cron from minute 17 to minute 43 in a new repository commit and records event, schedule, actor, revision and runner start time in each run summary. GitHub documents committing a cron change as recovery for some actor-related schedule failures; there is no evidence that this account was suspended or deleted. See [GitHub troubleshooting](https://docs.github.com/en/actions/how-tos/troubleshoot-workflows#scheduled-workflow-stopped-running). `[skip ci]` applies to push/pull-request triggers and is not established as the cause here.
+
+Verify automatic recovery separately from manual collection:
+
+```powershell
+gh run list --repo manishklach/InferenceFlow --workflow compute-pricing.yml --event schedule --limit 5 --json databaseId,event,status,conclusion,createdAt,url
+```
+
+Recovery requires a successful run with `event=schedule`, publication of both histories with a matching new timestamp, and preserved prior observations. A manual refresh never proves the scheduler works. Do not backfill missed hours using current quotes. If scheduled events still never appear after the revised schedule has had time to fire, retain the run/configuration evidence for owner escalation to GitHub Support; do not rotate a working provider key or increase its privileges.
+
+The previous local Codex collector remains paused. The GitHub runner does not depend on this computer, but automatic hourly collection remains unverified until the above evidence exists. Timing is subject to [GitHub schedule semantics](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule).

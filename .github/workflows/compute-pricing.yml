@@ -2,7 +2,8 @@ name: Hourly GPU and CPU rate history
 
 on:
   schedule:
-    - cron: '17 * * * *'
+    # Fresh cron revision refreshes schedule registration; runs remain hourly.
+    - cron: '43 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -20,6 +21,21 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Record trigger evidence
+        env:
+          TRIGGER_EVENT: ${{ github.event_name }}
+          TRIGGER_SCHEDULE: ${{ github.event.schedule }}
+          TRIGGER_ACTOR: ${{ github.actor }}
+          TRIGGER_SHA: ${{ github.sha }}
+        run: |
+          {
+            printf '### Pricing collection trigger\n\n'
+            printf 'Event: `%s`\n\n' "$TRIGGER_EVENT"
+            printf 'Schedule: `%s`\n\n' "$TRIGGER_SCHEDULE"
+            printf 'Actor: `%s`\n\n' "$TRIGGER_ACTOR"
+            printf 'Revision: `%s`\n\n' "$TRIGGER_SHA"
+            printf 'Runner started (UTC): `%s`\n' "$(date -u +%FT%TZ)"
+          } >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: main
