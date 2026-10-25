@@ -158,7 +158,9 @@ def live_run(args):
         expected_cap = 1 if policy == "sequential" else 4
         if config.get("max_inflight") != expected_cap or config.get("estimator_calibrated") is not False:
             raise SystemExit("Experiment requires matching tenant concurrency cap and uncalibrated estimator")
-        inventory = operator.get("workers", [])
+        # Historical workers remain in the operator report for auditability.
+        # Only a fresh worker is eligible; the single-use canary still gates admission.
+        inventory = [worker for worker in operator.get("workers", []) if worker.get("telemetry_fresh")]
         if (len(inventory) != 1 or inventory[0].get("mode") != "vllm" or inventory[0].get("hard_limit") != 4
                 or not inventory[0].get("provider_instance_id") or not inventory[0].get("telemetry_fresh")):
             raise SystemExit("Exactly one real-mode experiment worker with a four-slot hard cap required")

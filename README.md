@@ -442,6 +442,7 @@ docs/                     Contracts, deployment, runbooks, release notes
 - [Architecture](docs/architecture.md), [API](docs/api.md), [OpenAPI](docs-openapi.json)
 - [Billing](docs/billing.md), [GPU deployment](docs/gpu-deploy.md), [security](docs/security.md), [operations](docs/ops.md)
 - [Internal pricing experiment](docs/pricing-experiment.md)
+- [GPU Hourly Rates](https://inferenceflow-execution.abc123xyza.chatgpt.site/gpu-hourly-rates/) — full RunPod hardware catalog, recorded hourly quotes and daily summaries; [data and methodology](docs/gpu-rates/README.md).
 - [Changelog](CHANGELOG.md) and [release notes](docs/releases/v0.2.0.md)
 - [Product specification](inferenceflow_mvp_spec.md) and [implementation brief](codex_inferenceflow_prompt.md)
 
