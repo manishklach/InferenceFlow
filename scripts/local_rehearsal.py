@@ -12,6 +12,7 @@ import time
 
 from cryptography.fernet import Fernet
 import httpx
+from scripts.staging_supervisor import running_services
 
 ROOT = Path(__file__).resolve().parents[1]
 RUNTIME = ROOT / ".runtime/local-rehearsal"
@@ -138,7 +139,8 @@ def start(cloudflared, minutes):
             write_private(RUNTIME / "running.json", json.dumps({"expires_at_epoch": deadline, "mode": "mock"}))
             print("HTTPS mock rehearsal ready. URL saved privately; automatic shutdown armed.", flush=True)
             while time.time() < deadline and not (RUNTIME / "STOP").exists():
-                services = docker("ps", "--status", "running", "--services").stdout.split()
+                services = running_services(COMPOSE, RUNTIME,
+                                            permitted=lambda: time.time() < deadline and not (RUNTIME / "STOP").exists())
                 if tunnel.poll() is not None or not {"api", "postgres", "scheduler", "worker"}.issubset(services):
                     raise RuntimeError("A supervised component stopped")
                 time.sleep(2)

@@ -1,0 +1,33 @@
+{
+  "source": "RunPod MCP list_pod_billing",
+  "read_date_utc": "2026-10-25",
+  "response": {
+    "metadata": {
+      "query": {
+        "bucketSize": "day",
+        "endTime": "2026-10-26T00:00:00Z",
+        "podId": "2p58yft8rurow1",
+        "startTime": "2026-10-24T00:00:00Z"
+      },
+      "recordCount": 1,
+      "totals": {
+        "cpuAmount": 0,
+        "diskAmount": 0.002777777728624642,
+        "gpuAmount": 0.21122360602021217,
+        "totalAmount": 0.21400138374883682
+      },
+      "uniquePodCount": 1
+    },
+    "records": [
+      {
+        "cpuAmount": 0,
+        "diskAmount": 0.002777777728624642,
+        "endTime": "2026-10-26T00:00:00Z",
+        "gpuAmount": 0.21122360602021217,
+        "podId": "2p58yft8rurow1",
+        "startTime": "2026-10-25T00:00:00Z",
+        "totalAmount": 0.21400138374883682
+      }
+    ]
+  }
+}

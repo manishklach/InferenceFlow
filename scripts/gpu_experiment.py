@@ -27,8 +27,8 @@ def append(path, data):
 
 def workload(count, run_id):
     """Unique synthetic content; real tokenizer lengths are measured by the API."""
-    if count not in (10, 100, 1000):
-        raise ValueError("Choose 10, 100 or 1000 requests")
+    if count not in (10, 100, 500, 1000):
+        raise ValueError("Choose 10, 100, 500 or 1000 requests")
     rows = []
     for index in range(count):
         medium = index % 5 == 0
@@ -229,7 +229,7 @@ def compact_engine_sample(record):
              "vllm:generation_tokens_total", "vllm:iteration_tokens_total_count", "vllm:iteration_tokens_total_sum",
              "vllm:gpu_cache_usage_perc", "vllm:kv_cache_usage_perc", "vllm:request_success_total"}
     if "prometheus" in record:
-        metrics = {}
+        metrics: dict[str, float] = {}
         try:
             for family in text_string_to_metric_families(record["prometheus"]):
                 for sample in family.samples:
@@ -283,7 +283,7 @@ def main():
     run = sub.add_parser("run", help="Execute only after explicit approval; never provisions GPUs")
     run.add_argument("--workload-file", help="Prepared identical synthetic workload shared across comparison arms")
     for command in (prepare, run):
-        command.add_argument("--count", type=int, choices=[10, 100, 1000], required=True)
+        command.add_argument("--count", type=int, choices=[10, 100, 500, 1000], required=True)
         command.add_argument("--run-id", required=True)
         command.add_argument("--output", required=True)
     run.add_argument("--execute", action="store_true")
@@ -330,9 +330,9 @@ def main():
         data = {**summarize(jobs, results, elapsed, args.cost_usd),
                 "cost_kind": args.cost_kind, "cost_reference": args.cost_reference,
                 "coverage": args.directories, "throughput_window": "sum of measured stage wall times; excludes cold/idle time"}
-        output = Path(args.output)
-        output.parent.mkdir(parents=True, exist_ok=True)
-        with output.open("x", encoding="utf-8") as stream:
+        output_path = Path(args.output)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        with output_path.open("x", encoding="utf-8") as stream:
             json.dump(data, stream, indent=2)
         print("Offline cost report written; no provider, inference or wallet API called")
 

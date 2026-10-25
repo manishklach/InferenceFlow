@@ -1,0 +1,45 @@
+{
+  "kind": "preparation_only_no_resources",
+  "workloads": {
+    "smoke-10": {
+      "count": 10,
+      "sha256": "70e8829a2132dfb1c5832fbab4d2f788109eda75bcf476c51e2a3cf41b826807"
+    },
+    "comparison-100": {
+      "count": 100,
+      "sha256": "da762a0ef78ae00206b4428522a05ebdc700f3ef636dfe7a91de9255cbf3546a"
+    },
+    "comparison-500": {
+      "count": 500,
+      "sha256": "6f64d37dc03959a316084e661f1f5dbd3804a02252ec6e8d5a2dad784e86070c"
+    },
+    "interruption-100": {
+      "count": 100,
+      "sha256": "815d38a73cc538153064efcefd6007d9a4cee86e0f52285344946ccaf9dfde43"
+    },
+    "interruption-500": {
+      "count": 500,
+      "sha256": "7fd953c143fe910d02bfebf39ff8758ca7351e05255bc8d0d145f05692148b8e"
+    }
+  },
+  "matched_100_policies": [
+    "sequential",
+    "baseline",
+    "adaptive"
+  ],
+  "paid_execution_authorized": false,
+  "required_gates": [
+    "fresh_quote_and_approval",
+    "independent_armed_cleanup",
+    "live_worker_canary_challenge",
+    "smoke_10_and_coverage",
+    "matched_100_and_audits",
+    "interruption_and_billing",
+    "remaining_time_and_budget_before_500"
+  ],
+  "maximum_original_budget_usd": 10,
+  "inference_guard_budget_usd": 8,
+  "public_beta": false,
+  "stripe": false,
+  "automatic_provisioning": false
+}

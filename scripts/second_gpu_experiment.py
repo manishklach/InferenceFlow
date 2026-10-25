@@ -10,12 +10,15 @@ from pathlib import Path
 from scripts.gpu_experiment import workload
 
 
-def prepare(folder):
+def prepare(folder, validation_count=1000):
+    if validation_count not in (500, 1000):
+        raise ValueError("Validation count must be 500 or 1000")
     folder.mkdir(parents=True, exist_ok=False)
     files = {}
     for name, count, prefix in (("smoke-10", 10, "smoke"), ("comparison-100", 100, "matched"),
-                                ("comparison-1000", 1000, "matched"),
-                                ("interruption-100", 100, "gpu-test-interruption")):
+                                (f"comparison-{validation_count}", validation_count, "matched"),
+                                ("interruption-100", 100, "gpu-test-interruption"),
+                                (f"interruption-{validation_count}", validation_count, "gpu-test-interruption")):
         content = (json.dumps(workload(count, prefix), sort_keys=True, indent=2)+"\n").encode()
         (folder/(name+".json")).write_bytes(content)
         files[name] = {"count": count, "sha256": hashlib.sha256(content).hexdigest()}
@@ -23,7 +26,7 @@ def prepare(folder):
             "matched_100_policies": ["sequential", "baseline", "adaptive"],
             "paid_execution_authorized": False, "required_gates": ["fresh_quote_and_approval", "independent_armed_cleanup",
                 "live_worker_canary_challenge", "smoke_10_and_coverage", "matched_100_and_audits",
-                "interruption_and_billing", "remaining_time_and_budget_before_1000"],
+                "interruption_and_billing", f"remaining_time_and_budget_before_{validation_count}"],
             "maximum_original_budget_usd": 10, "inference_guard_budget_usd": 8,
             "public_beta": False, "stripe": False, "automatic_provisioning": False}
     (folder/"plan.json").write_text(json.dumps(plan, indent=2)+"\n", encoding="utf-8")
@@ -79,6 +82,7 @@ def main():
     sub = parser.add_subparsers(dest="action", required=True)
     p = sub.add_parser("prepare")
     p.add_argument("--output", required=True)
+    p.add_argument("--validation-count", type=int, choices=[500, 1000], default=1000)
     p = sub.add_parser("coverage")
     p.add_argument("--samples", required=True)
     p.add_argument("--start", required=True)
@@ -86,7 +90,7 @@ def main():
     p.add_argument("--output", required=True)
     args = parser.parse_args()
     if args.action == "prepare":
-        prepare(Path(args.output))
+        prepare(Path(args.output), args.validation_count)
         print("Prepared identical workloads and gates; no network call or provisioning")
     else:
         samples = [json.loads(line) for line in Path(args.samples).read_text(encoding="utf-8").splitlines() if line]
