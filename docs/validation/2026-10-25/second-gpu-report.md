@@ -1,5 +1,11 @@
 # Second real GPU experiment — measured results
 
+## Posted billing addendum
+
+A subsequent October 25 RunPod `list_pod_billing` read for exact pod `2p58yft8rurow1` returned one daily record: GPU **$0.21122360602021217**, disk **$0.002777777728624642**, CPU **$0**, total **$0.21400138374883682**. [Raw provider billing response](second-gpu-evidence/posted-billing.json). This supersedes the pending-bill status below while preserving the original estimate and report provenance. Dividing the posted total by 14,135 successful output tokens gives **$15.13982 per million output tokens**, including the entire rental's GPU/disk charges. It excludes any separate control-plane costs and is not a quality-adjusted commercial margin. A fresh Pod inventory was empty; the console showed $9.67 balance. Account balance is rounded and is not a substitute for itemized billing reconciliation.
+
+## Original experiment report
+
 October 25, 2026, 05:55–06:16 PDT. **410 accepted requests succeeded; the 1,000-request stage was not admitted. The GPU is terminated. NO-GO for commercial launch, adaptive-savings claims or 1,000-request validation.** Small-run execution, real batching, controlled worker recovery and customer accounting have useful positive evidence.
 
 ## Configuration and provenance
