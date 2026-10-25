@@ -1,0 +1,287 @@
+{
+  "pod_id": "2p58yft8rurow1",
+  "gpu": "NVIDIA L4 24 GB",
+  "cloud": "SECURE",
+  "data_center": "US-MO-2",
+  "provider_created_at": "2026-10-25T12:55:11.738Z",
+  "termination_confirmed_at": "2026-10-25T13:16:40.885666+00:00",
+  "rental_seconds_upper_bound": 1289.147665977478,
+  "quote_gpu_usd_hour": 0.59,
+  "quote_disk_usd_hour": 0.011,
+  "quote_based_cost_estimate_usd": 0.21521604090346227,
+  "actual_provider_bill_usd": null,
+  "actual_bill_status": "No bucket record returned yet; zero records is not zero cost",
+  "fully_loaded_estimated_usd_per_million_successful_output_tokens": 15.225754573998039,
+  "successful_requests": 410,
+  "input_tokens": 148698,
+  "output_tokens": 14135,
+  "customer_captured_micro_usd": 19351,
+  "usage_records": 410,
+  "capture_sources": 410,
+  "retried_attempts": 4,
+  "all_accepted_60_minute_completion_rate": 1.0,
+  "thousand_request_test": "NOT ADMITTED: staging supervisor failed on next policy switch; no 1000-request performance claim",
+  "hardware_coverage": {
+    "covered_seconds": 1015.6498348712921,
+    "unknown_seconds": 273.4978311061859,
+    "coverage_fraction": 0.7878460021887329,
+    "utilization_percent_on_covered_intervals": 33.063926072139026,
+    "full_lifetime_utilization_percent": null,
+    "method": "1.5-second maximum zero-order hold; unknown intervals are not zero"
+  },
+  "cold_start": {
+    "phases": {
+      "pod_allocation": {
+        "seconds": 1.962,
+        "start_event": "pod_create_requested",
+        "end_event": "image_pull_started"
+      },
+      "image_pull": {
+        "seconds": 135.0,
+        "start_event": "image_pull_started",
+        "end_event": "image_pull_finished"
+      },
+      "worker_bootstrap": {
+        "seconds": 26.691288,
+        "start_event": "container_bootstrap_started",
+        "end_event": "worker_environment_ready"
+      },
+      "model_download": {
+        "seconds": 25.624724,
+        "start_event": "model_download_started",
+        "end_event": "model_download_finished"
+      },
+      "engine_initialization_inclusive": {
+        "seconds": 150.504343,
+        "start_event": "engine_launch_requested",
+        "end_event": "engine_health_ready"
+      },
+      "model_weight_loading": {
+        "seconds": 1.829564,
+        "start_event": "model_loading_started",
+        "end_event": "model_loading_finished"
+      },
+      "compilation": {
+        "seconds": 53.81,
+        "start_event": "compilation_started",
+        "end_event": "compilation_finished"
+      },
+      "health_readiness_tail": {
+        "seconds": 30.107557,
+        "start_event": "compilation_finished",
+        "end_event": "engine_health_ready"
+      },
+      "rental_to_engine_health": {
+        "seconds": 342.125299,
+        "start_event": "pod_created",
+        "end_event": "engine_health_ready"
+      }
+    },
+    "additive": false,
+    "warning": "Engine initialization includes loading/compilation; do not sum inclusive phases. Provider image markers are required for allocation/pull separation; missing markers stay unknown. Download includes cache/metadata checks."
+  },
+  "phase_events": [
+    {
+      "phase": "image_pull_started",
+      "observed_at": "2026-10-25T12:55:13Z",
+      "source": "provider_first_download_observation"
+    },
+    {
+      "phase": "image_pull_finished",
+      "observed_at": "2026-10-25T12:57:28Z",
+      "source": "provider_pull_completion"
+    },
+    {
+      "phase": "container_bootstrap_started",
+      "observed_at": "2026-10-25T12:57:30.171782+00:00",
+      "source": "pod_utc_marker"
+    },
+    {
+      "phase": "worker_environment_ready",
+      "observed_at": "2026-10-25T12:57:56.863070+00:00",
+      "source": "pod_utc_marker"
+    },
+    {
+      "phase": "model_download_started",
+      "observed_at": "2026-10-25T12:57:57.427223+00:00",
+      "source": "pod_utc_marker"
+    },
+    {
+      "phase": "model_download_finished",
+      "observed_at": "2026-10-25T12:58:23.051947+00:00",
+      "source": "pod_utc_marker"
+    },
+    {
+      "phase": "engine_launch_requested",
+      "observed_at": "2026-10-25T12:58:23.358956+00:00",
+      "source": "pod_utc_marker"
+    },
+    {
+      "phase": "model_loading_finished",
+      "observed_at": "2026-10-25T12:58:56.027377+00:00",
+      "source": "provider_log_of_engine_report"
+    },
+    {
+      "phase": "model_loading_started",
+      "observed_at": "2026-10-25T12:58:54.197813+00:00",
+      "source": "derived_from_engine_reported_duration"
+    },
+    {
+      "phase": "compilation_finished",
+      "observed_at": "2026-10-25T13:00:23.755742+00:00",
+      "source": "provider_log_of_engine_report"
+    },
+    {
+      "phase": "compilation_started",
+      "observed_at": "2026-10-25T12:59:29.945742+00:00",
+      "source": "derived_from_engine_reported_duration"
+    },
+    {
+      "phase": "engine_health_ready",
+      "observed_at": "2026-10-25T13:00:53.863299+00:00",
+      "source": "pod_utc_marker"
+    },
+    {
+      "phase": "pod_create_requested",
+      "observed_at": "2026-10-25T12:55:11.038Z",
+      "source": "operator_request_utc"
+    },
+    {
+      "phase": "pod_created",
+      "observed_at": "2026-10-25T12:55:11.738Z",
+      "source": "RunPod get_pod"
+    }
+  ],
+  "cleanup": {
+    "independent_watchdog_run": 40194830746,
+    "finalizer_success": true,
+    "fresh_get_status": 404,
+    "pod_inventory_empty": true,
+    "network_volume_inventory_empty": true,
+    "persistent_storage_created": false
+  },
+  "stages": {
+    "second-smoke-live": {
+      "completion_seconds": 9.523637,
+      "p50_p95_p99_seconds": {
+        "p50": 6.164992,
+        "p95": 9.523637,
+        "p99": 9.523637
+      },
+      "input_tokens": 3618,
+      "output_tokens": 346,
+      "peak_engine_running": 4.0,
+      "peak_engine_waiting": 0.0,
+      "telemetry": {
+        "passed": true,
+        "required_coverage_fraction": 0.9,
+        "coverage_fraction": 1.0,
+        "covered_seconds": 9.523637056350708,
+        "unknown_seconds": 0,
+        "valid_unique_samples": 788,
+        "invalid_samples": 169,
+        "gpu_utilization_percent_covered_intervals_only": 32.1225482149481,
+        "method": "Zero-order hold capped at 1.5 seconds per sample; duplicates deduplicated. Uncovered intervals are unknown, never zero. This gate covers only the specified smoke window, not the entire rental."
+      },
+      "quote_allocated_stage_cost_usd": 0.0015899182880555558
+    },
+    "second-sequential": {
+      "completion_seconds": 236.222171,
+      "p50_p95_p99_seconds": {
+        "p50": 121.760319,
+        "p95": 225.070551,
+        "p99": 234.152022
+      },
+      "input_tokens": 36270,
+      "output_tokens": 3455,
+      "peak_engine_running": 1.0,
+      "peak_engine_waiting": 0.0,
+      "telemetry": {
+        "passed": true,
+        "required_coverage_fraction": 0.9,
+        "coverage_fraction": 1.0,
+        "covered_seconds": 236.22217106819153,
+        "unknown_seconds": 0,
+        "valid_unique_samples": 788,
+        "invalid_samples": 169,
+        "gpu_utilization_percent_covered_intervals_only": 54.43266834818886,
+        "method": "Zero-order hold capped at 1.5 seconds per sample; duplicates deduplicated. Uncovered intervals are unknown, never zero. This gate covers only the specified smoke window, not the entire rental."
+      },
+      "quote_allocated_stage_cost_usd": 0.03943597910305556
+    },
+    "second-baseline": {
+      "completion_seconds": 68.943523,
+      "p50_p95_p99_seconds": {
+        "p50": 35.418084,
+        "p95": 65.825163,
+        "p99": 68.030353
+      },
+      "input_tokens": 36270,
+      "output_tokens": 3445,
+      "peak_engine_running": 4.0,
+      "peak_engine_waiting": 0.0,
+      "telemetry": {
+        "passed": true,
+        "required_coverage_fraction": 0.9,
+        "coverage_fraction": 1.0,
+        "covered_seconds": 68.94352316856384,
+        "unknown_seconds": 0,
+        "valid_unique_samples": 788,
+        "invalid_samples": 169,
+        "gpu_utilization_percent_covered_intervals_only": 74.9835940123753,
+        "method": "Zero-order hold capped at 1.5 seconds per sample; duplicates deduplicated. Uncovered intervals are unknown, never zero. This gate covers only the specified smoke window, not the entire rental."
+      },
+      "quote_allocated_stage_cost_usd": 0.011509738145277776
+    },
+    "second-adaptive": {
+      "completion_seconds": 80.642818,
+      "p50_p95_p99_seconds": {
+        "p50": 47.193798,
+        "p95": 78.257071,
+        "p99": 80.421658
+      },
+      "input_tokens": 36270,
+      "output_tokens": 3457,
+      "peak_engine_running": 4.0,
+      "peak_engine_waiting": 0.0,
+      "telemetry": {
+        "passed": true,
+        "required_coverage_fraction": 0.9,
+        "coverage_fraction": 1.0,
+        "covered_seconds": 80.64281797409058,
+        "unknown_seconds": 0,
+        "valid_unique_samples": 788,
+        "invalid_samples": 169,
+        "gpu_utilization_percent_covered_intervals_only": 64.85776981215028,
+        "method": "Zero-order hold capped at 1.5 seconds per sample; duplicates deduplicated. Uncovered intervals are unknown, never zero. This gate covers only the specified smoke window, not the entire rental."
+      },
+      "quote_allocated_stage_cost_usd": 0.013462870449444445
+    },
+    "second-interruption": {
+      "completion_seconds": 87.021995,
+      "p50_p95_p99_seconds": {
+        "p50": 46.784308,
+        "p95": 82.792263,
+        "p99": 85.936382
+      },
+      "input_tokens": 36270,
+      "output_tokens": 3432,
+      "peak_engine_running": 4.0,
+      "peak_engine_waiting": 0.0,
+      "telemetry": {
+        "passed": true,
+        "required_coverage_fraction": 0.9,
+        "coverage_fraction": 1.0,
+        "covered_seconds": 87.02199506759644,
+        "unknown_seconds": 0,
+        "valid_unique_samples": 788,
+        "invalid_samples": 169,
+        "gpu_utilization_percent_covered_intervals_only": 73.93077400189769,
+        "method": "Zero-order hold capped at 1.5 seconds per sample; duplicates deduplicated. Uncovered intervals are unknown, never zero. This gate covers only the specified smoke window, not the entire rental."
+      },
+      "quote_allocated_stage_cost_usd": 0.014527838609722222
+    }
+  },
+  "decision": "NO-GO commercial launch, savings claim and 1000-request validation; GO only for preserved small-run recovery/accounting evidence",
+  "remaining_credit_console_usd": 9.67
+}
