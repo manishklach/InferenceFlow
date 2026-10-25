@@ -36,6 +36,12 @@ No build step is needed. For repeatable checks, install `beautifulsoup4 markdown
 
 The article distinguishes the engineering vision from measured results: real GPU benchmarks remain pending, the 60-minute target is not an SLA, and vLLM owns continuous batching. No backend, billing or GPU configuration is changed by this publication.
 
-## Pending validation fixes
+## Published validation fixes and compute rates
 
-The October23 follow-up adds canonical/social metadata, explicit prototype copy, stronger label contrast and private indexing directives. These changes are prepared, not deployed; publication requires the user confirmation requested by that task. Live source remains managed Sites commit809105c135da7388b49c5aa743693876d04b7724. See the repository [validation report](../../docs/validation/2026-10-23/website-report.md). GitHub commits do not publish Sites.
+The October23 follow-up adds canonical/social metadata, explicit prototype copy, stronger label contrast and private indexing directives. Those retained changes and the GPU/CPU rates page were published through Sites; the latest verified deployment is version 5, managed source commit `a1d27df7ebb46c710aaac4763ec171e2886d87f3`. GitHub commits alone do not publish Sites.
+
+The main navigation now links to [GPU Hourly Rates](https://inferenceflow-execution.abc123xyza.chatgpt.site/gpu-hourly-rates/), with all named RunPod GPU catalog entries across Community/Secure, search/stock filters, per-model history and daily summaries. The same page includes [CPU rates](https://inferenceflow-execution.abc123xyza.chatgpt.site/gpu-hourly-rates/#cpu-rates), six CPU Pod families, per-vCPU hourly units and estimated 2–32-vCPU instance costs. Availability is explicitly measured at two vCPUs only.
+
+`dist/gpu-hourly-rates/` is a buildless page. It reads public `docs/gpu-rates/observations.jsonl` and `docs/cpu-rates/observations.jsonl` from this repository's main branch, falling back to labeled bundled snapshots. Valid raw observations are retained; invalidated renderer replays are excluded from graphs/exports, and missing collections stay unknown. Hourly collection is a local Codex follow-up, dependent on app/connector access. It updates scoped data files rather than redeploying the site. No RunPod credential is shipped to the browser. B300 Secure $8.99/hour and CPU3 Compute-Optimized $0.03/vCPU-hour were verified in the live page on October25.
+
+Validation: JavaScript syntax checks passed, browser search matched B300, CPU selection correctly converted eight vCPUs to $0.24/hour, native Sites publication succeeded and the deployed page read both GitHub histories. [Second GPU backend experiment](../../docs/validation/2026-10-25/second-gpu-report.md) is separate: 410 successes, recovery/accounting evidence, no large-run or commercial-readiness claim. The site audience is unchanged.
