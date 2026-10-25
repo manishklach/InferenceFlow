@@ -36,6 +36,8 @@ class Submit(Strict):
 
 class Completion(Strict):
     epoch: int
+    worker_start_delay_seconds: float | None = Field(default=None, ge=0, le=86400, allow_inf_nan=False)
+    worker_engine_seconds: float | None = Field(default=None, ge=0, le=86400, allow_inf_nan=False)
     output_text: str | None = Field(default=None, max_length=200000)
     input_tokens: int | None = Field(default=None, ge=0)
     output_tokens: int | None = Field(default=None, ge=0)
@@ -65,6 +67,14 @@ class Checkout(Strict):
 
 class Poll(Strict):
     available_slots: int = Field(default=16, ge=0, le=16)
+
+
+class ProbeRequest(Strict):
+    worker_id: str = Field(min_length=1, max_length=100)
+
+
+class ProbeResponse(Strict):
+    challenge: str = Field(min_length=1, max_length=100)
 
 
 class ActiveLease(Strict):

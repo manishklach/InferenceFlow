@@ -10,7 +10,7 @@ def build_payload():
     lock = json.loads((root / "infra/model-lock.json").read_text(encoding="utf-8"))
     launcher = (folder / "launch.sh").read_text(encoding="utf-8")
     overlays = ["apps/worker/engines.py", "apps/worker/main.py", "packages/common/config.py",
-                "scripts/gpu_experiment.py", "scripts/experiment_worker.py"]
+                "scripts/gpu_experiment.py", "scripts/experiment_worker.py", "scripts/experiment_phases.py"]
     hashes = {}
     overlay_commands = []
     for index, name in enumerate(overlays):
@@ -20,6 +20,7 @@ def build_payload():
         overlay_commands.append(f"cat > {name} <<'{marker}'\n{source}\n{marker}\n")
     # Reviewed overlays are embedded literally and hashed; never fetch floating main.
     bootstrap = """set -euo pipefail
+python3 -c 'import datetime,json; print(json.dumps({"event":"experiment_phase","phase":"container_bootstrap_started","observed_at":datetime.datetime.now(datetime.timezone.utc).isoformat()}),flush=True)'
 : "${CONTROL_PLANE_URL:?Approved reachable HTTPS control plane required}"
 : "${WORKER_BOOTSTRAP_TOKEN:?Scoped experiment credential required}"
 [[ "$CONTROL_PLANE_URL" == https://* && "$CONTROL_PLANE_URL" != *REPLACE_* ]] || exit 2

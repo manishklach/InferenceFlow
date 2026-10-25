@@ -52,6 +52,8 @@ class ComparisonTests(unittest.TestCase):
                 (target / "summary.json").write_text(json.dumps(summary), encoding="utf-8")
                 paths.append(str(target))
             self.assertIn("sequential", compare(paths, include_sequential=True)["rows"][0])
+            subset = [p for p in paths if Path(p).name.endswith('-100')]
+            self.assertEqual(len(compare(subset, include_sequential=True, counts=(100,))["rows"]), 1)
 
     def test_unmatched_inputs_and_failed_audits_rejected(self):
         with tempfile.TemporaryDirectory() as directory:

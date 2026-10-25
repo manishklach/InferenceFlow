@@ -84,6 +84,10 @@ class ExperimentTools(unittest.TestCase):
 
         def respond(request):
             path = request.url.path
+            if path == "/internal/experiments/readiness":
+                return httpx.Response(200, json={"challenge": "unit-live-proof"})
+            if path == "/internal/experiments/readiness/unit-live-proof":
+                return httpx.Response(200, json={"ready": True})
             if path == "/v1/models":
                 return httpx.Response(200, json={"models": [{"execution_mode": "vllm", "revision": revision,
                                                              "tokenizer_revision": revision}]})

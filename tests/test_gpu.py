@@ -1,6 +1,7 @@
 import os
 import pytest
 from packages.python_sdk import InferenceFlowClient
+from scripts.gpu_experiment import live_readiness
 
 
 @pytest.mark.skipif(os.getenv("RUN_GPU_E2E") != "1", reason="Requires explicitly configured real GPU stack")
@@ -9,6 +10,12 @@ def test_real_gpu():
         os.environ["INFERENCEFLOW_API_KEY"], os.getenv("CONTROL_PLANE_URL", "http://localhost:8080")
     ) as c:
         assert c.get_models()["models"][0]["execution_mode"] != "mock"
+        metrics = os.environ["METRICS_TOKEN"]
+        report = c.client.get('/internal/scheduling/report', headers={'Authorization': 'Bearer '+metrics})
+        report.raise_for_status()
+        workers = report.json()['workers']
+        assert len(workers) == 1
+        proof = live_readiness(c, metrics, workers[0]['id'])
         j = c.create_job(
             [
                 {
@@ -16,7 +23,7 @@ def test_real_gpu():
                     "messages": [{"role": "user", "content": "Name the capital of France."}],
                     "max_output_tokens": 32,
                 }
-            ]
+            ], experiment_readiness=proof
         )
         assert c.wait_for_job(j["id"], timeout=600)["status"] == "succeeded"
         r = c.get_results(j["id"])["items"][0]

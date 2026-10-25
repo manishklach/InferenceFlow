@@ -7,6 +7,7 @@ from sqlalchemy import select, text
 from packages.common.db import Session, Job, Work, Usage, Ledger, ExecutionAttempt
 from packages.common.service import reconcile
 from packages.common.performance import percentiles
+from packages.common.experiment_timing import components
 
 
 def audit_run(session, job_ids, require_vllm=True):
@@ -22,6 +23,12 @@ def audit_run(session, job_ids, require_vllm=True):
     captures = {entry.source: entry for entry in session.scalars(select(Ledger).where(
         Ledger.tenant_id == jobs[0].tenant_id, Ledger.source.in_([rid + ":capture" for rid in ids])))}
     attempts = list(session.scalars(select(ExecutionAttempt).where(ExecutionAttempt.request_id.in_(ids))))
+    breakdown = {}
+    for row in rows:
+        matching = [a for a in attempts if a.request_id == row.id]
+        first = min(matching, key=lambda a: a.epoch) if matching else None
+        for name, seconds in components(lookup[row.job_id], row, first).items():
+            breakdown.setdefault(name, []).append(seconds)
     errors, latencies, waits = [], [], []
     within = 0
     for row in rows:
@@ -53,6 +60,10 @@ def audit_run(session, job_ids, require_vllm=True):
     if rows and all(row.completed_at is not None for row in rows):
         completion_seconds = (max(row.completed_at for row in rows) - min(job.created_at for job in jobs)).total_seconds()
     return {"scope": "selected_single_tenant_jobs", "read_only": True,
+            "first_dispatch_components_seconds": {name: {"measured": sum(v is not None for v in values),
+                "missing": sum(v is None for v in values), "percentiles": percentiles([v for v in values if v is not None])}
+                for name, values in breakdown.items()},
+            "timing_semantics": "Server UTC through worker poll; worker monotonic from poll receipt to engine start. Network/clock residual is unknown. First attempt only; retry counts reported separately.",
             "job_ids": job_ids, "accepted_requests": len(rows), "measurement_modes": modes,
             "statuses": dict(Counter(r.status for r in rows)), "errors": errors, "passed": not errors,
             "request_e2e_seconds_successful_only": percentiles(latencies),

@@ -30,7 +30,15 @@ cleanup() {
 }
 trap cleanup EXIT
 trap 'exit 143' TERM INT
+$worker_python -m scripts.experiment_phases mark --phase worker_environment_ready
+# Collect hardware during download/initialization too. Missing engine metrics are
+# explicit until its loopback listener is ready; canary tokens are overhead.
+$worker_python -m scripts.gpu_experiment collect --execute \
+  --output /opt/experiment-evidence/engine.jsonl --seconds 7200 --interval 1 &
+telemetry_pid=$!
+timeout 900 python3 -m scripts.experiment_phases download --execute
 started=$SECONDS
+$worker_python -m scripts.experiment_phases mark --phase engine_launch_requested
 python3 -m vllm.entrypoints.openai.api_server \
   --host 127.0.0.1 --port 8000 \
   --model "$MODEL_REPO" --revision "$MODEL_REVISION" \
@@ -44,15 +52,14 @@ until curl --silent --fail --max-time 5 http://127.0.0.1:8000/health >/dev/null;
   if (( SECONDS - started > 900 )); then echo 'Engine readiness timeout; TERMINATE POD at provider'; exit 4; fi
   sleep 5
 done
-# Startup-to-health includes downloads and initialization. It is not weight-load
-# time; keep the loading observation unknown until measured from engine logs.
+$worker_python -m scripts.experiment_phases mark --phase engine_health_ready
+# The explicit model-download phase precedes this engine-only interval. Compare
+# full rental-to-health via phase markers, not this interval against older runs.
 echo "engine_start_to_health_seconds=$((SECONDS - started))"
 export WORKER_MODEL_LOADING_SECONDS=0
+kill -0 "$telemetry_pid" 2>/dev/null || exit 6
 # Metrics/hardware samples go to both ephemeral disk and provider stdout logs.
 # This collector does not contact Runpod or modify the customer ledger.
-$worker_python -m scripts.gpu_experiment collect --execute \
-  --output /opt/experiment-evidence/engine.jsonl --seconds 7200 --interval 1 &
-telemetry_pid=$!
 restarts=0
 while kill -0 "$engine_pid" 2>/dev/null; do
   if [[ -n "${EXPERIMENT_INTERRUPT_PREFIX:-}" ]]; then
@@ -64,7 +71,7 @@ while kill -0 "$engine_pid" 2>/dev/null; do
   fi
   worker_pid=$!
   status=0
-  wait -n "$engine_pid" "$worker_pid" || status=$?
+  wait -n "$engine_pid" "$worker_pid" "$telemetry_pid" || status=$?
   if ! kill -0 "$engine_pid" 2>/dev/null; then break; fi
   if (( status == 75 && restarts == 0 )); then
     restarts=1

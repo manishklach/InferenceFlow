@@ -13,10 +13,11 @@ from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST, REG
 from packages.common.metrics import PlatformCollector
 
 from packages.common.config import settings
-from packages.common.db import Session, Tenant, Wallet, Key, Job, Work, Worker, Ledger, now, uid
+from packages.common.db import Session, Tenant, Wallet, Key, Job, Work, Worker, WorkerProbe, Ledger, now, uid
 from packages.common.security import digest_candidates, digest, token, encrypt, decrypt, validate_url
-from packages.common.schemas import Submit, Completion, Registration, NamedKey, Checkout, Telemetry, Poll
+from packages.common.schemas import Submit, Completion, Registration, NamedKey, Checkout, Telemetry, Poll, ProbeRequest, ProbeResponse
 from packages.common import service as svc
+from packages.common.experiment_readiness import compatible as experiment_compatible
 from packages.common.payments import handle_event
 from apps.api.oidc import router as oidc_router
 
@@ -48,6 +49,7 @@ requests_metric = Counter("inferenceflow_http_requests_total", "HTTP requests", 
 
 @app.middleware("http")
 async def boundary(request, call_next):
+    request.state.received_at = now()
     rid = "req_" + uid()
     request.state.request_id = rid
     # Stream actual body to enforce limits even for chunked transfer.
@@ -277,7 +279,8 @@ def models(request: Request, t=Depends(customer)):
 def create_job(
     request: Request, body: Submit, idempotency_key: str = Header(default=""), t=Depends(customer), s=Depends(db)
 ):
-    return result(request, svc.view(s, svc.submit(s, t, body, idempotency_key)))
+    return result(request, svc.view(s, svc.submit(s, t, body, idempotency_key,
+                  readiness=request.headers.get("X-Experiment-Readiness"), received_at=request.state.received_at)))
 
 
 @app.get("/v1/jobs")
@@ -609,7 +612,55 @@ def poll(request: Request, body: Poll | None = None, wid=Depends(worker_auth), s
                 },
             }
         )
-    return result(request, {"items": out})
+    challenge = s.scalar(select(WorkerProbe).where(WorkerProbe.worker_id == wid,
+        WorkerProbe.generation == node.generation, WorkerProbe.expires_at > now(),
+        WorkerProbe.completed_at.is_(None)).order_by(WorkerProbe.created_at.desc()).limit(1))
+    if challenge:
+        challenge.delivered_at = challenge.delivered_at or now()
+    return result(request, {"items": out, "readiness_challenge": challenge.id if challenge else None})
+
+
+def experiment_operator(authorization: str = Header(default="")):
+    cfg = settings()
+    if not cfg.reviewed_gpu_experiment_enabled:
+        raise svc.Problem(404, "not_found")
+    if not cfg.metrics_token or not secrets.compare_digest(authorization, "Bearer " + cfg.metrics_token):
+        raise svc.Problem(401, "metrics_unauthorized")
+
+
+@app.post("/internal/experiments/readiness", dependencies=[Depends(experiment_operator)])
+def request_probe(body: ProbeRequest, s=Depends(db)):
+    worker = s.scalar(select(Worker).where(Worker.id == body.worker_id).with_for_update())
+    if not experiment_compatible(worker) or worker.execution_mode != "vllm" or worker.expires_at <= now():
+        raise svc.Problem(503, "experiment_worker_not_ready")
+    # Invalidate older pending/completed challenges. No cached heartbeat is proof.
+    for previous in s.scalars(select(WorkerProbe).where(WorkerProbe.worker_id == worker.id,
+                                                      WorkerProbe.expires_at > now()).with_for_update()):
+        previous.expires_at = now()
+    probe = WorkerProbe(worker_id=worker.id, generation=worker.generation, expires_at=now()+timedelta(seconds=30))
+    s.add(probe)
+    s.flush()
+    return {"challenge": probe.id, "expires_at": probe.expires_at, "ready": False}
+
+
+@app.get("/internal/experiments/readiness/{challenge}", dependencies=[Depends(experiment_operator)])
+def probe_status(challenge: str, s=Depends(db)):
+    probe = s.get(WorkerProbe, challenge)
+    worker = s.get(Worker, probe.worker_id) if probe else None
+    ready = bool(probe and worker and experiment_compatible(worker) and probe.completed_at and probe.expires_at > now()
+                 and not probe.consumed_at and probe.generation == worker.generation and worker.expires_at > now())
+    return {"ready": ready}
+
+
+@app.post("/internal/workers/readiness")
+def acknowledge_probe(body: ProbeResponse, wid=Depends(worker_auth), s=Depends(db)):
+    worker = s.scalar(select(Worker).where(Worker.id == wid).with_for_update())
+    probe = s.scalar(select(WorkerProbe).where(WorkerProbe.id == body.challenge).with_for_update())
+    if (not probe or not probe.delivered_at or probe.worker_id != wid or probe.generation != worker.generation or probe.expires_at <= now()
+            or probe.consumed_at or worker.execution_mode != "vllm"):
+        raise svc.Problem(409, "stale_readiness_challenge")
+    probe.completed_at = probe.completed_at or now()
+    return {"ready": True}
 
 
 @app.post("/internal/workers/requests/{rid}/finalize")

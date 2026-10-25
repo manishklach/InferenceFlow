@@ -5,7 +5,9 @@ import hashlib
 from pathlib import Path
 
 
-def compare(directories, include_sequential=False):
+def compare(directories, include_sequential=False, counts=(10, 100, 1000)):
+    if not counts or len(counts) != len(set(counts)) or any(n not in (10, 100, 1000) for n in counts):
+        raise ValueError("Select unique 10/100/1000 request counts")
     groups = {}
     for directory in directories:
         folder = Path(directory)
@@ -15,6 +17,8 @@ def compare(directories, include_sequential=False):
             raise ValueError("Passing real-mode timing/billing audit required")
         policy = summary["policy"]
         count = summary["accepted_requests"]
+        if audit.get("statuses", {}).get("succeeded") != count:
+            raise ValueError("All accepted requests must succeed before throughput comparison")
         policies = ("sequential", "baseline", "adaptive") if include_sequential else ("baseline", "adaptive")
         if count not in (10, 100, 1000) or policy not in policies:
             raise ValueError("Comparison requires selected policies and 10/100/1000 requests")
@@ -40,7 +44,7 @@ def compare(directories, include_sequential=False):
                                  "cost_reference": cost.get("cost_reference"),
                                  "output_tokens_per_second": summary["output_tokens_per_second"]}
     rows = []
-    for count in (10, 100, 1000):
+    for count in counts:
         if (count, "baseline") not in groups or (count, "adaptive") not in groups:
             raise ValueError(f"Missing matched pair for {count}")
         base, adaptive = groups[count, "baseline"], groups[count, "adaptive"]
@@ -73,8 +77,9 @@ def main():
     parser.add_argument("--directories", nargs="+", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument("--include-sequential", action="store_true")
+    parser.add_argument("--counts", nargs="+", type=int, choices=[10, 100, 1000], default=[10, 100, 1000])
     args = parser.parse_args()
-    report = compare(args.directories, args.include_sequential)
+    report = compare(args.directories, args.include_sequential, args.counts)
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("x", encoding="utf-8") as stream:
