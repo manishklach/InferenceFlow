@@ -4,6 +4,7 @@ import argparse
 from datetime import datetime, timedelta, timezone
 import json
 import os
+from pathlib import Path
 import re
 import signal
 import subprocess
@@ -176,6 +177,16 @@ def start():
     raise RuntimeError("Real host startup timed out")
 
 
+def host_alive():
+    try:
+        pid = int((RUNTIME / "host.pid").read_text())
+        os.kill(pid, 0)
+        # The workflow is Linux-only. A zombie cannot serve traffic.
+        return Path(f"/proc/{pid}/stat").read_text().split(") ", 1)[1].split()[0] != "Z"
+    except (OSError, ValueError, IndexError):
+        return False
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action", choices=["start", "serve", "wait", "stop", "seed"])
@@ -200,6 +211,8 @@ def main():
                 if (RUNTIME / "host-error.json").exists() or not stopped["export_sealed"] or stopped["stop_returncode"]:
                     raise RuntimeError("Host stopped without clean export/teardown")
                 return
+            if not host_alive():
+                raise RuntimeError("Control host process exited without a clean shutdown record")
             time.sleep(2)
         raise RuntimeError("Host lifetime exhausted; finalizer required")
 
