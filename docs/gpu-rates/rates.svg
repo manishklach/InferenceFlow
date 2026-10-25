@@ -15,973 +15,1069 @@
 <text x="15" y="165">$8.27</text>
 <path d="M70 100 H770" stroke="#334155"/>
 <text x="15" y="105">$10.34</text>
-<circle cx="78.00" cy="365.47" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="108.18" cy="365.47" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="156.65" cy="365.47" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="380.65" cy="365.47" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="544.41" cy="365.47" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="545.45" cy="365.47" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="680.32" cy="365.47" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="770.00" cy="365.47" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<polyline points="78.00,365.47 108.18,365.47 156.65,365.47 380.65,365.47 544.41,365.47 545.45,365.47 680.32,365.47 770.00,365.47" fill="none" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="76.27" cy="365.47" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="99.94" cy="365.47" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="137.93" cy="365.47" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="313.55" cy="365.47" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="441.94" cy="365.47" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="442.76" cy="365.47" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="548.50" cy="365.47" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="618.81" cy="365.47" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="770.00" cy="365.47" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<polyline points="76.27,365.47 99.94,365.47 137.93,365.47 313.55,365.47 441.94,365.47 442.76,365.47 548.50,365.47 618.81,365.47 770.00,365.47" fill="none" stroke="#60a5fa" stroke-width="2"/>
 <text x="795" y="105" fill="#60a5fa" font-size="13">A100 PCIe / COMMUNITY</text>
-<circle cx="78.00" cy="348.06" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="108.18" cy="348.06" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="156.65" cy="348.06" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="380.65" cy="348.06" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="544.41" cy="348.06" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="545.45" cy="348.06" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="680.32" cy="348.06" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="76.27" cy="348.06" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="99.94" cy="348.06" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="137.93" cy="348.06" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="313.55" cy="348.06" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="441.94" cy="348.06" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="442.76" cy="348.06" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="548.50" cy="348.06" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="618.81" cy="348.06" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
 <circle cx="770.00" cy="348.06" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<polyline points="78.00,348.06 108.18,348.06 156.65,348.06 380.65,348.06 544.41,348.06 545.45,348.06 680.32,348.06 770.00,348.06" fill="none" stroke="#fbbf24" stroke-width="2"/>
+<polyline points="76.27,348.06 99.94,348.06 137.93,348.06 313.55,348.06 441.94,348.06 442.76,348.06 548.50,348.06 618.81,348.06 770.00,348.06" fill="none" stroke="#fbbf24" stroke-width="2"/>
 <text x="795" y="140" fill="#fbbf24" font-size="13">A100 PCIe / SECURE</text>
-<circle cx="78.00" cy="359.67" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="108.18" cy="359.67" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
-<circle cx="156.65" cy="359.67" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
-<circle cx="380.65" cy="359.67" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="544.41" cy="359.67" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="545.45" cy="359.67" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="680.32" cy="359.67" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="76.27" cy="359.67" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="99.94" cy="359.67" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
+<circle cx="137.93" cy="359.67" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
+<circle cx="313.55" cy="359.67" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="441.94" cy="359.67" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="442.76" cy="359.67" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="548.50" cy="359.67" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="618.81" cy="359.67" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
 <circle cx="770.00" cy="359.67" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<polyline points="78.00,359.67 108.18,359.67 156.65,359.67 380.65,359.67 544.41,359.67 545.45,359.67 680.32,359.67 770.00,359.67" fill="none" stroke="#34d399" stroke-width="2"/>
+<polyline points="76.27,359.67 99.94,359.67 137.93,359.67 313.55,359.67 441.94,359.67 442.76,359.67 548.50,359.67 618.81,359.67 770.00,359.67" fill="none" stroke="#34d399" stroke-width="2"/>
 <text x="795" y="175" fill="#34d399" font-size="13">A100 SXM / COMMUNITY</text>
-<circle cx="78.00" cy="348.06" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="108.18" cy="348.06" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="156.65" cy="348.06" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="380.65" cy="348.06" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="544.41" cy="348.06" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="545.45" cy="348.06" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="680.32" cy="348.06" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="76.27" cy="348.06" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="99.94" cy="348.06" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="137.93" cy="348.06" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="313.55" cy="348.06" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="441.94" cy="348.06" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="442.76" cy="348.06" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="548.50" cy="348.06" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="618.81" cy="348.06" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
 <circle cx="770.00" cy="348.06" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<polyline points="78.00,348.06 108.18,348.06 156.65,348.06 380.65,348.06 544.41,348.06 545.45,348.06 680.32,348.06 770.00,348.06" fill="none" stroke="#fb7185" stroke-width="2"/>
+<polyline points="76.27,348.06 99.94,348.06 137.93,348.06 313.55,348.06 441.94,348.06 442.76,348.06 548.50,348.06 618.81,348.06 770.00,348.06" fill="none" stroke="#fb7185" stroke-width="2"/>
 <text x="795" y="210" fill="#fb7185" font-size="13">A100 SXM / SECURE</text>
-<circle cx="78.00" cy="370.98" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="108.18" cy="370.98" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="156.65" cy="370.98" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="380.65" cy="370.98" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="544.41" cy="370.98" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="545.45" cy="370.98" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="680.32" cy="370.98" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="76.27" cy="370.98" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="99.94" cy="370.98" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="137.93" cy="370.98" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="313.55" cy="370.98" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="441.94" cy="370.98" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="442.76" cy="370.98" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="548.50" cy="370.98" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="618.81" cy="370.98" r="5" fill="#c084fc" stroke="#c084fc" stroke-width="2"/>
 <circle cx="770.00" cy="370.98" r="5" fill="#c084fc" stroke="#c084fc" stroke-width="2"/>
-<polyline points="78.00,370.98 108.18,370.98 156.65,370.98 380.65,370.98 544.41,370.98 545.45,370.98 680.32,370.98 770.00,370.98" fill="none" stroke="#c084fc" stroke-width="2"/>
+<polyline points="76.27,370.98 99.94,370.98 137.93,370.98 313.55,370.98 441.94,370.98 442.76,370.98 548.50,370.98 618.81,370.98 770.00,370.98" fill="none" stroke="#c084fc" stroke-width="2"/>
 <text x="795" y="245" fill="#c084fc" font-size="13">A100 SXM 40GB / COMMUNITY</text>
-<circle cx="78.00" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="108.18" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="156.65" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="380.65" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="544.41" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="545.45" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="680.32" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="76.27" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="99.94" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="137.93" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="313.55" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="441.94" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="442.76" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="548.50" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="618.81" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
 <circle cx="770.00" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<polyline points="78.00,400.00 108.18,400.00 156.65,400.00 380.65,400.00 544.41,400.00 545.45,400.00 680.32,400.00 770.00,400.00" fill="none" stroke="#22d3ee" stroke-width="2"/>
+<polyline points="76.27,400.00 99.94,400.00 137.93,400.00 313.55,400.00 441.94,400.00 442.76,400.00 548.50,400.00 618.81,400.00 770.00,400.00" fill="none" stroke="#22d3ee" stroke-width="2"/>
 <text x="795" y="280" fill="#22d3ee" font-size="13">A100 SXM 40GB / SECURE</text>
-<circle cx="78.00" cy="389.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="108.18" cy="389.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="156.65" cy="389.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="380.65" cy="389.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="544.41" cy="389.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="545.45" cy="389.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="680.32" cy="389.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="76.27" cy="389.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="99.94" cy="389.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="137.93" cy="389.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="313.55" cy="389.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="441.94" cy="389.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="442.76" cy="389.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="548.50" cy="389.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="618.81" cy="389.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
 <circle cx="770.00" cy="389.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<polyline points="78.00,389.84 108.18,389.84 156.65,389.84 380.65,389.84 544.41,389.84 545.45,389.84 680.32,389.84 770.00,389.84" fill="none" stroke="#60a5fa" stroke-width="2"/>
+<polyline points="76.27,389.84 99.94,389.84 137.93,389.84 313.55,389.84 441.94,389.84 442.76,389.84 548.50,389.84 618.81,389.84 770.00,389.84" fill="none" stroke="#60a5fa" stroke-width="2"/>
 <text x="795" y="315" fill="#60a5fa" font-size="13">A40 / COMMUNITY</text>
-<circle cx="78.00" cy="382.88" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="108.18" cy="382.88" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="156.65" cy="382.88" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="380.65" cy="382.88" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="544.41" cy="382.88" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="545.45" cy="382.88" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="680.32" cy="382.88" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="76.27" cy="382.88" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="99.94" cy="382.88" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="137.93" cy="382.88" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="313.55" cy="382.88" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="441.94" cy="382.88" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="442.76" cy="382.88" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="548.50" cy="382.88" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="618.81" cy="382.88" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
 <circle cx="770.00" cy="382.88" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<polyline points="78.00,382.88 108.18,382.88 156.65,382.88 380.65,382.88 544.41,382.88 545.45,382.88 680.32,382.88 770.00,382.88" fill="none" stroke="#fbbf24" stroke-width="2"/>
+<polyline points="76.27,382.88 99.94,382.88 137.93,382.88 313.55,382.88 441.94,382.88 442.76,382.88 548.50,382.88 618.81,382.88 770.00,382.88" fill="none" stroke="#fbbf24" stroke-width="2"/>
 <text x="795" y="350" fill="#fbbf24" font-size="13">A40 / SECURE</text>
-<circle cx="78.00" cy="226.47" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="108.18" cy="226.47" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="156.65" cy="226.47" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="380.65" cy="226.47" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="544.41" cy="226.47" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="545.45" cy="226.47" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="680.32" cy="226.47" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="76.27" cy="226.47" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="99.94" cy="226.47" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="137.93" cy="226.47" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="313.55" cy="226.47" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="441.94" cy="226.47" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="442.76" cy="226.47" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="548.50" cy="226.47" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="618.81" cy="226.47" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
 <circle cx="770.00" cy="226.47" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<polyline points="78.00,226.47 108.18,226.47 156.65,226.47 380.65,226.47 544.41,226.47 545.45,226.47 680.32,226.47 770.00,226.47" fill="none" stroke="#34d399" stroke-width="2"/>
+<polyline points="76.27,226.47 99.94,226.47 137.93,226.47 313.55,226.47 441.94,226.47 442.76,226.47 548.50,226.47 618.81,226.47 770.00,226.47" fill="none" stroke="#34d399" stroke-width="2"/>
 <text x="795" y="385" fill="#34d399" font-size="13">B200 / COMMUNITY</text>
-<circle cx="78.00" cy="168.15" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="108.18" cy="168.15" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="156.65" cy="168.15" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="380.65" cy="168.15" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="544.41" cy="168.15" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="545.45" cy="168.15" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="680.32" cy="168.15" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="76.27" cy="168.15" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="99.94" cy="168.15" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="137.93" cy="168.15" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="313.55" cy="168.15" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="441.94" cy="168.15" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="442.76" cy="168.15" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="548.50" cy="168.15" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="618.81" cy="168.15" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
 <circle cx="770.00" cy="168.15" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<polyline points="78.00,168.15 108.18,168.15 156.65,168.15 380.65,168.15 544.41,168.15 545.45,168.15 680.32,168.15 770.00,168.15" fill="none" stroke="#fb7185" stroke-width="2"/>
+<polyline points="76.27,168.15 99.94,168.15 137.93,168.15 313.55,168.15 441.94,168.15 442.76,168.15 548.50,168.15 618.81,168.15 770.00,168.15" fill="none" stroke="#fb7185" stroke-width="2"/>
 <text x="795" y="420" fill="#fb7185" font-size="13">B200 / SECURE</text>
-<circle cx="78.00" cy="198.62" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="108.18" cy="198.62" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="156.65" cy="198.62" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="380.65" cy="198.62" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="544.41" cy="198.62" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="545.45" cy="198.62" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="680.32" cy="198.62" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="76.27" cy="198.62" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="99.94" cy="198.62" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="137.93" cy="198.62" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="313.55" cy="198.62" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="441.94" cy="198.62" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="442.76" cy="198.62" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="548.50" cy="198.62" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="618.81" cy="198.62" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
 <circle cx="770.00" cy="198.62" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<polyline points="78.00,198.62 108.18,198.62 156.65,198.62 380.65,198.62 544.41,198.62 545.45,198.62 680.32,198.62 770.00,198.62" fill="none" stroke="#c084fc" stroke-width="2"/>
+<polyline points="76.27,198.62 99.94,198.62 137.93,198.62 313.55,198.62 441.94,198.62 442.76,198.62 548.50,198.62 618.81,198.62 770.00,198.62" fill="none" stroke="#c084fc" stroke-width="2"/>
 <text x="795" y="455" fill="#c084fc" font-size="13">B300 / COMMUNITY</text>
-<circle cx="78.00" cy="139.13" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="108.18" cy="139.13" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="156.65" cy="139.13" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="380.65" cy="139.13" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="544.41" cy="139.13" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="545.45" cy="139.13" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="680.32" cy="139.13" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="76.27" cy="139.13" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="99.94" cy="139.13" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="137.93" cy="139.13" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="313.55" cy="139.13" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="441.94" cy="139.13" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="442.76" cy="139.13" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="548.50" cy="139.13" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="618.81" cy="139.13" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
 <circle cx="770.00" cy="139.13" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<polyline points="78.00,139.13 108.18,139.13 156.65,139.13 380.65,139.13 544.41,139.13 545.45,139.13 680.32,139.13 770.00,139.13" fill="none" stroke="#22d3ee" stroke-width="2"/>
+<polyline points="76.27,139.13 99.94,139.13 137.93,139.13 313.55,139.13 441.94,139.13 442.76,139.13 548.50,139.13 618.81,139.13 770.00,139.13" fill="none" stroke="#22d3ee" stroke-width="2"/>
 <text x="795" y="490" fill="#22d3ee" font-size="13">B300 / SECURE</text>
-<circle cx="78.00" cy="324.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="108.18" cy="324.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="156.65" cy="324.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="380.65" cy="324.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="544.41" cy="324.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="545.45" cy="324.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="680.32" cy="324.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="770.00" cy="324.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<polyline points="78.00,324.84 108.18,324.84 156.65,324.84 380.65,324.84 544.41,324.84 545.45,324.84 680.32,324.84 770.00,324.84" fill="none" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="76.27" cy="324.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="99.94" cy="324.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="137.93" cy="324.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="313.55" cy="324.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="441.94" cy="324.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="442.76" cy="324.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="548.50" cy="324.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="618.81" cy="324.84" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="770.00" cy="324.84" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<polyline points="76.27,324.84 99.94,324.84 137.93,324.84 313.55,324.84 441.94,324.84 442.76,324.84 548.50,324.84 618.81,324.84 770.00,324.84" fill="none" stroke="#60a5fa" stroke-width="2"/>
 <text x="795" y="525" fill="#60a5fa" font-size="13">H100 NVL / COMMUNITY</text>
-<circle cx="78.00" cy="307.43" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="108.18" cy="307.43" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="156.65" cy="307.43" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="380.65" cy="307.43" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="544.41" cy="307.43" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="545.45" cy="307.43" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="680.32" cy="307.43" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="76.27" cy="307.43" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="99.94" cy="307.43" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="137.93" cy="307.43" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="313.55" cy="307.43" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="441.94" cy="307.43" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="442.76" cy="307.43" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="548.50" cy="307.43" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="618.81" cy="307.43" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
 <circle cx="770.00" cy="307.43" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<polyline points="78.00,307.43 108.18,307.43 156.65,307.43 380.65,307.43 544.41,307.43 545.45,307.43 680.32,307.43 770.00,307.43" fill="none" stroke="#fbbf24" stroke-width="2"/>
+<polyline points="76.27,307.43 99.94,307.43 137.93,307.43 313.55,307.43 441.94,307.43 442.76,307.43 548.50,307.43 618.81,307.43 770.00,307.43" fill="none" stroke="#fbbf24" stroke-width="2"/>
 <text x="795" y="560" fill="#fbbf24" font-size="13">H100 NVL / SECURE</text>
-<circle cx="78.00" cy="342.25" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="108.18" cy="342.25" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="156.65" cy="342.25" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="380.65" cy="342.25" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="544.41" cy="342.25" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="545.45" cy="342.25" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="680.32" cy="342.25" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="76.27" cy="342.25" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="99.94" cy="342.25" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="137.93" cy="342.25" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="313.55" cy="342.25" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="441.94" cy="342.25" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="442.76" cy="342.25" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="548.50" cy="342.25" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="618.81" cy="342.25" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
 <circle cx="770.00" cy="342.25" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<polyline points="78.00,342.25 108.18,342.25 156.65,342.25 380.65,342.25 544.41,342.25 545.45,342.25 680.32,342.25 770.00,342.25" fill="none" stroke="#34d399" stroke-width="2"/>
+<polyline points="76.27,342.25 99.94,342.25 137.93,342.25 313.55,342.25 441.94,342.25 442.76,342.25 548.50,342.25 618.81,342.25 770.00,342.25" fill="none" stroke="#34d399" stroke-width="2"/>
 <text x="795" y="595" fill="#34d399" font-size="13">H100 PCIe / COMMUNITY</text>
-<circle cx="78.00" cy="316.14" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="108.18" cy="316.14" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="156.65" cy="316.14" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="380.65" cy="316.14" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="544.41" cy="316.14" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="545.45" cy="316.14" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="680.32" cy="316.14" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="76.27" cy="316.14" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="99.94" cy="316.14" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="137.93" cy="316.14" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="313.55" cy="316.14" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="441.94" cy="316.14" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="442.76" cy="316.14" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="548.50" cy="316.14" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="618.81" cy="316.14" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
 <circle cx="770.00" cy="316.14" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<polyline points="78.00,316.14 108.18,316.14 156.65,316.14 380.65,316.14 544.41,316.14 545.45,316.14 680.32,316.14 770.00,316.14" fill="none" stroke="#fb7185" stroke-width="2"/>
+<polyline points="76.27,316.14 99.94,316.14 137.93,316.14 313.55,316.14 441.94,316.14 442.76,316.14 548.50,316.14 618.81,316.14 770.00,316.14" fill="none" stroke="#fb7185" stroke-width="2"/>
 <text x="795" y="630" fill="#fb7185" font-size="13">H100 PCIe / SECURE</text>
-<circle cx="78.00" cy="321.94" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="108.18" cy="321.94" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="156.65" cy="321.94" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="380.65" cy="321.94" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="544.41" cy="321.94" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="545.45" cy="321.94" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="680.32" cy="321.94" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="76.27" cy="321.94" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="99.94" cy="321.94" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="137.93" cy="321.94" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="313.55" cy="321.94" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="441.94" cy="321.94" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="442.76" cy="321.94" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="548.50" cy="321.94" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="618.81" cy="321.94" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
 <circle cx="770.00" cy="321.94" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<polyline points="78.00,321.94 108.18,321.94 156.65,321.94 380.65,321.94 544.41,321.94 545.45,321.94 680.32,321.94 770.00,321.94" fill="none" stroke="#c084fc" stroke-width="2"/>
+<polyline points="76.27,321.94 99.94,321.94 137.93,321.94 313.55,321.94 441.94,321.94 442.76,321.94 548.50,321.94 618.81,321.94 770.00,321.94" fill="none" stroke="#c084fc" stroke-width="2"/>
 <text x="795" y="665" fill="#c084fc" font-size="13">H100 SXM / COMMUNITY</text>
-<circle cx="78.00" cy="284.22" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="108.18" cy="284.22" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="156.65" cy="284.22" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="380.65" cy="284.22" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="544.41" cy="284.22" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="545.45" cy="284.22" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="680.32" cy="284.22" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="76.27" cy="284.22" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="99.94" cy="284.22" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="137.93" cy="284.22" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="313.55" cy="284.22" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="441.94" cy="284.22" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="442.76" cy="284.22" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="548.50" cy="284.22" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="618.81" cy="284.22" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
 <circle cx="770.00" cy="284.22" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<polyline points="78.00,284.22 108.18,284.22 156.65,284.22 380.65,284.22 544.41,284.22 545.45,284.22 680.32,284.22 770.00,284.22" fill="none" stroke="#22d3ee" stroke-width="2"/>
+<polyline points="76.27,284.22 99.94,284.22 137.93,284.22 313.55,284.22 441.94,284.22 442.76,284.22 548.50,284.22 618.81,284.22 770.00,284.22" fill="none" stroke="#22d3ee" stroke-width="2"/>
 <text x="795" y="700" fill="#22d3ee" font-size="13">H100 SXM / SECURE</text>
-<circle cx="78.00" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="108.18" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="156.65" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="380.65" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="544.41" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="545.45" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="680.32" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="76.27" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="99.94" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="137.93" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="313.55" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="441.94" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="442.76" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="548.50" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="618.81" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
 <circle cx="770.00" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<polyline points="78.00,385.49 108.18,385.49 156.65,385.49 380.65,385.49 544.41,385.49 545.45,385.49 680.32,385.49 770.00,385.49" fill="none" stroke="#60a5fa" stroke-width="2"/>
+<polyline points="76.27,385.49 99.94,385.49 137.93,385.49 313.55,385.49 441.94,385.49 442.76,385.49 548.50,385.49 618.81,385.49 770.00,385.49" fill="none" stroke="#60a5fa" stroke-width="2"/>
 <text x="795" y="735" fill="#60a5fa" font-size="13">H200 NVL / COMMUNITY</text>
-<circle cx="78.00" cy="290.02" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="108.18" cy="290.02" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="156.65" cy="290.02" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="380.65" cy="290.02" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="544.41" cy="290.02" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="545.45" cy="290.02" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="680.32" cy="290.02" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="76.27" cy="290.02" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="99.94" cy="290.02" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="137.93" cy="290.02" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="313.55" cy="290.02" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="441.94" cy="290.02" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="442.76" cy="290.02" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="548.50" cy="290.02" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="618.81" cy="290.02" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
 <circle cx="770.00" cy="290.02" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<polyline points="78.00,290.02 108.18,290.02 156.65,290.02 380.65,290.02 544.41,290.02 545.45,290.02 680.32,290.02 770.00,290.02" fill="none" stroke="#fbbf24" stroke-width="2"/>
+<polyline points="76.27,290.02 99.94,290.02 137.93,290.02 313.55,290.02 441.94,290.02 442.76,290.02 548.50,290.02 618.81,290.02 770.00,290.02" fill="none" stroke="#fbbf24" stroke-width="2"/>
 <text x="795" y="770" fill="#fbbf24" font-size="13">H200 NVL / SECURE</text>
-<circle cx="78.00" cy="295.83" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
-<circle cx="108.18" cy="295.83" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
-<circle cx="156.65" cy="295.83" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
-<circle cx="380.65" cy="295.83" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="544.41" cy="295.83" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="545.45" cy="295.83" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="680.32" cy="295.83" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="770.00" cy="295.83" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<polyline points="78.00,295.83 108.18,295.83 156.65,295.83 380.65,295.83 544.41,295.83 545.45,295.83 680.32,295.83 770.00,295.83" fill="none" stroke="#34d399" stroke-width="2"/>
+<circle cx="76.27" cy="295.83" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
+<circle cx="99.94" cy="295.83" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
+<circle cx="137.93" cy="295.83" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
+<circle cx="313.55" cy="295.83" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="441.94" cy="295.83" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="442.76" cy="295.83" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="548.50" cy="295.83" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="618.81" cy="295.83" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="770.00" cy="295.83" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
+<polyline points="76.27,295.83 99.94,295.83 137.93,295.83 313.55,295.83 441.94,295.83 442.76,295.83 548.50,295.83 618.81,295.83 770.00,295.83" fill="none" stroke="#34d399" stroke-width="2"/>
 <text x="795" y="805" fill="#34d399" font-size="13">H200 SXM / COMMUNITY</text>
-<circle cx="78.00" cy="246.50" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="108.18" cy="246.50" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="156.65" cy="246.50" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="380.65" cy="246.50" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="544.41" cy="246.50" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="545.45" cy="246.50" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="680.32" cy="246.50" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="76.27" cy="246.50" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="99.94" cy="246.50" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="137.93" cy="246.50" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="313.55" cy="246.50" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="441.94" cy="246.50" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="442.76" cy="246.50" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="548.50" cy="246.50" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="618.81" cy="246.50" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
 <circle cx="770.00" cy="246.50" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<polyline points="78.00,246.50 108.18,246.50 156.65,246.50 380.65,246.50 544.41,246.50 545.45,246.50 680.32,246.50 770.00,246.50" fill="none" stroke="#fb7185" stroke-width="2"/>
+<polyline points="76.27,246.50 99.94,246.50 137.93,246.50 313.55,246.50 441.94,246.50 442.76,246.50 548.50,246.50 618.81,246.50 770.00,246.50" fill="none" stroke="#fb7185" stroke-width="2"/>
 <text x="795" y="840" fill="#fb7185" font-size="13">H200 SXM / SECURE</text>
 <circle cx="70.00" cy="387.23" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="78.00" cy="387.23" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="108.18" cy="387.23" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="156.65" cy="387.23" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="380.65" cy="387.23" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="544.41" cy="387.23" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="545.45" cy="387.23" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="680.32" cy="387.23" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="76.27" cy="387.23" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="99.94" cy="387.23" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="137.93" cy="387.23" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="313.55" cy="387.23" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="441.94" cy="387.23" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="442.76" cy="387.23" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="548.50" cy="387.23" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="618.81" cy="387.23" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
 <circle cx="770.00" cy="387.23" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<polyline points="70.00,387.23 78.00,387.23 108.18,387.23 156.65,387.23 380.65,387.23 544.41,387.23 545.45,387.23 680.32,387.23 770.00,387.23" fill="none" stroke="#c084fc" stroke-width="2"/>
+<polyline points="70.00,387.23 76.27,387.23 99.94,387.23 137.93,387.23 313.55,387.23 441.94,387.23 442.76,387.23 548.50,387.23 618.81,387.23 770.00,387.23" fill="none" stroke="#c084fc" stroke-width="2"/>
 <text x="795" y="875" fill="#c084fc" font-size="13">L4 / COMMUNITY</text>
 <circle cx="70.00" cy="382.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="78.00" cy="382.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="108.18" cy="382.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="156.65" cy="382.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="380.65" cy="382.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="544.41" cy="382.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="545.45" cy="382.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="680.32" cy="382.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="76.27" cy="382.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="99.94" cy="382.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="137.93" cy="382.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="313.55" cy="382.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="441.94" cy="382.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="442.76" cy="382.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="548.50" cy="382.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="618.81" cy="382.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
 <circle cx="770.00" cy="382.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<polyline points="70.00,382.88 78.00,382.88 108.18,382.88 156.65,382.88 380.65,382.88 544.41,382.88 545.45,382.88 680.32,382.88 770.00,382.88" fill="none" stroke="#22d3ee" stroke-width="2"/>
+<polyline points="70.00,382.88 76.27,382.88 99.94,382.88 137.93,382.88 313.55,382.88 441.94,382.88 442.76,382.88 548.50,382.88 618.81,382.88 770.00,382.88" fill="none" stroke="#22d3ee" stroke-width="2"/>
 <text x="795" y="910" fill="#22d3ee" font-size="13">L4 / SECURE</text>
-<circle cx="78.00" cy="379.98" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="108.18" cy="379.98" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="156.65" cy="379.98" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="380.65" cy="379.98" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="544.41" cy="379.98" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="545.45" cy="379.98" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="680.32" cy="379.98" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="76.27" cy="379.98" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="99.94" cy="379.98" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="137.93" cy="379.98" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="313.55" cy="379.98" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="441.94" cy="379.98" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="442.76" cy="379.98" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="548.50" cy="379.98" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="618.81" cy="379.98" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
 <circle cx="770.00" cy="379.98" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
-<polyline points="78.00,379.98 108.18,379.98 156.65,379.98 380.65,379.98 544.41,379.98 545.45,379.98 680.32,379.98 770.00,379.98" fill="none" stroke="#60a5fa" stroke-width="2"/>
+<polyline points="76.27,379.98 99.94,379.98 137.93,379.98 313.55,379.98 441.94,379.98 442.76,379.98 548.50,379.98 618.81,379.98 770.00,379.98" fill="none" stroke="#60a5fa" stroke-width="2"/>
 <text x="795" y="945" fill="#60a5fa" font-size="13">L40 / COMMUNITY</text>
-<circle cx="78.00" cy="376.21" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="108.18" cy="376.21" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="156.65" cy="376.21" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="380.65" cy="376.21" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="544.41" cy="376.21" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="545.45" cy="376.21" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="680.32" cy="376.21" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="76.27" cy="376.21" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="99.94" cy="376.21" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="137.93" cy="376.21" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="313.55" cy="376.21" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="441.94" cy="376.21" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="442.76" cy="376.21" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="548.50" cy="376.21" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="618.81" cy="376.21" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
 <circle cx="770.00" cy="376.21" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<polyline points="78.00,376.21 108.18,376.21 156.65,376.21 380.65,376.21 544.41,376.21 545.45,376.21 680.32,376.21 770.00,376.21" fill="none" stroke="#fbbf24" stroke-width="2"/>
+<polyline points="76.27,376.21 99.94,376.21 137.93,376.21 313.55,376.21 441.94,376.21 442.76,376.21 548.50,376.21 618.81,376.21 770.00,376.21" fill="none" stroke="#fbbf24" stroke-width="2"/>
 <text x="795" y="980" fill="#fbbf24" font-size="13">L40 / SECURE</text>
 <circle cx="70.00" cy="377.08" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="78.00" cy="377.08" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
-<circle cx="108.18" cy="377.08" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="156.65" cy="377.08" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="380.65" cy="377.08" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="544.41" cy="377.08" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="545.45" cy="377.08" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="680.32" cy="377.08" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="770.00" cy="377.08" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<polyline points="70.00,377.08 78.00,377.08 108.18,377.08 156.65,377.08 380.65,377.08 544.41,377.08 545.45,377.08 680.32,377.08 770.00,377.08" fill="none" stroke="#34d399" stroke-width="2"/>
+<circle cx="76.27" cy="377.08" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
+<circle cx="99.94" cy="377.08" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="137.93" cy="377.08" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="313.55" cy="377.08" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="441.94" cy="377.08" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="442.76" cy="377.08" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="548.50" cy="377.08" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="618.81" cy="377.08" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="770.00" cy="377.08" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
+<polyline points="70.00,377.08 76.27,377.08 99.94,377.08 137.93,377.08 313.55,377.08 441.94,377.08 442.76,377.08 548.50,377.08 618.81,377.08 770.00,377.08" fill="none" stroke="#34d399" stroke-width="2"/>
 <text x="795" y="1015" fill="#34d399" font-size="13">L40S / COMMUNITY</text>
 <circle cx="70.00" cy="368.37" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="78.00" cy="368.37" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="108.18" cy="368.37" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="156.65" cy="368.37" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="380.65" cy="368.37" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="544.41" cy="368.37" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="545.45" cy="368.37" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="680.32" cy="368.37" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="76.27" cy="368.37" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="99.94" cy="368.37" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="137.93" cy="368.37" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="313.55" cy="368.37" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="441.94" cy="368.37" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="442.76" cy="368.37" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="548.50" cy="368.37" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="618.81" cy="368.37" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
 <circle cx="770.00" cy="368.37" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<polyline points="70.00,368.37 78.00,368.37 108.18,368.37 156.65,368.37 380.65,368.37 544.41,368.37 545.45,368.37 680.32,368.37 770.00,368.37" fill="none" stroke="#fb7185" stroke-width="2"/>
+<polyline points="70.00,368.37 76.27,368.37 99.94,368.37 137.93,368.37 313.55,368.37 441.94,368.37 442.76,368.37 548.50,368.37 618.81,368.37 770.00,368.37" fill="none" stroke="#fb7185" stroke-width="2"/>
 <text x="795" y="1050" fill="#fb7185" font-size="13">L40S / SECURE</text>
-<circle cx="78.00" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="108.18" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="156.65" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="380.65" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="544.41" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="545.45" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="680.32" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="76.27" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="99.94" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="137.93" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="313.55" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="441.94" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="442.76" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="548.50" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="618.81" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
 <circle cx="770.00" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<polyline points="78.00,385.49 108.18,385.49 156.65,385.49 380.65,385.49 544.41,385.49 545.45,385.49 680.32,385.49 770.00,385.49" fill="none" stroke="#c084fc" stroke-width="2"/>
+<polyline points="76.27,385.49 99.94,385.49 137.93,385.49 313.55,385.49 441.94,385.49 442.76,385.49 548.50,385.49 618.81,385.49 770.00,385.49" fill="none" stroke="#c084fc" stroke-width="2"/>
 <text x="795" y="1085" fill="#c084fc" font-size="13">MI300X / COMMUNITY</text>
-<circle cx="78.00" cy="330.65" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="108.18" cy="330.65" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="156.65" cy="330.65" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="380.65" cy="330.65" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="544.41" cy="330.65" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="545.45" cy="330.65" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="680.32" cy="330.65" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="76.27" cy="330.65" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="99.94" cy="330.65" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="137.93" cy="330.65" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="313.55" cy="330.65" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="441.94" cy="330.65" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="442.76" cy="330.65" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="548.50" cy="330.65" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="618.81" cy="330.65" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
 <circle cx="770.00" cy="330.65" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<polyline points="78.00,330.65 108.18,330.65 156.65,330.65 380.65,330.65 544.41,330.65 545.45,330.65 680.32,330.65 770.00,330.65" fill="none" stroke="#22d3ee" stroke-width="2"/>
+<polyline points="76.27,330.65 99.94,330.65 137.93,330.65 313.55,330.65 441.94,330.65 442.76,330.65 548.50,330.65 618.81,330.65 770.00,330.65" fill="none" stroke="#22d3ee" stroke-width="2"/>
 <text x="795" y="1120" fill="#22d3ee" font-size="13">MI300X / SECURE</text>
-<circle cx="78.00" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="108.18" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="156.65" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="380.65" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="544.41" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="545.45" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="680.32" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="76.27" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="99.94" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="137.93" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="313.55" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="441.94" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="442.76" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="548.50" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="618.81" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
 <circle cx="770.00" cy="385.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<polyline points="78.00,385.49 108.18,385.49 156.65,385.49 380.65,385.49 544.41,385.49 545.45,385.49 680.32,385.49 770.00,385.49" fill="none" stroke="#60a5fa" stroke-width="2"/>
+<polyline points="76.27,385.49 99.94,385.49 137.93,385.49 313.55,385.49 441.94,385.49 442.76,385.49 548.50,385.49 618.81,385.49 770.00,385.49" fill="none" stroke="#60a5fa" stroke-width="2"/>
 <text x="795" y="1155" fill="#60a5fa" font-size="13">PRO 6000 MIG 24GB / COMMUNITY</text>
-<circle cx="78.00" cy="379.98" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="108.18" cy="379.98" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="156.65" cy="379.98" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="380.65" cy="379.98" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="544.41" cy="379.98" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="545.45" cy="379.98" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="680.32" cy="379.98" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="76.27" cy="379.98" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="99.94" cy="379.98" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="137.93" cy="379.98" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="313.55" cy="379.98" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="441.94" cy="379.98" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="442.76" cy="379.98" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="548.50" cy="379.98" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="618.81" cy="379.98" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
 <circle cx="770.00" cy="379.98" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<polyline points="78.00,379.98 108.18,379.98 156.65,379.98 380.65,379.98 544.41,379.98 545.45,379.98 680.32,379.98 770.00,379.98" fill="none" stroke="#fbbf24" stroke-width="2"/>
+<polyline points="76.27,379.98 99.94,379.98 137.93,379.98 313.55,379.98 441.94,379.98 442.76,379.98 548.50,379.98 618.81,379.98 770.00,379.98" fill="none" stroke="#fbbf24" stroke-width="2"/>
 <text x="795" y="1190" fill="#fbbf24" font-size="13">PRO 6000 MIG 24GB / SECURE</text>
-<circle cx="78.00" cy="370.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="108.18" cy="370.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="156.65" cy="370.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="380.65" cy="370.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="544.41" cy="370.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="545.45" cy="370.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="680.32" cy="370.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="76.27" cy="370.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="99.94" cy="370.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="137.93" cy="370.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="313.55" cy="370.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="441.94" cy="370.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="442.76" cy="370.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="548.50" cy="370.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="618.81" cy="370.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
 <circle cx="770.00" cy="370.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<polyline points="78.00,370.98 108.18,370.98 156.65,370.98 380.65,370.98 544.41,370.98 545.45,370.98 680.32,370.98 770.00,370.98" fill="none" stroke="#34d399" stroke-width="2"/>
+<polyline points="76.27,370.98 99.94,370.98 137.93,370.98 313.55,370.98 441.94,370.98 442.76,370.98 548.50,370.98 618.81,370.98 770.00,370.98" fill="none" stroke="#34d399" stroke-width="2"/>
 <text x="795" y="1225" fill="#34d399" font-size="13">PRO 6000 MIG 48GB / COMMUNITY</text>
-<circle cx="78.00" cy="362.57" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="108.18" cy="362.57" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="156.65" cy="362.57" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="380.65" cy="362.57" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="544.41" cy="362.57" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="545.45" cy="362.57" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="680.32" cy="362.57" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="76.27" cy="362.57" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="99.94" cy="362.57" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="137.93" cy="362.57" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="313.55" cy="362.57" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="441.94" cy="362.57" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="442.76" cy="362.57" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="548.50" cy="362.57" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="618.81" cy="362.57" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
 <circle cx="770.00" cy="362.57" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<polyline points="78.00,362.57 108.18,362.57 156.65,362.57 380.65,362.57 544.41,362.57 545.45,362.57 680.32,362.57 770.00,362.57" fill="none" stroke="#fb7185" stroke-width="2"/>
+<polyline points="76.27,362.57 99.94,362.57 137.93,362.57 313.55,362.57 441.94,362.57 442.76,362.57 548.50,362.57 618.81,362.57 770.00,362.57" fill="none" stroke="#fb7185" stroke-width="2"/>
 <text x="795" y="1260" fill="#fb7185" font-size="13">PRO 6000 MIG 48GB / SECURE</text>
-<circle cx="78.00" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="108.18" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="156.65" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="380.65" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="544.41" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="545.45" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="680.32" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="76.27" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="99.94" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="137.93" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="313.55" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="441.94" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="442.76" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="548.50" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="618.81" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
 <circle cx="770.00" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<polyline points="78.00,385.49 108.18,385.49 156.65,385.49 380.65,385.49 544.41,385.49 545.45,385.49 680.32,385.49 770.00,385.49" fill="none" stroke="#c084fc" stroke-width="2"/>
+<polyline points="76.27,385.49 99.94,385.49 137.93,385.49 313.55,385.49 441.94,385.49 442.76,385.49 548.50,385.49 618.81,385.49 770.00,385.49" fill="none" stroke="#c084fc" stroke-width="2"/>
 <text x="795" y="1295" fill="#c084fc" font-size="13">RTX 2000 Ada / COMMUNITY</text>
-<circle cx="78.00" cy="393.04" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="108.18" cy="393.04" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="156.65" cy="393.04" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="380.65" cy="393.04" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="544.41" cy="393.04" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="545.45" cy="393.04" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="680.32" cy="393.04" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="770.00" cy="393.04" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<polyline points="78.00,393.04 108.18,393.04 156.65,393.04 380.65,393.04 544.41,393.04 545.45,393.04 680.32,393.04 770.00,393.04" fill="none" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="76.27" cy="393.04" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="99.94" cy="393.04" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="137.93" cy="393.04" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="313.55" cy="393.04" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="441.94" cy="393.04" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="442.76" cy="393.04" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="548.50" cy="393.04" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="618.81" cy="393.04" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="770.00" cy="393.04" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<polyline points="76.27,393.04 99.94,393.04 137.93,393.04 313.55,393.04 441.94,393.04 442.76,393.04 548.50,393.04 618.81,393.04 770.00,393.04" fill="none" stroke="#22d3ee" stroke-width="2"/>
 <text x="795" y="1330" fill="#22d3ee" font-size="13">RTX 2000 Ada / SECURE</text>
-<circle cx="78.00" cy="396.23" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="108.18" cy="396.23" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="156.65" cy="396.23" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="380.65" cy="396.23" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="544.41" cy="396.23" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="545.45" cy="396.23" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="680.32" cy="396.23" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="76.27" cy="396.23" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="99.94" cy="396.23" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="137.93" cy="396.23" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="313.55" cy="396.23" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="441.94" cy="396.23" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="442.76" cy="396.23" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="548.50" cy="396.23" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="618.81" cy="396.23" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
 <circle cx="770.00" cy="396.23" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<polyline points="78.00,396.23 108.18,396.23 156.65,396.23 380.65,396.23 544.41,396.23 545.45,396.23 680.32,396.23 770.00,396.23" fill="none" stroke="#60a5fa" stroke-width="2"/>
+<polyline points="76.27,396.23 99.94,396.23 137.93,396.23 313.55,396.23 441.94,396.23 442.76,396.23 548.50,396.23 618.81,396.23 770.00,396.23" fill="none" stroke="#60a5fa" stroke-width="2"/>
 <text x="795" y="1365" fill="#60a5fa" font-size="13">RTX 3070 / COMMUNITY</text>
-<circle cx="78.00" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="108.18" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="156.65" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="380.65" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="544.41" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="545.45" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="680.32" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="76.27" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="99.94" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="137.93" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="313.55" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="441.94" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="442.76" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="548.50" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="618.81" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
 <circle cx="770.00" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<polyline points="78.00,400.00 108.18,400.00 156.65,400.00 380.65,400.00 544.41,400.00 545.45,400.00 680.32,400.00 770.00,400.00" fill="none" stroke="#fbbf24" stroke-width="2"/>
+<polyline points="76.27,400.00 99.94,400.00 137.93,400.00 313.55,400.00 441.94,400.00 442.76,400.00 548.50,400.00 618.81,400.00 770.00,400.00" fill="none" stroke="#fbbf24" stroke-width="2"/>
 <text x="795" y="1400" fill="#fbbf24" font-size="13">RTX 3070 / SECURE</text>
-<circle cx="78.00" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="108.18" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="156.65" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="380.65" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="544.41" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="545.45" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="680.32" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="770.00" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<polyline points="78.00,395.07 108.18,395.07 156.65,395.07 380.65,395.07 544.41,395.07 545.45,395.07 680.32,395.07 770.00,395.07" fill="none" stroke="#34d399" stroke-width="2"/>
+<circle cx="76.27" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="99.94" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="137.93" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="313.55" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="441.94" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="442.76" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="548.50" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="618.81" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="770.00" cy="395.07" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
+<polyline points="76.27,395.07 99.94,395.07 137.93,395.07 313.55,395.07 441.94,395.07 442.76,395.07 548.50,395.07 618.81,395.07 770.00,395.07" fill="none" stroke="#34d399" stroke-width="2"/>
 <text x="795" y="1435" fill="#34d399" font-size="13">RTX 3080 / COMMUNITY</text>
-<circle cx="78.00" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="108.18" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="156.65" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="380.65" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="544.41" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="545.45" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="680.32" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="76.27" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="99.94" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="137.93" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="313.55" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="441.94" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="442.76" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="548.50" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="618.81" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
 <circle cx="770.00" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<polyline points="78.00,400.00 108.18,400.00 156.65,400.00 380.65,400.00 544.41,400.00 545.45,400.00 680.32,400.00 770.00,400.00" fill="none" stroke="#fb7185" stroke-width="2"/>
+<polyline points="76.27,400.00 99.94,400.00 137.93,400.00 313.55,400.00 441.94,400.00 442.76,400.00 548.50,400.00 618.81,400.00 770.00,400.00" fill="none" stroke="#fb7185" stroke-width="2"/>
 <text x="795" y="1470" fill="#fb7185" font-size="13">RTX 3080 / SECURE</text>
-<circle cx="78.00" cy="394.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="108.18" cy="394.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="156.65" cy="394.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="380.65" cy="394.78" r="5" fill="#c084fc" stroke="#c084fc" stroke-width="2"/>
-<circle cx="544.41" cy="394.78" r="5" fill="#c084fc" stroke="#c084fc" stroke-width="2"/>
-<circle cx="545.45" cy="394.78" r="5" fill="#c084fc" stroke="#c084fc" stroke-width="2"/>
-<circle cx="680.32" cy="394.78" r="5" fill="#c084fc" stroke="#c084fc" stroke-width="2"/>
+<circle cx="76.27" cy="394.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="99.94" cy="394.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="137.93" cy="394.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="313.55" cy="394.78" r="5" fill="#c084fc" stroke="#c084fc" stroke-width="2"/>
+<circle cx="441.94" cy="394.78" r="5" fill="#c084fc" stroke="#c084fc" stroke-width="2"/>
+<circle cx="442.76" cy="394.78" r="5" fill="#c084fc" stroke="#c084fc" stroke-width="2"/>
+<circle cx="548.50" cy="394.78" r="5" fill="#c084fc" stroke="#c084fc" stroke-width="2"/>
+<circle cx="618.81" cy="394.78" r="5" fill="#c084fc" stroke="#c084fc" stroke-width="2"/>
 <circle cx="770.00" cy="394.78" r="5" fill="#c084fc" stroke="#c084fc" stroke-width="2"/>
-<polyline points="78.00,394.78 108.18,394.78 156.65,394.78 380.65,394.78 544.41,394.78 545.45,394.78 680.32,394.78 770.00,394.78" fill="none" stroke="#c084fc" stroke-width="2"/>
+<polyline points="76.27,394.78 99.94,394.78 137.93,394.78 313.55,394.78 441.94,394.78 442.76,394.78 548.50,394.78 618.81,394.78 770.00,394.78" fill="none" stroke="#c084fc" stroke-width="2"/>
 <text x="795" y="1505" fill="#c084fc" font-size="13">RTX 3080 Ti / COMMUNITY</text>
-<circle cx="78.00" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="108.18" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="156.65" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="380.65" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="544.41" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="545.45" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="680.32" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="76.27" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="99.94" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="137.93" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="313.55" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="441.94" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="442.76" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="548.50" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="618.81" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
 <circle cx="770.00" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<polyline points="78.00,400.00 108.18,400.00 156.65,400.00 380.65,400.00 544.41,400.00 545.45,400.00 680.32,400.00 770.00,400.00" fill="none" stroke="#22d3ee" stroke-width="2"/>
+<polyline points="76.27,400.00 99.94,400.00 137.93,400.00 313.55,400.00 441.94,400.00 442.76,400.00 548.50,400.00 618.81,400.00 770.00,400.00" fill="none" stroke="#22d3ee" stroke-width="2"/>
 <text x="795" y="1540" fill="#22d3ee" font-size="13">RTX 3080 Ti / SECURE</text>
-<circle cx="78.00" cy="393.62" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="108.18" cy="393.62" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="156.65" cy="393.62" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="380.65" cy="393.62" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="544.41" cy="393.62" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="545.45" cy="393.62" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="680.32" cy="393.62" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="76.27" cy="393.62" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="99.94" cy="393.62" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="137.93" cy="393.62" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="313.55" cy="393.62" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="441.94" cy="393.62" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="442.76" cy="393.62" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="548.50" cy="393.62" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="618.81" cy="393.62" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
 <circle cx="770.00" cy="393.62" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
-<polyline points="78.00,393.62 108.18,393.62 156.65,393.62 380.65,393.62 544.41,393.62 545.45,393.62 680.32,393.62 770.00,393.62" fill="none" stroke="#60a5fa" stroke-width="2"/>
+<polyline points="76.27,393.62 99.94,393.62 137.93,393.62 313.55,393.62 441.94,393.62 442.76,393.62 548.50,393.62 618.81,393.62 770.00,393.62" fill="none" stroke="#60a5fa" stroke-width="2"/>
 <text x="795" y="1575" fill="#60a5fa" font-size="13">RTX 3090 / COMMUNITY</text>
-<circle cx="78.00" cy="385.49" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="108.18" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="156.65" cy="385.49" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="380.65" cy="385.49" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="544.41" cy="385.49" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="545.45" cy="385.49" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="680.32" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="76.27" cy="385.49" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="99.94" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="137.93" cy="385.49" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="313.55" cy="385.49" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="441.94" cy="385.49" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="442.76" cy="385.49" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="548.50" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="618.81" cy="385.49" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
 <circle cx="770.00" cy="385.49" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<polyline points="78.00,385.49 108.18,385.49 156.65,385.49 380.65,385.49 544.41,385.49 545.45,385.49 680.32,385.49 770.00,385.49" fill="none" stroke="#fbbf24" stroke-width="2"/>
+<polyline points="76.27,385.49 99.94,385.49 137.93,385.49 313.55,385.49 441.94,385.49 442.76,385.49 548.50,385.49 618.81,385.49 770.00,385.49" fill="none" stroke="#fbbf24" stroke-width="2"/>
 <text x="795" y="1610" fill="#fbbf24" font-size="13">RTX 3090 / SECURE</text>
-<circle cx="78.00" cy="392.17" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="108.18" cy="392.17" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="156.65" cy="392.17" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="380.65" cy="392.17" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="544.41" cy="392.17" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
-<circle cx="545.45" cy="392.17" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
-<circle cx="680.32" cy="392.17" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="76.27" cy="392.17" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="99.94" cy="392.17" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="137.93" cy="392.17" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="313.55" cy="392.17" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="441.94" cy="392.17" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
+<circle cx="442.76" cy="392.17" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
+<circle cx="548.50" cy="392.17" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="618.81" cy="392.17" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
 <circle cx="770.00" cy="392.17" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<polyline points="78.00,392.17 108.18,392.17 156.65,392.17 380.65,392.17 544.41,392.17 545.45,392.17 680.32,392.17 770.00,392.17" fill="none" stroke="#34d399" stroke-width="2"/>
+<polyline points="76.27,392.17 99.94,392.17 137.93,392.17 313.55,392.17 441.94,392.17 442.76,392.17 548.50,392.17 618.81,392.17 770.00,392.17" fill="none" stroke="#34d399" stroke-width="2"/>
 <text x="795" y="1645" fill="#34d399" font-size="13">RTX 3090 Ti / COMMUNITY</text>
-<circle cx="78.00" cy="386.65" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="108.18" cy="386.65" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="156.65" cy="386.65" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="380.65" cy="386.65" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="544.41" cy="386.65" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="545.45" cy="386.65" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="680.32" cy="386.65" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="76.27" cy="386.65" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="99.94" cy="386.65" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="137.93" cy="386.65" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="313.55" cy="386.65" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="441.94" cy="386.65" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="442.76" cy="386.65" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="548.50" cy="386.65" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="618.81" cy="386.65" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
 <circle cx="770.00" cy="386.65" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<polyline points="78.00,386.65 108.18,386.65 156.65,386.65 380.65,386.65 544.41,386.65 545.45,386.65 680.32,386.65 770.00,386.65" fill="none" stroke="#fb7185" stroke-width="2"/>
+<polyline points="76.27,386.65 99.94,386.65 137.93,386.65 313.55,386.65 441.94,386.65 442.76,386.65 548.50,386.65 618.81,386.65 770.00,386.65" fill="none" stroke="#fb7185" stroke-width="2"/>
 <text x="795" y="1680" fill="#fb7185" font-size="13">RTX 3090 Ti / SECURE</text>
-<circle cx="78.00" cy="394.20" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="108.18" cy="394.20" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="156.65" cy="394.20" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="380.65" cy="394.20" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="544.41" cy="394.20" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="545.45" cy="394.20" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="680.32" cy="394.20" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="76.27" cy="394.20" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="99.94" cy="394.20" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="137.93" cy="394.20" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="313.55" cy="394.20" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="441.94" cy="394.20" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="442.76" cy="394.20" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="548.50" cy="394.20" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="618.81" cy="394.20" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
 <circle cx="770.00" cy="394.20" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<polyline points="78.00,394.20 108.18,394.20 156.65,394.20 380.65,394.20 544.41,394.20 545.45,394.20 680.32,394.20 770.00,394.20" fill="none" stroke="#c084fc" stroke-width="2"/>
+<polyline points="76.27,394.20 99.94,394.20 137.93,394.20 313.55,394.20 441.94,394.20 442.76,394.20 548.50,394.20 618.81,394.20 770.00,394.20" fill="none" stroke="#c084fc" stroke-width="2"/>
 <text x="795" y="1715" fill="#c084fc" font-size="13">RTX 4000 Ada / COMMUNITY</text>
-<circle cx="78.00" cy="391.88" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="108.18" cy="391.88" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="156.65" cy="391.88" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="380.65" cy="391.88" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="544.41" cy="391.88" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="545.45" cy="391.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="680.32" cy="391.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="76.27" cy="391.88" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="99.94" cy="391.88" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="137.93" cy="391.88" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="313.55" cy="391.88" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="441.94" cy="391.88" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="442.76" cy="391.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="548.50" cy="391.88" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="618.81" cy="391.88" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
 <circle cx="770.00" cy="391.88" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<polyline points="78.00,391.88 108.18,391.88 156.65,391.88 380.65,391.88 544.41,391.88 545.45,391.88 680.32,391.88 770.00,391.88" fill="none" stroke="#22d3ee" stroke-width="2"/>
+<polyline points="76.27,391.88 99.94,391.88 137.93,391.88 313.55,391.88 441.94,391.88 442.76,391.88 548.50,391.88 618.81,391.88 770.00,391.88" fill="none" stroke="#22d3ee" stroke-width="2"/>
 <text x="795" y="1750" fill="#22d3ee" font-size="13">RTX 4000 Ada / SECURE</text>
-<circle cx="78.00" cy="394.78" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="108.18" cy="394.78" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="156.65" cy="394.78" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="380.65" cy="394.78" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="544.41" cy="394.78" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="545.45" cy="394.78" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="680.32" cy="394.78" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="76.27" cy="394.78" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="99.94" cy="394.78" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="137.93" cy="394.78" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="313.55" cy="394.78" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="441.94" cy="394.78" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="442.76" cy="394.78" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="548.50" cy="394.78" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="618.81" cy="394.78" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
 <circle cx="770.00" cy="394.78" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<polyline points="78.00,394.78 108.18,394.78 156.65,394.78 380.65,394.78 544.41,394.78 545.45,394.78 680.32,394.78 770.00,394.78" fill="none" stroke="#60a5fa" stroke-width="2"/>
+<polyline points="76.27,394.78 99.94,394.78 137.93,394.78 313.55,394.78 441.94,394.78 442.76,394.78 548.50,394.78 618.81,394.78 770.00,394.78" fill="none" stroke="#60a5fa" stroke-width="2"/>
 <text x="795" y="1785" fill="#60a5fa" font-size="13">RTX 4000 Ada SFF / COMMUNITY</text>
-<circle cx="78.00" cy="387.23" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="108.18" cy="387.23" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="156.65" cy="387.23" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="380.65" cy="387.23" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="544.41" cy="387.23" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="545.45" cy="387.23" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="680.32" cy="387.23" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="76.27" cy="387.23" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="99.94" cy="387.23" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="137.93" cy="387.23" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="313.55" cy="387.23" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="441.94" cy="387.23" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="442.76" cy="387.23" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="548.50" cy="387.23" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="618.81" cy="387.23" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
 <circle cx="770.00" cy="387.23" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<polyline points="78.00,387.23 108.18,387.23 156.65,387.23 380.65,387.23 544.41,387.23 545.45,387.23 680.32,387.23 770.00,387.23" fill="none" stroke="#fbbf24" stroke-width="2"/>
+<polyline points="76.27,387.23 99.94,387.23 137.93,387.23 313.55,387.23 441.94,387.23 442.76,387.23 548.50,387.23 618.81,387.23 770.00,387.23" fill="none" stroke="#fbbf24" stroke-width="2"/>
 <text x="795" y="1820" fill="#fbbf24" font-size="13">RTX 4000 Ada SFF / SECURE</text>
-<circle cx="78.00" cy="394.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="108.18" cy="394.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="156.65" cy="394.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="380.65" cy="394.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="544.41" cy="394.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="545.45" cy="394.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="680.32" cy="394.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="76.27" cy="394.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="99.94" cy="394.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="137.93" cy="394.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="313.55" cy="394.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="441.94" cy="394.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="442.76" cy="394.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="548.50" cy="394.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="618.81" cy="394.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
 <circle cx="770.00" cy="394.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<polyline points="78.00,394.49 108.18,394.49 156.65,394.49 380.65,394.49 544.41,394.49 545.45,394.49 680.32,394.49 770.00,394.49" fill="none" stroke="#34d399" stroke-width="2"/>
+<polyline points="76.27,394.49 99.94,394.49 137.93,394.49 313.55,394.49 441.94,394.49 442.76,394.49 548.50,394.49 618.81,394.49 770.00,394.49" fill="none" stroke="#34d399" stroke-width="2"/>
 <text x="795" y="1855" fill="#34d399" font-size="13">RTX 4070 Ti / COMMUNITY</text>
-<circle cx="78.00" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="108.18" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="156.65" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="380.65" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="544.41" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="545.45" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="680.32" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="76.27" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="99.94" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="137.93" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="313.55" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="441.94" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="442.76" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="548.50" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="618.81" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
 <circle cx="770.00" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<polyline points="78.00,385.49 108.18,385.49 156.65,385.49 380.65,385.49 544.41,385.49 545.45,385.49 680.32,385.49 770.00,385.49" fill="none" stroke="#fb7185" stroke-width="2"/>
+<polyline points="76.27,385.49 99.94,385.49 137.93,385.49 313.55,385.49 441.94,385.49 442.76,385.49 548.50,385.49 618.81,385.49 770.00,385.49" fill="none" stroke="#fb7185" stroke-width="2"/>
 <text x="795" y="1890" fill="#fb7185" font-size="13">RTX 4070 Ti / SECURE</text>
-<circle cx="78.00" cy="392.17" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="108.18" cy="392.17" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="156.65" cy="392.17" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="380.65" cy="392.17" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="544.41" cy="392.17" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="545.45" cy="392.17" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="680.32" cy="392.17" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="76.27" cy="392.17" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="99.94" cy="392.17" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="137.93" cy="392.17" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="313.55" cy="392.17" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="441.94" cy="392.17" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="442.76" cy="392.17" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="548.50" cy="392.17" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="618.81" cy="392.17" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
 <circle cx="770.00" cy="392.17" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<polyline points="78.00,392.17 108.18,392.17 156.65,392.17 380.65,392.17 544.41,392.17 545.45,392.17 680.32,392.17 770.00,392.17" fill="none" stroke="#c084fc" stroke-width="2"/>
+<polyline points="76.27,392.17 99.94,392.17 137.93,392.17 313.55,392.17 441.94,392.17 442.76,392.17 548.50,392.17 618.81,392.17 770.00,392.17" fill="none" stroke="#c084fc" stroke-width="2"/>
 <text x="795" y="1925" fill="#c084fc" font-size="13">RTX 4080 / COMMUNITY</text>
-<circle cx="78.00" cy="385.49" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="108.18" cy="385.49" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="156.65" cy="385.49" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="380.65" cy="385.49" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="544.41" cy="385.49" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="545.45" cy="385.49" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="680.32" cy="385.49" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="76.27" cy="385.49" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="99.94" cy="385.49" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="137.93" cy="385.49" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="313.55" cy="385.49" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="441.94" cy="385.49" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="442.76" cy="385.49" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="548.50" cy="385.49" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="618.81" cy="385.49" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
 <circle cx="770.00" cy="385.49" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<polyline points="78.00,385.49 108.18,385.49 156.65,385.49 380.65,385.49 544.41,385.49 545.45,385.49 680.32,385.49 770.00,385.49" fill="none" stroke="#22d3ee" stroke-width="2"/>
+<polyline points="76.27,385.49 99.94,385.49 137.93,385.49 313.55,385.49 441.94,385.49 442.76,385.49 548.50,385.49 618.81,385.49 770.00,385.49" fill="none" stroke="#22d3ee" stroke-width="2"/>
 <text x="795" y="1960" fill="#22d3ee" font-size="13">RTX 4080 / SECURE</text>
-<circle cx="78.00" cy="391.88" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="108.18" cy="391.88" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="156.65" cy="391.88" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="380.65" cy="391.88" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="544.41" cy="391.88" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="545.45" cy="391.88" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="680.32" cy="391.88" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="770.00" cy="391.88" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<polyline points="78.00,391.88 108.18,391.88 156.65,391.88 380.65,391.88 544.41,391.88 545.45,391.88 680.32,391.88 770.00,391.88" fill="none" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="76.27" cy="391.88" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="99.94" cy="391.88" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="137.93" cy="391.88" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="313.55" cy="391.88" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="441.94" cy="391.88" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="442.76" cy="391.88" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="548.50" cy="391.88" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="618.81" cy="391.88" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="770.00" cy="391.88" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<polyline points="76.27,391.88 99.94,391.88 137.93,391.88 313.55,391.88 441.94,391.88 442.76,391.88 548.50,391.88 618.81,391.88 770.00,391.88" fill="none" stroke="#60a5fa" stroke-width="2"/>
 <text x="795" y="1995" fill="#60a5fa" font-size="13">RTX 4080 SUPER / COMMUNITY</text>
-<circle cx="78.00" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="108.18" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="156.65" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="380.65" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="544.41" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="545.45" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="680.32" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="76.27" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="99.94" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="137.93" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="313.55" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="441.94" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="442.76" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="548.50" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="618.81" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
 <circle cx="770.00" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<polyline points="78.00,385.49 108.18,385.49 156.65,385.49 380.65,385.49 544.41,385.49 545.45,385.49 680.32,385.49 770.00,385.49" fill="none" stroke="#fbbf24" stroke-width="2"/>
+<polyline points="76.27,385.49 99.94,385.49 137.93,385.49 313.55,385.49 441.94,385.49 442.76,385.49 548.50,385.49 618.81,385.49 770.00,385.49" fill="none" stroke="#fbbf24" stroke-width="2"/>
 <text x="795" y="2030" fill="#fbbf24" font-size="13">RTX 4080 SUPER / SECURE</text>
 <circle cx="70.00" cy="390.13" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="78.00" cy="390.13" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="108.18" cy="390.13" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="156.65" cy="390.13" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="380.65" cy="390.13" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="544.41" cy="390.13" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="545.45" cy="390.13" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="680.32" cy="390.13" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="76.27" cy="390.13" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="99.94" cy="390.13" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="137.93" cy="390.13" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="313.55" cy="390.13" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="441.94" cy="390.13" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="442.76" cy="390.13" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="548.50" cy="390.13" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="618.81" cy="390.13" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
 <circle cx="770.00" cy="390.13" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<polyline points="70.00,390.13 78.00,390.13 108.18,390.13 156.65,390.13 380.65,390.13 544.41,390.13 545.45,390.13 680.32,390.13 770.00,390.13" fill="none" stroke="#34d399" stroke-width="2"/>
+<polyline points="70.00,390.13 76.27,390.13 99.94,390.13 137.93,390.13 313.55,390.13 441.94,390.13 442.76,390.13 548.50,390.13 618.81,390.13 770.00,390.13" fill="none" stroke="#34d399" stroke-width="2"/>
 <text x="795" y="2065" fill="#34d399" font-size="13">RTX 4090 / COMMUNITY</text>
 <circle cx="70.00" cy="374.17" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="78.00" cy="374.17" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="108.18" cy="374.17" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="156.65" cy="374.17" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="380.65" cy="374.17" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="544.41" cy="374.17" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="545.45" cy="374.17" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="680.32" cy="374.17" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="76.27" cy="374.17" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="99.94" cy="374.17" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="137.93" cy="374.17" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="313.55" cy="374.17" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="441.94" cy="374.17" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="442.76" cy="374.17" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="548.50" cy="374.17" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="618.81" cy="374.17" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
 <circle cx="770.00" cy="374.17" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<polyline points="70.00,374.17 78.00,374.17 108.18,374.17 156.65,374.17 380.65,374.17 544.41,374.17 545.45,374.17 680.32,374.17 770.00,374.17" fill="none" stroke="#fb7185" stroke-width="2"/>
+<polyline points="70.00,374.17 76.27,374.17 99.94,374.17 137.93,374.17 313.55,374.17 441.94,374.17 442.76,374.17 548.50,374.17 618.81,374.17 770.00,374.17" fill="none" stroke="#fb7185" stroke-width="2"/>
 <text x="795" y="2100" fill="#fb7185" font-size="13">RTX 4090 / SECURE</text>
-<circle cx="78.00" cy="385.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="108.18" cy="385.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="156.65" cy="385.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="380.65" cy="385.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="544.41" cy="385.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="545.45" cy="385.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="680.32" cy="385.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="76.27" cy="385.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="99.94" cy="385.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="137.93" cy="385.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="313.55" cy="385.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="441.94" cy="385.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="442.76" cy="385.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="548.50" cy="385.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="618.81" cy="385.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
 <circle cx="770.00" cy="385.78" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<polyline points="78.00,385.78 108.18,385.78 156.65,385.78 380.65,385.78 544.41,385.78 545.45,385.78 680.32,385.78 770.00,385.78" fill="none" stroke="#c084fc" stroke-width="2"/>
+<polyline points="76.27,385.78 99.94,385.78 137.93,385.78 313.55,385.78 441.94,385.78 442.76,385.78 548.50,385.78 618.81,385.78 770.00,385.78" fill="none" stroke="#c084fc" stroke-width="2"/>
 <text x="795" y="2135" fill="#c084fc" font-size="13">RTX 5000 Ada / COMMUNITY</text>
-<circle cx="78.00" cy="375.92" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="108.18" cy="375.92" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="156.65" cy="375.92" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="380.65" cy="375.92" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="544.41" cy="375.92" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="545.45" cy="375.92" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="680.32" cy="375.92" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="76.27" cy="375.92" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="99.94" cy="375.92" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="137.93" cy="375.92" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="313.55" cy="375.92" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="441.94" cy="375.92" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="442.76" cy="375.92" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="548.50" cy="375.92" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="618.81" cy="375.92" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
 <circle cx="770.00" cy="375.92" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<polyline points="78.00,375.92 108.18,375.92 156.65,375.92 380.65,375.92 544.41,375.92 545.45,375.92 680.32,375.92 770.00,375.92" fill="none" stroke="#22d3ee" stroke-width="2"/>
+<polyline points="76.27,375.92 99.94,375.92 137.93,375.92 313.55,375.92 441.94,375.92 442.76,375.92 548.50,375.92 618.81,375.92 770.00,375.92" fill="none" stroke="#22d3ee" stroke-width="2"/>
 <text x="795" y="2170" fill="#22d3ee" font-size="13">RTX 5000 Ada / SECURE</text>
-<circle cx="78.00" cy="388.68" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="108.18" cy="388.68" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="156.65" cy="388.68" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="380.65" cy="388.68" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="544.41" cy="388.68" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="545.45" cy="388.68" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="680.32" cy="388.68" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="76.27" cy="388.68" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="99.94" cy="388.68" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="137.93" cy="388.68" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="313.55" cy="388.68" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="441.94" cy="388.68" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="442.76" cy="388.68" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="548.50" cy="388.68" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="618.81" cy="388.68" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
 <circle cx="770.00" cy="388.68" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
-<polyline points="78.00,388.68 108.18,388.68 156.65,388.68 380.65,388.68 544.41,388.68 545.45,388.68 680.32,388.68 770.00,388.68" fill="none" stroke="#60a5fa" stroke-width="2"/>
+<polyline points="76.27,388.68 99.94,388.68 137.93,388.68 313.55,388.68 441.94,388.68 442.76,388.68 548.50,388.68 618.81,388.68 770.00,388.68" fill="none" stroke="#60a5fa" stroke-width="2"/>
 <text x="795" y="2205" fill="#60a5fa" font-size="13">RTX 5080 / COMMUNITY</text>
-<circle cx="78.00" cy="382.88" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="108.18" cy="382.88" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="156.65" cy="382.88" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="380.65" cy="382.88" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="544.41" cy="382.88" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="545.45" cy="382.88" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="680.32" cy="382.88" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="76.27" cy="382.88" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="99.94" cy="382.88" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="137.93" cy="382.88" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="313.55" cy="382.88" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="441.94" cy="382.88" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="442.76" cy="382.88" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="548.50" cy="382.88" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="618.81" cy="382.88" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
 <circle cx="770.00" cy="382.88" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<polyline points="78.00,382.88 108.18,382.88 156.65,382.88 380.65,382.88 544.41,382.88 545.45,382.88 680.32,382.88 770.00,382.88" fill="none" stroke="#fbbf24" stroke-width="2"/>
+<polyline points="76.27,382.88 99.94,382.88 137.93,382.88 313.55,382.88 441.94,382.88 442.76,382.88 548.50,382.88 618.81,382.88 770.00,382.88" fill="none" stroke="#fbbf24" stroke-width="2"/>
 <text x="795" y="2240" fill="#fbbf24" font-size="13">RTX 5080 / SECURE</text>
-<circle cx="78.00" cy="379.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="108.18" cy="379.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="156.65" cy="379.98" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
-<circle cx="380.65" cy="379.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="544.41" cy="379.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="545.45" cy="379.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="680.32" cy="379.98" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
-<circle cx="770.00" cy="379.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<polyline points="78.00,379.98 108.18,379.98 156.65,379.98 380.65,379.98 544.41,379.98 545.45,379.98 680.32,379.98 770.00,379.98" fill="none" stroke="#34d399" stroke-width="2"/>
+<circle cx="76.27" cy="379.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="99.94" cy="379.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="137.93" cy="379.98" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
+<circle cx="313.55" cy="379.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="441.94" cy="379.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="442.76" cy="379.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="548.50" cy="379.98" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
+<circle cx="618.81" cy="379.98" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="770.00" cy="379.98" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
+<polyline points="76.27,379.98 99.94,379.98 137.93,379.98 313.55,379.98 441.94,379.98 442.76,379.98 548.50,379.98 618.81,379.98 770.00,379.98" fill="none" stroke="#34d399" stroke-width="2"/>
 <text x="795" y="2275" fill="#34d399" font-size="13">RTX 5090 / COMMUNITY</text>
-<circle cx="78.00" cy="365.47" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="108.18" cy="365.47" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="156.65" cy="365.47" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="380.65" cy="365.47" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="544.41" cy="365.47" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="545.45" cy="365.47" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="680.32" cy="365.47" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="76.27" cy="365.47" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="99.94" cy="365.47" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="137.93" cy="365.47" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="313.55" cy="365.47" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="441.94" cy="365.47" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="442.76" cy="365.47" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="548.50" cy="365.47" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="618.81" cy="365.47" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
 <circle cx="770.00" cy="365.47" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<polyline points="78.00,365.47 108.18,365.47 156.65,365.47 380.65,365.47 544.41,365.47 545.45,365.47 680.32,365.47 770.00,365.47" fill="none" stroke="#fb7185" stroke-width="2"/>
+<polyline points="76.27,365.47 99.94,365.47 137.93,365.47 313.55,365.47 441.94,365.47 442.76,365.47 548.50,365.47 618.81,365.47 770.00,365.47" fill="none" stroke="#fb7185" stroke-width="2"/>
 <text x="795" y="2310" fill="#fb7185" font-size="13">RTX 5090 / SECURE</text>
-<circle cx="78.00" cy="378.53" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="108.18" cy="378.53" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="156.65" cy="378.53" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="380.65" cy="378.53" r="5" fill="#c084fc" stroke="#c084fc" stroke-width="2"/>
-<circle cx="544.41" cy="378.53" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="545.45" cy="378.53" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="680.32" cy="378.53" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="76.27" cy="378.53" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="99.94" cy="378.53" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="137.93" cy="378.53" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="313.55" cy="378.53" r="5" fill="#c084fc" stroke="#c084fc" stroke-width="2"/>
+<circle cx="441.94" cy="378.53" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="442.76" cy="378.53" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="548.50" cy="378.53" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="618.81" cy="378.53" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
 <circle cx="770.00" cy="378.53" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<polyline points="78.00,378.53 108.18,378.53 156.65,378.53 380.65,378.53 544.41,378.53 545.45,378.53 680.32,378.53 770.00,378.53" fill="none" stroke="#c084fc" stroke-width="2"/>
+<polyline points="76.27,378.53 99.94,378.53 137.93,378.53 313.55,378.53 441.94,378.53 442.76,378.53 548.50,378.53 618.81,378.53 770.00,378.53" fill="none" stroke="#c084fc" stroke-width="2"/>
 <text x="795" y="2345" fill="#c084fc" font-size="13">RTX 6000 Ada / COMMUNITY</text>
-<circle cx="78.00" cy="371.27" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="108.18" cy="371.27" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="156.65" cy="371.27" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="380.65" cy="371.27" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="544.41" cy="371.27" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="545.45" cy="371.27" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="680.32" cy="371.27" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="76.27" cy="371.27" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="99.94" cy="371.27" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="137.93" cy="371.27" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="313.55" cy="371.27" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="441.94" cy="371.27" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="442.76" cy="371.27" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="548.50" cy="371.27" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="618.81" cy="371.27" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
 <circle cx="770.00" cy="371.27" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<polyline points="78.00,371.27 108.18,371.27 156.65,371.27 380.65,371.27 544.41,371.27 545.45,371.27 680.32,371.27 770.00,371.27" fill="none" stroke="#22d3ee" stroke-width="2"/>
+<polyline points="76.27,371.27 99.94,371.27 137.93,371.27 313.55,371.27 441.94,371.27 442.76,371.27 548.50,371.27 618.81,371.27 770.00,371.27" fill="none" stroke="#22d3ee" stroke-width="2"/>
 <text x="795" y="2380" fill="#22d3ee" font-size="13">RTX 6000 Ada / SECURE</text>
-<circle cx="78.00" cy="396.52" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="108.18" cy="396.52" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="156.65" cy="396.52" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="380.65" cy="396.52" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="544.41" cy="396.52" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="545.45" cy="396.52" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="680.32" cy="396.52" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="770.00" cy="396.52" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<polyline points="78.00,396.52 108.18,396.52 156.65,396.52 380.65,396.52 544.41,396.52 545.45,396.52 680.32,396.52 770.00,396.52" fill="none" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="76.27" cy="396.52" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="99.94" cy="396.52" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="137.93" cy="396.52" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="313.55" cy="396.52" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="441.94" cy="396.52" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="442.76" cy="396.52" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="548.50" cy="396.52" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="618.81" cy="396.52" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="770.00" cy="396.52" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<polyline points="76.27,396.52 99.94,396.52 137.93,396.52 313.55,396.52 441.94,396.52 442.76,396.52 548.50,396.52 618.81,396.52 770.00,396.52" fill="none" stroke="#60a5fa" stroke-width="2"/>
 <text x="795" y="2415" fill="#60a5fa" font-size="13">RTX A2000 / COMMUNITY</text>
-<circle cx="78.00" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="108.18" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="156.65" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="380.65" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="544.41" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="545.45" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="680.32" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="76.27" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="99.94" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="137.93" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="313.55" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="441.94" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="442.76" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="548.50" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="618.81" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
 <circle cx="770.00" cy="385.49" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<polyline points="78.00,385.49 108.18,385.49 156.65,385.49 380.65,385.49 544.41,385.49 545.45,385.49 680.32,385.49 770.00,385.49" fill="none" stroke="#fbbf24" stroke-width="2"/>
+<polyline points="76.27,385.49 99.94,385.49 137.93,385.49 313.55,385.49 441.94,385.49 442.76,385.49 548.50,385.49 618.81,385.49 770.00,385.49" fill="none" stroke="#fbbf24" stroke-width="2"/>
 <text x="795" y="2450" fill="#fbbf24" font-size="13">RTX A2000 / SECURE</text>
-<circle cx="78.00" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="108.18" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="156.65" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="380.65" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="544.41" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="545.45" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="680.32" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="770.00" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<polyline points="78.00,395.07 108.18,395.07 156.65,395.07 380.65,395.07 544.41,395.07 545.45,395.07 680.32,395.07 770.00,395.07" fill="none" stroke="#34d399" stroke-width="2"/>
+<circle cx="76.27" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="99.94" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="137.93" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="313.55" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="441.94" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="442.76" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="548.50" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="618.81" cy="395.07" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="770.00" cy="395.07" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
+<polyline points="76.27,395.07 99.94,395.07 137.93,395.07 313.55,395.07 441.94,395.07 442.76,395.07 548.50,395.07 618.81,395.07 770.00,395.07" fill="none" stroke="#34d399" stroke-width="2"/>
 <text x="795" y="2485" fill="#34d399" font-size="13">RTX A4000 / COMMUNITY</text>
-<circle cx="78.00" cy="392.75" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="108.18" cy="392.75" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="156.65" cy="392.75" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="380.65" cy="392.75" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="544.41" cy="392.75" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="545.45" cy="392.75" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="680.32" cy="392.75" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="76.27" cy="392.75" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="99.94" cy="392.75" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="137.93" cy="392.75" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="313.55" cy="392.75" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="441.94" cy="392.75" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="442.76" cy="392.75" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="548.50" cy="392.75" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="618.81" cy="392.75" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
 <circle cx="770.00" cy="392.75" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<polyline points="78.00,392.75 108.18,392.75 156.65,392.75 380.65,392.75 544.41,392.75 545.45,392.75 680.32,392.75 770.00,392.75" fill="none" stroke="#fb7185" stroke-width="2"/>
+<polyline points="76.27,392.75 99.94,392.75 137.93,392.75 313.55,392.75 441.94,392.75 442.76,392.75 548.50,392.75 618.81,392.75 770.00,392.75" fill="none" stroke="#fb7185" stroke-width="2"/>
 <text x="795" y="2520" fill="#fb7185" font-size="13">RTX A4000 / SECURE</text>
-<circle cx="78.00" cy="394.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="108.18" cy="394.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="156.65" cy="394.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="380.65" cy="394.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="544.41" cy="394.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="545.45" cy="394.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="680.32" cy="394.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="770.00" cy="394.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<polyline points="78.00,394.49 108.18,394.49 156.65,394.49 380.65,394.49 544.41,394.49 545.45,394.49 680.32,394.49 770.00,394.49" fill="none" stroke="#c084fc" stroke-width="2"/>
+<circle cx="76.27" cy="394.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="99.94" cy="394.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="137.93" cy="394.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="313.55" cy="394.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="441.94" cy="394.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="442.76" cy="394.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="548.50" cy="394.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="618.81" cy="394.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="770.00" cy="394.49" r="5" fill="#c084fc" stroke="#c084fc" stroke-width="2"/>
+<polyline points="76.27,394.49 99.94,394.49 137.93,394.49 313.55,394.49 441.94,394.49 442.76,394.49 548.50,394.49 618.81,394.49 770.00,394.49" fill="none" stroke="#c084fc" stroke-width="2"/>
 <text x="795" y="2555" fill="#c084fc" font-size="13">RTX A4500 / COMMUNITY</text>
-<circle cx="78.00" cy="392.75" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="108.18" cy="392.75" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="156.65" cy="392.75" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="380.65" cy="392.75" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="544.41" cy="392.75" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="545.45" cy="392.75" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="680.32" cy="392.75" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="76.27" cy="392.75" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="99.94" cy="392.75" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="137.93" cy="392.75" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="313.55" cy="392.75" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="441.94" cy="392.75" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="442.76" cy="392.75" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="548.50" cy="392.75" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="618.81" cy="392.75" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
 <circle cx="770.00" cy="392.75" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<polyline points="78.00,392.75 108.18,392.75 156.65,392.75 380.65,392.75 544.41,392.75 545.45,392.75 680.32,392.75 770.00,392.75" fill="none" stroke="#22d3ee" stroke-width="2"/>
+<polyline points="76.27,392.75 99.94,392.75 137.93,392.75 313.55,392.75 441.94,392.75 442.76,392.75 548.50,392.75 618.81,392.75 770.00,392.75" fill="none" stroke="#22d3ee" stroke-width="2"/>
 <text x="795" y="2590" fill="#22d3ee" font-size="13">RTX A4500 / SECURE</text>
-<circle cx="78.00" cy="395.36" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="108.18" cy="395.36" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="156.65" cy="395.36" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="380.65" cy="395.36" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="544.41" cy="395.36" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="545.45" cy="395.36" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="680.32" cy="395.36" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="76.27" cy="395.36" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="99.94" cy="395.36" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="137.93" cy="395.36" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="313.55" cy="395.36" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="441.94" cy="395.36" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="442.76" cy="395.36" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="548.50" cy="395.36" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="618.81" cy="395.36" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
 <circle cx="770.00" cy="395.36" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<polyline points="78.00,395.36 108.18,395.36 156.65,395.36 380.65,395.36 544.41,395.36 545.45,395.36 680.32,395.36 770.00,395.36" fill="none" stroke="#60a5fa" stroke-width="2"/>
+<polyline points="76.27,395.36 99.94,395.36 137.93,395.36 313.55,395.36 441.94,395.36 442.76,395.36 548.50,395.36 618.81,395.36 770.00,395.36" fill="none" stroke="#60a5fa" stroke-width="2"/>
 <text x="795" y="2625" fill="#60a5fa" font-size="13">RTX A5000 / COMMUNITY</text>
-<circle cx="78.00" cy="392.17" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="108.18" cy="392.17" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="156.65" cy="392.17" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="380.65" cy="392.17" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="544.41" cy="392.17" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="545.45" cy="392.17" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="680.32" cy="392.17" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="76.27" cy="392.17" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="99.94" cy="392.17" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="137.93" cy="392.17" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="313.55" cy="392.17" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="441.94" cy="392.17" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="442.76" cy="392.17" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="548.50" cy="392.17" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="618.81" cy="392.17" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
 <circle cx="770.00" cy="392.17" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<polyline points="78.00,392.17 108.18,392.17 156.65,392.17 380.65,392.17 544.41,392.17 545.45,392.17 680.32,392.17 770.00,392.17" fill="none" stroke="#fbbf24" stroke-width="2"/>
+<polyline points="76.27,392.17 99.94,392.17 137.93,392.17 313.55,392.17 441.94,392.17 442.76,392.17 548.50,392.17 618.81,392.17 770.00,392.17" fill="none" stroke="#fbbf24" stroke-width="2"/>
 <text x="795" y="2660" fill="#fbbf24" font-size="13">RTX A5000 / SECURE</text>
-<circle cx="78.00" cy="390.42" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="108.18" cy="390.42" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="156.65" cy="390.42" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="380.65" cy="390.42" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="544.41" cy="390.42" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="545.45" cy="390.42" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="680.32" cy="390.42" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="76.27" cy="390.42" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="99.94" cy="390.42" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="137.93" cy="390.42" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="313.55" cy="390.42" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="441.94" cy="390.42" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="442.76" cy="390.42" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="548.50" cy="390.42" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="618.81" cy="390.42" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
 <circle cx="770.00" cy="390.42" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<polyline points="78.00,390.42 108.18,390.42 156.65,390.42 380.65,390.42 544.41,390.42 545.45,390.42 680.32,390.42 770.00,390.42" fill="none" stroke="#34d399" stroke-width="2"/>
+<polyline points="76.27,390.42 99.94,390.42 137.93,390.42 313.55,390.42 441.94,390.42 442.76,390.42 548.50,390.42 618.81,390.42 770.00,390.42" fill="none" stroke="#34d399" stroke-width="2"/>
 <text x="795" y="2695" fill="#34d399" font-size="13">RTX A6000 / COMMUNITY</text>
-<circle cx="78.00" cy="382.88" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="108.18" cy="382.88" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="156.65" cy="382.88" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="380.65" cy="382.88" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="544.41" cy="382.88" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="545.45" cy="382.88" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="680.32" cy="382.88" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="76.27" cy="382.88" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="99.94" cy="382.88" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="137.93" cy="382.88" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="313.55" cy="382.88" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="441.94" cy="382.88" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="442.76" cy="382.88" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="548.50" cy="382.88" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="618.81" cy="382.88" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
 <circle cx="770.00" cy="382.88" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<polyline points="78.00,382.88 108.18,382.88 156.65,382.88 380.65,382.88 544.41,382.88 545.45,382.88 680.32,382.88 770.00,382.88" fill="none" stroke="#fb7185" stroke-width="2"/>
+<polyline points="76.27,382.88 99.94,382.88 137.93,382.88 313.55,382.88 441.94,382.88 442.76,382.88 548.50,382.88 618.81,382.88 770.00,382.88" fill="none" stroke="#fb7185" stroke-width="2"/>
 <text x="795" y="2730" fill="#fb7185" font-size="13">RTX A6000 / SECURE</text>
-<circle cx="78.00" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="108.18" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="156.65" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="380.65" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="544.41" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="545.45" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="680.32" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="76.27" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="99.94" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="137.93" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="313.55" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="441.94" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="442.76" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="548.50" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="618.81" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
 <circle cx="770.00" cy="385.49" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<polyline points="78.00,385.49 108.18,385.49 156.65,385.49 380.65,385.49 544.41,385.49 545.45,385.49 680.32,385.49 770.00,385.49" fill="none" stroke="#c084fc" stroke-width="2"/>
+<polyline points="76.27,385.49 99.94,385.49 137.93,385.49 313.55,385.49 441.94,385.49 442.76,385.49 548.50,385.49 618.81,385.49 770.00,385.49" fill="none" stroke="#c084fc" stroke-width="2"/>
 <text x="795" y="2765" fill="#c084fc" font-size="13">RTX PRO 4000 / COMMUNITY</text>
-<circle cx="78.00" cy="383.46" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="108.18" cy="383.46" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="156.65" cy="383.46" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="380.65" cy="383.46" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="544.41" cy="383.46" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="545.45" cy="383.46" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="680.32" cy="383.46" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="76.27" cy="383.46" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="99.94" cy="383.46" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="137.93" cy="383.46" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="313.55" cy="383.46" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="441.94" cy="383.46" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="442.76" cy="383.46" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="548.50" cy="383.46" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="618.81" cy="383.46" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
 <circle cx="770.00" cy="383.46" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<polyline points="78.00,383.46 108.18,383.46 156.65,383.46 380.65,383.46 544.41,383.46 545.45,383.46 680.32,383.46 770.00,383.46" fill="none" stroke="#22d3ee" stroke-width="2"/>
+<polyline points="76.27,383.46 99.94,383.46 137.93,383.46 313.55,383.46 441.94,383.46 442.76,383.46 548.50,383.46 618.81,383.46 770.00,383.46" fill="none" stroke="#22d3ee" stroke-width="2"/>
 <text x="795" y="2800" fill="#22d3ee" font-size="13">RTX PRO 4000 / SECURE</text>
-<circle cx="78.00" cy="390.13" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="108.18" cy="390.13" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="156.65" cy="390.13" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="380.65" cy="390.13" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="544.41" cy="390.13" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="545.45" cy="390.13" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="680.32" cy="390.13" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="76.27" cy="390.13" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="99.94" cy="390.13" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="137.93" cy="390.13" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="313.55" cy="390.13" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="441.94" cy="390.13" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="442.76" cy="390.13" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="548.50" cy="390.13" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="618.81" cy="390.13" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
 <circle cx="770.00" cy="390.13" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<polyline points="78.00,390.13 108.18,390.13 156.65,390.13 380.65,390.13 544.41,390.13 545.45,390.13 680.32,390.13 770.00,390.13" fill="none" stroke="#60a5fa" stroke-width="2"/>
+<polyline points="76.27,390.13 99.94,390.13 137.93,390.13 313.55,390.13 441.94,390.13 442.76,390.13 548.50,390.13 618.81,390.13 770.00,390.13" fill="none" stroke="#60a5fa" stroke-width="2"/>
 <text x="795" y="2835" fill="#60a5fa" font-size="13">RTX PRO 4500 / COMMUNITY</text>
-<circle cx="78.00" cy="379.11" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="108.18" cy="379.11" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="156.65" cy="379.11" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="380.65" cy="379.11" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="544.41" cy="379.11" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="545.45" cy="379.11" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="680.32" cy="379.11" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="76.27" cy="379.11" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="99.94" cy="379.11" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="137.93" cy="379.11" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="313.55" cy="379.11" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="441.94" cy="379.11" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="442.76" cy="379.11" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="548.50" cy="379.11" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="618.81" cy="379.11" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
 <circle cx="770.00" cy="379.11" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<polyline points="78.00,379.11 108.18,379.11 156.65,379.11 380.65,379.11 544.41,379.11 545.45,379.11 680.32,379.11 770.00,379.11" fill="none" stroke="#fbbf24" stroke-width="2"/>
+<polyline points="76.27,379.11 99.94,379.11 137.93,379.11 313.55,379.11 441.94,379.11 442.76,379.11 548.50,379.11 618.81,379.11 770.00,379.11" fill="none" stroke="#fbbf24" stroke-width="2"/>
 <text x="795" y="2870" fill="#fbbf24" font-size="13">RTX PRO 4500 / SECURE</text>
-<circle cx="78.00" cy="385.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="108.18" cy="385.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="156.65" cy="385.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="380.65" cy="385.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="544.41" cy="385.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="545.45" cy="385.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="680.32" cy="385.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="76.27" cy="385.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="99.94" cy="385.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="137.93" cy="385.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="313.55" cy="385.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="441.94" cy="385.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="442.76" cy="385.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="548.50" cy="385.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="618.81" cy="385.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
 <circle cx="770.00" cy="385.49" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<polyline points="78.00,385.49 108.18,385.49 156.65,385.49 380.65,385.49 544.41,385.49 545.45,385.49 680.32,385.49 770.00,385.49" fill="none" stroke="#34d399" stroke-width="2"/>
+<polyline points="76.27,385.49 99.94,385.49 137.93,385.49 313.55,385.49 441.94,385.49 442.76,385.49 548.50,385.49 618.81,385.49 770.00,385.49" fill="none" stroke="#34d399" stroke-width="2"/>
 <text x="795" y="2905" fill="#34d399" font-size="13">RTX PRO 4500 SE / COMMUNITY</text>
-<circle cx="78.00" cy="379.11" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="108.18" cy="379.11" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="156.65" cy="379.11" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="380.65" cy="379.11" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="544.41" cy="379.11" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="545.45" cy="379.11" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<circle cx="680.32" cy="379.11" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="76.27" cy="379.11" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="99.94" cy="379.11" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="137.93" cy="379.11" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="313.55" cy="379.11" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="441.94" cy="379.11" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="442.76" cy="379.11" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="548.50" cy="379.11" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
+<circle cx="618.81" cy="379.11" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
 <circle cx="770.00" cy="379.11" r="5" fill="#fb7185" stroke="#fb7185" stroke-width="2"/>
-<polyline points="78.00,379.11 108.18,379.11 156.65,379.11 380.65,379.11 544.41,379.11 545.45,379.11 680.32,379.11 770.00,379.11" fill="none" stroke="#fb7185" stroke-width="2"/>
+<polyline points="76.27,379.11 99.94,379.11 137.93,379.11 313.55,379.11 441.94,379.11 442.76,379.11 548.50,379.11 618.81,379.11 770.00,379.11" fill="none" stroke="#fb7185" stroke-width="2"/>
 <text x="795" y="2940" fill="#fb7185" font-size="13">RTX PRO 4500 SE / SECURE</text>
-<circle cx="78.00" cy="376.21" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="108.18" cy="376.21" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="156.65" cy="376.21" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="380.65" cy="376.21" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="544.41" cy="376.21" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="545.45" cy="376.21" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="680.32" cy="376.21" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="76.27" cy="376.21" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="99.94" cy="376.21" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="137.93" cy="376.21" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="313.55" cy="376.21" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="441.94" cy="376.21" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="442.76" cy="376.21" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="548.50" cy="376.21" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="618.81" cy="376.21" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
 <circle cx="770.00" cy="376.21" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<polyline points="78.00,376.21 108.18,376.21 156.65,376.21 380.65,376.21 544.41,376.21 545.45,376.21 680.32,376.21 770.00,376.21" fill="none" stroke="#c084fc" stroke-width="2"/>
+<polyline points="76.27,376.21 99.94,376.21 137.93,376.21 313.55,376.21 441.94,376.21 442.76,376.21 548.50,376.21 618.81,376.21 770.00,376.21" fill="none" stroke="#c084fc" stroke-width="2"/>
 <text x="795" y="2975" fill="#c084fc" font-size="13">RTX PRO 5000 / COMMUNITY</text>
-<circle cx="78.00" cy="372.14" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="108.18" cy="372.14" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="156.65" cy="372.14" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="380.65" cy="372.14" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="544.41" cy="372.14" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="545.45" cy="372.14" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="680.32" cy="372.14" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="76.27" cy="372.14" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="99.94" cy="372.14" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="137.93" cy="372.14" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="313.55" cy="372.14" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="441.94" cy="372.14" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="442.76" cy="372.14" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="548.50" cy="372.14" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="618.81" cy="372.14" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
 <circle cx="770.00" cy="372.14" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<polyline points="78.00,372.14 108.18,372.14 156.65,372.14 380.65,372.14 544.41,372.14 545.45,372.14 680.32,372.14 770.00,372.14" fill="none" stroke="#22d3ee" stroke-width="2"/>
+<polyline points="76.27,372.14 99.94,372.14 137.93,372.14 313.55,372.14 441.94,372.14 442.76,372.14 548.50,372.14 618.81,372.14 770.00,372.14" fill="none" stroke="#22d3ee" stroke-width="2"/>
 <text x="795" y="3010" fill="#22d3ee" font-size="13">RTX PRO 5000 / SECURE</text>
-<circle cx="78.00" cy="350.96" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="108.18" cy="350.96" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="156.65" cy="350.96" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="380.65" cy="350.96" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="544.41" cy="350.96" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="545.45" cy="350.96" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="680.32" cy="350.96" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="76.27" cy="350.96" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="99.94" cy="350.96" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="137.93" cy="350.96" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="313.55" cy="350.96" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="441.94" cy="350.96" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="442.76" cy="350.96" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="548.50" cy="350.96" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="618.81" cy="350.96" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
 <circle cx="770.00" cy="350.96" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<polyline points="78.00,350.96 108.18,350.96 156.65,350.96 380.65,350.96 544.41,350.96 545.45,350.96 680.32,350.96 770.00,350.96" fill="none" stroke="#60a5fa" stroke-width="2"/>
+<polyline points="76.27,350.96 99.94,350.96 137.93,350.96 313.55,350.96 441.94,350.96 442.76,350.96 548.50,350.96 618.81,350.96 770.00,350.96" fill="none" stroke="#60a5fa" stroke-width="2"/>
 <text x="795" y="3045" fill="#60a5fa" font-size="13">RTX PRO 6000 / COMMUNITY</text>
-<circle cx="78.00" cy="327.75" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="108.18" cy="327.75" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="156.65" cy="327.75" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="380.65" cy="327.75" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="544.41" cy="327.75" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="545.45" cy="327.75" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="680.32" cy="327.75" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="76.27" cy="327.75" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="99.94" cy="327.75" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="137.93" cy="327.75" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="313.55" cy="327.75" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="441.94" cy="327.75" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="442.76" cy="327.75" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="548.50" cy="327.75" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="618.81" cy="327.75" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
 <circle cx="770.00" cy="327.75" r="5" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
-<polyline points="78.00,327.75 108.18,327.75 156.65,327.75 380.65,327.75 544.41,327.75 545.45,327.75 680.32,327.75 770.00,327.75" fill="none" stroke="#fbbf24" stroke-width="2"/>
+<polyline points="76.27,327.75 99.94,327.75 137.93,327.75 313.55,327.75 441.94,327.75 442.76,327.75 548.50,327.75 618.81,327.75 770.00,327.75" fill="none" stroke="#fbbf24" stroke-width="2"/>
 <text x="795" y="3080" fill="#fbbf24" font-size="13">RTX PRO 6000 / SECURE</text>
-<circle cx="78.00" cy="352.41" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="108.18" cy="352.41" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="156.65" cy="352.41" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="380.65" cy="352.41" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="544.41" cy="352.41" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="545.45" cy="352.41" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="680.32" cy="352.41" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="76.27" cy="352.41" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="99.94" cy="352.41" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="137.93" cy="352.41" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="313.55" cy="352.41" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="441.94" cy="352.41" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="442.76" cy="352.41" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="548.50" cy="352.41" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="618.81" cy="352.41" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
 <circle cx="770.00" cy="352.41" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<polyline points="78.00,352.41 108.18,352.41 156.65,352.41 380.65,352.41 544.41,352.41 545.45,352.41 680.32,352.41 770.00,352.41" fill="none" stroke="#34d399" stroke-width="2"/>
+<polyline points="76.27,352.41 99.94,352.41 137.93,352.41 313.55,352.41 441.94,352.41 442.76,352.41 548.50,352.41 618.81,352.41 770.00,352.41" fill="none" stroke="#34d399" stroke-width="2"/>
 <text x="795" y="3115" fill="#34d399" font-size="13">RTX PRO 6000 MaxQ / COMMUNITY</text>
-<circle cx="78.00" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="108.18" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="156.65" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="380.65" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="544.41" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="545.45" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="680.32" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="76.27" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="99.94" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="137.93" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="313.55" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="441.94" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="442.76" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="548.50" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="618.81" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
 <circle cx="770.00" cy="385.49" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<polyline points="78.00,385.49 108.18,385.49 156.65,385.49 380.65,385.49 544.41,385.49 545.45,385.49 680.32,385.49 770.00,385.49" fill="none" stroke="#fb7185" stroke-width="2"/>
+<polyline points="76.27,385.49 99.94,385.49 137.93,385.49 313.55,385.49 441.94,385.49 442.76,385.49 548.50,385.49 618.81,385.49 770.00,385.49" fill="none" stroke="#fb7185" stroke-width="2"/>
 <text x="795" y="3150" fill="#fb7185" font-size="13">RTX PRO 6000 MaxQ / SECURE</text>
-<circle cx="78.00" cy="350.96" r="5" fill="#c084fc" stroke="#c084fc" stroke-width="2"/>
-<circle cx="108.18" cy="350.96" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="156.65" cy="350.96" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="380.65" cy="350.96" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="544.41" cy="350.96" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="545.45" cy="350.96" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="680.32" cy="350.96" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="770.00" cy="350.96" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<polyline points="78.00,350.96 108.18,350.96 156.65,350.96 380.65,350.96 544.41,350.96 545.45,350.96 680.32,350.96 770.00,350.96" fill="none" stroke="#c084fc" stroke-width="2"/>
+<circle cx="76.27" cy="350.96" r="5" fill="#c084fc" stroke="#c084fc" stroke-width="2"/>
+<circle cx="99.94" cy="350.96" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="137.93" cy="350.96" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="313.55" cy="350.96" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="441.94" cy="350.96" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="442.76" cy="350.96" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="548.50" cy="350.96" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="618.81" cy="350.96" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="770.00" cy="350.96" r="5" fill="#c084fc" stroke="#c084fc" stroke-width="2"/>
+<polyline points="76.27,350.96 99.94,350.96 137.93,350.96 313.55,350.96 441.94,350.96 442.76,350.96 548.50,350.96 618.81,350.96 770.00,350.96" fill="none" stroke="#c084fc" stroke-width="2"/>
 <text x="795" y="3185" fill="#c084fc" font-size="13">RTX PRO 6000 WK / COMMUNITY</text>
-<circle cx="78.00" cy="324.84" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="108.18" cy="324.84" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="156.65" cy="324.84" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="380.65" cy="324.84" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="544.41" cy="324.84" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="545.45" cy="324.84" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="680.32" cy="324.84" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="76.27" cy="324.84" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="99.94" cy="324.84" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="137.93" cy="324.84" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="313.55" cy="324.84" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="441.94" cy="324.84" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="442.76" cy="324.84" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="548.50" cy="324.84" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="618.81" cy="324.84" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
 <circle cx="770.00" cy="324.84" r="5" fill="#22d3ee" stroke="#22d3ee" stroke-width="2"/>
-<polyline points="78.00,324.84 108.18,324.84 156.65,324.84 380.65,324.84 544.41,324.84 545.45,324.84 680.32,324.84 770.00,324.84" fill="none" stroke="#22d3ee" stroke-width="2"/>
+<polyline points="76.27,324.84 99.94,324.84 137.93,324.84 313.55,324.84 441.94,324.84 442.76,324.84 548.50,324.84 618.81,324.84 770.00,324.84" fill="none" stroke="#22d3ee" stroke-width="2"/>
 <text x="795" y="3220" fill="#22d3ee" font-size="13">RTX PRO 6000 WK / SECURE</text>
-<circle cx="78.00" cy="394.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="108.18" cy="394.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="156.65" cy="394.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="380.65" cy="394.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="544.41" cy="394.49" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="545.45" cy="394.49" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
-<circle cx="680.32" cy="394.49" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="76.27" cy="394.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="99.94" cy="394.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="137.93" cy="394.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="313.55" cy="394.49" r="5" fill="#101827" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="441.94" cy="394.49" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="442.76" cy="394.49" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="548.50" cy="394.49" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
+<circle cx="618.81" cy="394.49" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
 <circle cx="770.00" cy="394.49" r="5" fill="#60a5fa" stroke="#60a5fa" stroke-width="2"/>
-<polyline points="78.00,394.49 108.18,394.49 156.65,394.49 380.65,394.49 544.41,394.49 545.45,394.49 680.32,394.49 770.00,394.49" fill="none" stroke="#60a5fa" stroke-width="2"/>
+<polyline points="76.27,394.49 99.94,394.49 137.93,394.49 313.55,394.49 441.94,394.49 442.76,394.49 548.50,394.49 618.81,394.49 770.00,394.49" fill="none" stroke="#60a5fa" stroke-width="2"/>
 <text x="795" y="3255" fill="#60a5fa" font-size="13">Tesla V100 / COMMUNITY</text>
-<circle cx="78.00" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="108.18" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="156.65" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="380.65" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="544.41" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="545.45" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<circle cx="680.32" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="76.27" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="99.94" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="137.93" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="313.55" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="441.94" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="442.76" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="548.50" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="618.81" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
 <circle cx="770.00" cy="400.00" r="5" fill="#101827" stroke="#fbbf24" stroke-width="2"/>
-<polyline points="78.00,400.00 108.18,400.00 156.65,400.00 380.65,400.00 544.41,400.00 545.45,400.00 680.32,400.00 770.00,400.00" fill="none" stroke="#fbbf24" stroke-width="2"/>
+<polyline points="76.27,400.00 99.94,400.00 137.93,400.00 313.55,400.00 441.94,400.00 442.76,400.00 548.50,400.00 618.81,400.00 770.00,400.00" fill="none" stroke="#fbbf24" stroke-width="2"/>
 <text x="795" y="3290" fill="#fbbf24" font-size="13">Tesla V100 / SECURE</text>
-<circle cx="78.00" cy="393.33" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="108.18" cy="393.33" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="156.65" cy="393.33" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
-<circle cx="380.65" cy="393.33" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="544.41" cy="393.33" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="545.45" cy="393.33" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<circle cx="680.32" cy="393.33" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
-<circle cx="770.00" cy="393.33" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
-<polyline points="78.00,393.33 108.18,393.33 156.65,393.33 380.65,393.33 544.41,393.33 545.45,393.33 680.32,393.33 770.00,393.33" fill="none" stroke="#34d399" stroke-width="2"/>
+<circle cx="76.27" cy="393.33" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="99.94" cy="393.33" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="137.93" cy="393.33" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
+<circle cx="313.55" cy="393.33" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="441.94" cy="393.33" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="442.76" cy="393.33" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="548.50" cy="393.33" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
+<circle cx="618.81" cy="393.33" r="5" fill="#101827" stroke="#34d399" stroke-width="2"/>
+<circle cx="770.00" cy="393.33" r="5" fill="#34d399" stroke="#34d399" stroke-width="2"/>
+<polyline points="76.27,393.33 99.94,393.33 137.93,393.33 313.55,393.33 441.94,393.33 442.76,393.33 548.50,393.33 618.81,393.33 770.00,393.33" fill="none" stroke="#34d399" stroke-width="2"/>
 <text x="795" y="3325" fill="#34d399" font-size="13">V100 SXM2 / COMMUNITY</text>
-<circle cx="78.00" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="108.18" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="156.65" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="380.65" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="544.41" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="545.45" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<circle cx="680.32" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="76.27" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="99.94" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="137.93" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="313.55" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="441.94" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="442.76" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="548.50" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+<circle cx="618.81" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
 <circle cx="770.00" cy="400.00" r="5" fill="#101827" stroke="#fb7185" stroke-width="2"/>
-<polyline points="78.00,400.00 108.18,400.00 156.65,400.00 380.65,400.00 544.41,400.00 545.45,400.00 680.32,400.00 770.00,400.00" fill="none" stroke="#fb7185" stroke-width="2"/>
+<polyline points="76.27,400.00 99.94,400.00 137.93,400.00 313.55,400.00 441.94,400.00 442.76,400.00 548.50,400.00 618.81,400.00 770.00,400.00" fill="none" stroke="#fb7185" stroke-width="2"/>
 <text x="795" y="3360" fill="#fb7185" font-size="13">V100 SXM2 / SECURE</text>
-<circle cx="78.00" cy="400.00" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="108.18" cy="400.00" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="156.65" cy="400.00" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="380.65" cy="400.00" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="544.41" cy="400.00" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="545.45" cy="400.00" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<circle cx="680.32" cy="400.00" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="76.27" cy="400.00" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="99.94" cy="400.00" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="137.93" cy="400.00" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="313.55" cy="400.00" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="441.94" cy="400.00" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="442.76" cy="400.00" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="548.50" cy="400.00" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
+<circle cx="618.81" cy="400.00" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
 <circle cx="770.00" cy="400.00" r="5" fill="#101827" stroke="#c084fc" stroke-width="2"/>
-<polyline points="78.00,400.00 108.18,400.00 156.65,400.00 380.65,400.00 544.41,400.00 545.45,400.00 680.32,400.00 770.00,400.00" fill="none" stroke="#c084fc" stroke-width="2"/>
+<polyline points="76.27,400.00 99.94,400.00 137.93,400.00 313.55,400.00 441.94,400.00 442.76,400.00 548.50,400.00 618.81,400.00 770.00,400.00" fill="none" stroke="#c084fc" stroke-width="2"/>
 <text x="795" y="3395" fill="#c084fc" font-size="13">unknown / COMMUNITY</text>
-<circle cx="78.00" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="108.18" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="156.65" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="380.65" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="544.41" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="545.45" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<circle cx="680.32" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="76.27" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="99.94" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="137.93" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="313.55" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="441.94" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="442.76" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="548.50" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
+<circle cx="618.81" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
 <circle cx="770.00" cy="400.00" r="5" fill="#101827" stroke="#22d3ee" stroke-width="2"/>
-<polyline points="78.00,400.00 108.18,400.00 156.65,400.00 380.65,400.00 544.41,400.00 545.45,400.00 680.32,400.00 770.00,400.00" fill="none" stroke="#22d3ee" stroke-width="2"/>
+<polyline points="76.27,400.00 99.94,400.00 137.93,400.00 313.55,400.00 441.94,400.00 442.76,400.00 548.50,400.00 618.81,400.00 770.00,400.00" fill="none" stroke="#22d3ee" stroke-width="2"/>
 <text x="795" y="3430" fill="#22d3ee" font-size="13">unknown / SECURE</text>
 <text x="70" y="435" font-size="12">2026-10-25T12:51:16.063663+00:00</text>
-<text x="70" y="460" font-size="12">Latest: 2026-10-25T21:14:54.226333+00:00 · 774 observations</text>
+<text x="70" y="460" font-size="12">Latest: 2026-10-25T23:33:39.191979+00:00 · 870 observations</text>
 <text x="70" y="490" font-size="12">One observation is a starting point, not evidence of an hourly or daily trend.</text>
 </g></svg>
