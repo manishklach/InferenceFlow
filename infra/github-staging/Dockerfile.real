@@ -1,0 +1,6 @@
+FROM inferenceflow-control:github-staging
+USER root
+RUN pip install --no-cache-dir jinja2==3.1.6
+ENV HF_HOME=/home/platform/.cache/huggingface
+USER platform
+RUN python -c "from transformers import AutoTokenizer; t=AutoTokenizer.from_pretrained('Qwen/Qwen3-4B',revision='1cfa9a7208912126459214e8b04321603b3df60c',trust_remote_code=False); ids=t.apply_chat_template([{'role':'user','content':'Pinned CPU tokenizer readiness'}],tokenize=True,add_generation_prompt=True,enable_thinking=False); assert 0<len(ids)<10240"

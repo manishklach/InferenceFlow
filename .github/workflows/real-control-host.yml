@@ -1,0 +1,65 @@
+name: Private real-GPU control host (no provisioning)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: temporary-staging-rehearsal
+  cancel-in-progress: false
+jobs:
+  control:
+    if: github.ref == 'refs/heads/main'
+    environment: staging-experiment
+    runs-on: ubuntu-24.04
+    timeout-minutes: 160
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.lock
+      - name: Check real-host configuration and credential encryption contracts
+        run: python -m unittest tests.test_real_control_host tests.test_experiment_connection tests.test_sealed_evidence -q
+      - name: Verify pinned tunnel binary
+        run: |
+          mkdir -p .runtime
+          curl --fail --silent --show-error --location https://github.com/cloudflare/cloudflared/releases/download/2026.10.3/cloudflared-linux-amd64 -o .runtime/cloudflared
+          echo '053b80b0a23031a038fdbf3c073f59f82b8f1f152aa67971d7383ffafc0dbab0  .runtime/cloudflared' | sha256sum --check
+          chmod 700 .runtime/cloudflared
+      - name: Start private CPU control plane with pinned tokenizer
+        env:
+          AUTH0_STAGING_CLIENT_SECRET: ${{ secrets.AUTH0_STAGING_CLIENT_SECRET }}
+          AUTH0_STAGING_CLIENT_ID: ${{ vars.AUTH0_STAGING_CLIENT_ID }}
+          AUTH0_STAGING_ISSUER: ${{ vars.AUTH0_STAGING_ISSUER }}
+          AUTH0_STAGING_AUDIENCE: ${{ vars.AUTH0_STAGING_AUDIENCE }}
+          EVIDENCE_RECIPIENT_PUBLIC_KEY: ${{ vars.EVIDENCE_RECIPIENT_PUBLIC_KEY }}
+        run: python -m scripts.github_real_host start
+      - name: Publish only owner-encrypted minimal experiment connection
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sealed-experiment-connection-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .runtime/github-staging/connection.enc.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 1
+      - name: Hold supervised host; operator must separately approve and attach one GPU
+        run: python -m scripts.github_real_host wait
+      - name: Request final encrypted export and isolated shutdown
+        if: always()
+        timeout-minutes: 3
+        run: python -m scripts.github_real_host stop
+      - name: Preserve only owner-encrypted final database evidence
+        if: always() && hashFiles('.runtime/github-staging/final-evidence.enc.json') != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sealed-real-control-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .runtime/github-staging/final-evidence.enc.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 1
+      - name: Final exact-project cleanup
+        if: always()
+        timeout-minutes: 3
+        run: docker compose -f infra/github-staging/compose.yml -f infra/github-staging/real.yml down --volumes --timeout 15 >/dev/null 2>&1

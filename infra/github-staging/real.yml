@@ -1,0 +1,13 @@
+services:
+  migrate:
+    image: inferenceflow-control:github-real
+    build:
+      dockerfile: infra/github-staging/Dockerfile.real
+  api:
+    image: inferenceflow-control:github-real
+    build:
+      dockerfile: infra/github-staging/Dockerfile.real
+  scheduler:
+    image: inferenceflow-control:github-real
+    build:
+      dockerfile: infra/github-staging/Dockerfile.real
