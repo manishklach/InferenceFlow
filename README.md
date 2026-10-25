@@ -443,6 +443,8 @@ docs/                     Contracts, deployment, runbooks, release notes
 - [Billing](docs/billing.md), [GPU deployment](docs/gpu-deploy.md), [security](docs/security.md), [operations](docs/ops.md)
 - [Internal pricing experiment](docs/pricing-experiment.md)
 - [GPU Hourly Rates](https://inferenceflow-execution.abc123xyza.chatgpt.site/gpu-hourly-rates/) — full RunPod hardware catalog, recorded hourly quotes and daily summaries; [data and methodology](docs/gpu-rates/README.md).
+- [CPU pricing and history](https://inferenceflow-execution.abc123xyza.chatgpt.site/gpu-hourly-rates/#cpu-rates) — six CPU Pod families, per-vCPU rates and instance estimates; [units and availability caveats](docs/cpu-rates/README.md).
+- [Second real GPU report](docs/validation/2026-10-25/second-gpu-report.md): 410/410 completed, controlled worker recovery and billing audits passed; adaptive was slower than baseline, and a staging-supervision outage blocked the 1,000-request stage. Pod termination is verified; commercial readiness remains NO-GO.
 - [Changelog](CHANGELOG.md) and [release notes](docs/releases/v0.2.0.md)
 - [Product specification](inferenceflow_mvp_spec.md) and [implementation brief](codex_inferenceflow_prompt.md)
 

@@ -1,0 +1,209 @@
+{
+  "summary": {
+    "accepted_jobs": 1,
+    "accepted_requests": 100,
+    "successful_requests": 100,
+    "unsuccessful_or_unfinished_requests": 0,
+    "all_accepted_jobs_successful_within_hour": 1.0,
+    "all_accepted_requests_successful_within_hour_lower_bound": 1.0,
+    "successful_job_seconds": {
+      "p50": 87.021995,
+      "p95": 87.021995,
+      "p99": 87.021995
+    },
+    "elapsed_seconds": 98.67200000002049,
+    "input_tokens": 36270,
+    "output_tokens": 3432,
+    "requests_per_second": 1.0134587319602242,
+    "input_tokens_per_second": 367.58148208197326,
+    "output_tokens_per_second": 34.78190368087489,
+    "provided_cost_usd": null,
+    "provided_cost_per_million_total_tokens_usd": null,
+    "cost_provenance": "operator-supplied; verify invoice coverage, not customer charges",
+    "request_timing_limit": "Results API omits per-request timestamps; use read-only DB export for exact request attainment.",
+    "workload_sha256": "3df13073c828f819cf96653dbda8fa5c3e90726c173e7297d167562ae4084c98",
+    "policy": "adaptive",
+    "server_configuration": {
+      "public_beta_enabled": false,
+      "stripe_enabled": false,
+      "reviewed_gpu_experiment_enabled": true,
+      "scheduler_v2_enabled": true,
+      "adaptive_dispatch_enabled": true,
+      "max_inflight": 4,
+      "execution_mode": "vllm",
+      "provisioning_enabled": false,
+      "estimator_calibrated": false
+    },
+    "model": {
+      "id": "qwen3-4b",
+      "display_name": "Qwen3 4B",
+      "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+      "tokenizer_revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+      "max_context_tokens": 10240,
+      "max_prompt_tokens": 8192,
+      "max_output_tokens": 2048,
+      "input_price_micro_usd_per_million": 100000,
+      "output_price_micro_usd_per_million": 300000,
+      "supported_tiers": [
+        "standard",
+        "economy"
+      ],
+      "availability": "best_effort",
+      "execution_mode": "vllm",
+      "rates_test_only": true
+    },
+    "workers": [
+      {
+        "id": "first-gpu-2p58yft8rurow1",
+        "mode": "vllm",
+        "telemetry_fresh": true,
+        "provider_instance_id": "2p58yft8rurow1",
+        "http_overlap": {
+          "worker_http_inflight": 0,
+          "worker_http_peak_inflight": 4,
+          "worker_http_completed": 310,
+          "worker_http_errors": 0,
+          "worker_http_overlap_seconds": 87.12134907580912,
+          "worker_http_request_seconds": 420.64013172732666,
+          "worker_http_observed_seconds": 702.627995961986,
+          "worker_http_idle_seconds": 466.28981128690066,
+          "worker_trace_write_errors": 0
+        },
+        "gpu_utilization": 0.0,
+        "kv_cache_usage": 0.00020929259104229825,
+        "engine_running": 0,
+        "engine_waiting": 0,
+        "dispatch_limit": 4,
+        "hard_limit": 4
+      }
+    ]
+  },
+  "audit": {
+    "scope": "selected_single_tenant_jobs",
+    "read_only": true,
+    "first_dispatch_components_seconds": {
+      "admission": {
+        "measured": 100,
+        "missing": 0,
+        "percentiles": {
+          "p50": 0.728321,
+          "p95": 0.728321,
+          "p99": 0.728321
+        }
+      },
+      "scheduler_not_before": {
+        "measured": 100,
+        "missing": 0,
+        "percentiles": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        }
+      },
+      "queue_until_scheduler_observation": {
+        "measured": 100,
+        "missing": 0,
+        "percentiles": {
+          "p50": 0.823655,
+          "p95": 0.908661,
+          "p99": 0.917463
+        }
+      },
+      "scheduler_capacity_and_policy_wait": {
+        "measured": 100,
+        "missing": 0,
+        "percentiles": {
+          "p50": 43.779509,
+          "p95": 79.732748,
+          "p99": 83.045526
+        }
+      },
+      "lease_assignment": {
+        "measured": 100,
+        "missing": 0,
+        "percentiles": {
+          "p50": 0.000587,
+          "p95": 0.001536,
+          "p99": 0.00227
+        }
+      },
+      "lease_to_worker_poll": {
+        "measured": 100,
+        "missing": 0,
+        "percentiles": {
+          "p50": 0.217685,
+          "p95": 0.473757,
+          "p99": 0.559454
+        }
+      },
+      "worker_poll_receipt_to_execution_start": {
+        "measured": 96,
+        "missing": 4,
+        "percentiles": {
+          "p50": 0.0002010469906963408,
+          "p95": 0.0019861359614878893,
+          "p99": 0.0028407559730112553
+        }
+      },
+      "worker_engine_call": {
+        "measured": 96,
+        "missing": 4,
+        "percentiles": {
+          "p50": 1.3777859839610755,
+          "p95": 1.535460145038087,
+          "p99": 1.8229844170273282
+        }
+      }
+    },
+    "timing_semantics": "Server UTC through worker poll; worker monotonic from poll receipt to engine start. Network/clock residual is unknown. First attempt only; retry counts reported separately.",
+    "job_ids": [
+      "job_224d8e7dab2446efa25ddfc791ca19d8"
+    ],
+    "accepted_requests": 100,
+    "measurement_modes": [
+      "vllm"
+    ],
+    "statuses": {
+      "succeeded": 100
+    },
+    "errors": [],
+    "passed": true,
+    "request_e2e_seconds_successful_only": {
+      "p50": 46.784308,
+      "p95": 82.792263,
+      "p99": 85.936382
+    },
+    "accepted_to_last_terminal_seconds": 87.021995,
+    "submission_to_first_dispatch_seconds": {
+      "p50": 45.103136,
+      "p95": 80.954054,
+      "p99": 84.280672
+    },
+    "all_accepted_requests_successful_within_60_minutes": 1.0,
+    "attempt_outcomes": {
+      "succeeded": 100,
+      "lease_lost": 4
+    },
+    "retried_attempts": 4,
+    "unique_usage_records": 100,
+    "unique_capture_sources": 100,
+    "captured_micro_usd": 4714,
+    "input_tokens": 36270,
+    "output_tokens": 3432,
+    "execution_semantics": "Inference may repeat; accepted customer usage/capture must not duplicate."
+  },
+  "telemetry": {
+    "passed": true,
+    "required_coverage_fraction": 0.9,
+    "coverage_fraction": 1.0,
+    "covered_seconds": 87.02199506759644,
+    "unknown_seconds": 0,
+    "valid_unique_samples": 788,
+    "invalid_samples": 169,
+    "gpu_utilization_percent_covered_intervals_only": 73.93077400189769,
+    "method": "Zero-order hold capped at 1.5 seconds per sample; duplicates deduplicated. Uncovered intervals are unknown, never zero. This gate covers only the specified smoke window, not the entire rental."
+  },
+  "peak_engine_running": 4.0,
+  "peak_engine_waiting": 0.0,
+  "quote_allocated_stage_cost_usd": 0.014527838609722222
+}

@@ -1,5 +1,7 @@
 # Second GPU experiment — October 25 independent review
 
+Execution update: [measured second-experiment report](../validation/2026-10-25/second-gpu-report.md). The bounded run has ended and the pod is terminated. 410 requests succeeded; 1,000 requests were not admitted after a local staging-supervision failure. The preparation below is retained as the original protocol, not a statement that the run is still pending.
+
 **Preparation only. No second inference pod has been created.** Public beta, live Stripe and automatic provisioning remain disabled. This plan validates execution and economics; it does not introduce extraction features or alter wallet/rate/settlement algorithms. Root LICENSE remains undecided.
 
 ## Diagnosis before the readiness change

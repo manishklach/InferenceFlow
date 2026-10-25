@@ -31,7 +31,8 @@ def main():
     with history.open("a", encoding="utf-8") as stream:
         for row in rows:
             stream.write(json.dumps(row, sort_keys=True) + "\n")
-    all_rows = [json.loads(line) for line in history.read_text().splitlines() if line]
+    all_rows = [row for line in history.read_text().splitlines() if line
+                for row in [json.loads(line)] if not row.get("invalidated")]
     fields = ["observed_at_utc", "gpu", "vram_gb", "cloud", "gpu_usd_per_hour", "availability"]
     with (folder / "hourly.csv").open("w", newline="", encoding="utf-8") as stream:
         writer = csv.DictWriter(stream, fieldnames=fields, extrasaction="ignore")
