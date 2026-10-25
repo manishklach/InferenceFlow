@@ -140,6 +140,8 @@ def main():
                               f"Endpoint: {url}\n\nExact callback awaiting owner approval: "
                               f"{url}/auth/oidc/callback\n\n"
                               "No GPU provisioned; no RunPod key on this runner. Session stops within 120 minutes.\n")
+            print(json.dumps({"status": "https_mock_ready_owner_login_unverified", "endpoint": url,
+                              "callback_awaiting_approval": url+"/auth/oidc/callback", "gpu_created": False}), flush=True)
 
             def tunnel_stopped():
                 return stopping or tunnel.poll() is not None

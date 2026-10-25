@@ -1,6 +1,6 @@
 # Temporary GitHub-hosted staging proposal
 
-**Proposal only. No hosting workflow is enabled, no credentials have been transferred, and no GPU is provisioned.** Requested October 25, 2026. This is one bounded integration-test session, not permanent API hosting.
+Requested October 25, 2026. This is one bounded integration-test session, not permanent API hosting. The owner subsequently approved the protected `staging-experiment` environment and Auth0 client-secret destination. Main-only restrictions and owner review were verified; that one secret is stored encrypted. No RunPod key or previous database was transferred. The manual [no-GPU rehearsal workflow](../../.github/workflows/staging-rehearsal.yml) implements mock hosting only; real GPU execution and private evidence export remain gated. A dispatched/approved workflow is not proof that HTTPS/OIDC or mock execution passed.
 
 ## Architecture and cost
 
