@@ -11,11 +11,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
-def main():
+def record_snapshot(incoming, observed_at=None, source="RunPod MCP GPU catalog"):
     folder = Path(__file__).resolve().parents[1] / "docs/gpu-rates"
     folder.mkdir(exist_ok=True)
-    observed = datetime.now(timezone.utc).isoformat()
-    incoming = json.load(sys.stdin)
+    observed = observed_at or datetime.now(timezone.utc).isoformat()
     rows = []
     for item in incoming:
         cloud = item["cloud"]
@@ -26,7 +25,7 @@ def main():
                      "gpu_usd_per_hour": item["price"][cloud.lower()],
                      "availability": item["availability"],
                      "data_centers": item.get("dataCenters", []),
-                     "source": "RunPod MCP GPU catalog", "cuda_floor": item.get("cuda_floor")})
+                     "source": source, "cuda_floor": item.get("cuda_floor")})
     history = folder / "observations.jsonl"
     with history.open("a", encoding="utf-8") as stream:
         for row in rows:
@@ -88,6 +87,10 @@ def main():
         table.append(f'| {row["gpu"]} | {row["vram_gb"]} | {row["cloud"]} | {row["gpu_usd_per_hour"]:.4f} | {row["availability"]} | {row["observed_at_utc"]} |')
     (folder / "latest.md").write_text("\n".join(table) + "\n", encoding="utf-8")
     print(f"Recorded {len(rows)} quotes; regenerated hourly.csv, daily.csv and rates.svg")
+
+
+def main():
+    record_snapshot(json.load(sys.stdin))
 
 
 if __name__ == "__main__":

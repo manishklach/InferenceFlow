@@ -6,18 +6,17 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
-def main():
+def record_snapshot(incoming, observed_at=None, source="RunPod MCP list_cpu_types"):
     folder = Path(__file__).resolve().parents[1] / "docs/cpu-rates"
     folder.mkdir(parents=True, exist_ok=True)
-    incoming = json.load(sys.stdin)
-    observed = datetime.now(timezone.utc).isoformat()
+    observed = observed_at or datetime.now(timezone.utc).isoformat()
     rows = [{"observed_at_utc": observed, "cpu_id": item["id"], "cpu_name": item["name"],
              "group": item["group"], "ram_gb_per_vcpu": item["ramGbPerVcpu"],
              "min_vcpu": item["vcpu"]["min"], "max_vcpu": item["vcpu"]["max"],
              "usd_per_vcpu_hour": item["price"]["securePerVcpu"],
              "cloud": "SECURE", "product": "POD", "availability_vcpu_count": 2,
              "availability": item["availability"], "data_centers": item.get("dataCenters", []),
-             "source": "RunPod MCP list_cpu_types"} for item in incoming]
+             "source": source} for item in incoming]
     history = folder / "observations.jsonl"
     with history.open("a", encoding="utf-8") as out:
         for row in rows:
@@ -37,6 +36,10 @@ def main():
         for key, prices in sorted(groups.items()):
             writer.writerow([*key, len(prices), min(prices), sum(prices) / len(prices), max(prices)])
     print(f"Appended {len(rows)} CPU quotes; retained {len(all_rows)} observations")
+
+
+def main():
+    record_snapshot(json.load(sys.stdin))
 
 
 if __name__ == "__main__":
