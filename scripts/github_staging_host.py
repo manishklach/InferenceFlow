@@ -1,6 +1,7 @@
 """Temporary no-GPU Auth0 staging rehearsal on a reviewed GitHub runner."""
 
 import json
+import io
 import os
 from pathlib import Path
 import re
@@ -8,12 +9,14 @@ import secrets
 import signal
 import subprocess
 import time
+import tarfile
 
 from cryptography.fernet import Fernet
 import httpx
 
 from packages.common.config import Settings
 from scripts.staging_supervisor import monitor, private_write
+from scripts.sealed_evidence import seal
 
 ROOT = Path(__file__).resolve().parents[1]
 RUNTIME = ROOT / ".runtime/github-staging"
@@ -54,6 +57,55 @@ def docker(*args):
         private_write(RUNTIME / f"docker-failure-{time.time_ns()}.txt", result.stderr)
         raise RuntimeError("Compose failed; private diagnostics retained on runner")
     return result
+
+
+def exercise_pipeline(url, public_pem):
+    from packages.python_sdk import InferenceFlowClient
+    from scripts.gpu_experiment import workload
+
+    identity = os.environ["GITHUB_RUN_ID"]+"-"+os.environ["GITHUB_RUN_ATTEMPT"]
+    seeded = json.loads(docker("exec", "-T", "-e", "HOSTED_DISPOSABLE_MOCK=true", "api", "python", "-m",
+                               "scripts.hosted_mock_pipeline", "seed", "--run-id", identity).stdout)
+    # This synthetic tenant/key exists only in the newly isolated mock database.
+    # No owner/customer balance is funded or changed.
+    evidence = {"mode": "mock", "gpu_measurement": False, "test_credit_micro_usd": 1_000_000,
+                "tenant_id": seeded["tenant_id"], "run_id": identity}
+    with InferenceFlowClient(seeded["key"], url) as client:
+        if client.get_models()["models"][0]["execution_mode"] != "mock":
+            raise RuntimeError("Refuse non-mock pipeline")
+        evidence["wallet_before"] = client.get_wallet()
+        requests = workload(10, "hosted-mock")
+        job = client.create_job(requests, idempotency_key="hosted-mock-"+identity)
+        duplicate = client.create_job(requests, idempotency_key="hosted-mock-"+identity)
+        if duplicate["id"] != job["id"]:
+            raise RuntimeError("Idempotency mismatch")
+        job = client.wait_for_job(job["id"], timeout=120, poll_interval=1)
+        results = client.get_results(job["id"])
+        if job["status"] != "succeeded" or len(results["items"]) != 10:
+            raise RuntimeError("Mock requests did not all succeed")
+        evidence.update(job=job, results=results, wallet_after=client.get_wallet())
+    docker("exec", "-T", "api", "python", "-m", "scripts.hosted_mock_pipeline", "audit",
+           "--job-id", job["id"], "--output", "/tmp/hosted-mock-audit.json")
+    audit = json.loads(docker("exec", "-T", "api", "cat", "/tmp/hosted-mock-audit.json").stdout)
+    database = docker("exec", "-T", "postgres", "pg_dump", "-U", "if_hosted_staging",
+                      "--no-owner", "--no-acl", "if_hosted_staging").stdout.encode()
+    if b"wallet_ledger" not in database:
+        raise RuntimeError("Database evidence export missing ledger")
+    payload = io.BytesIO()
+    with tarfile.open(fileobj=payload, mode="w:gz") as archive:
+        for name, content in (("pipeline.json", json.dumps(evidence).encode()),
+                              ("audit.json", json.dumps(audit).encode()), ("database.sql", database)):
+            info = tarfile.TarInfo(name)
+            info.size = len(content)
+            info.mode = 0o600
+            archive.addfile(info, io.BytesIO(content))
+    envelope = seal(payload.getvalue(), public_pem)
+    private_write(RUNTIME / "evidence.enc.json", envelope.decode())
+    print(json.dumps({"status": "hosted_mock_pipeline_passed", "requests": 10,
+                      "unique_usage_records": audit["unique_usage_records"],
+                      "unique_capture_sources": audit["unique_capture_sources"],
+                      "ledger_audit_passed": audit["passed"], "idempotency_verified": True,
+                      "evidence_sealed": True, "gpu_measurement": False}), flush=True)
 
 
 def main():
@@ -142,6 +194,10 @@ def main():
                               "No GPU provisioned; no RunPod key on this runner. Session stops within 120 minutes.\n")
             print(json.dumps({"status": "https_mock_ready_owner_login_unverified", "endpoint": url,
                               "callback_awaiting_approval": url+"/auth/oidc/callback", "gpu_created": False}), flush=True)
+
+            if os.environ.get("EXERCISE_PIPELINE") == "true":
+                exercise_pipeline(url, os.environ["EVIDENCE_RECIPIENT_PUBLIC_KEY"].encode())
+                return
 
             def tunnel_stopped():
                 return stopping or tunnel.poll() is not None

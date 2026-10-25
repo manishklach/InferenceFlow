@@ -1,6 +1,11 @@
 name: Temporary no-GPU staging rehearsal
 on:
   workflow_dispatch:
+    inputs:
+      exercise_pipeline:
+        description: 'Complete ten mock requests, audit and seal evidence, then stop. Requires approved encrypted export.'
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
@@ -35,7 +40,18 @@ jobs:
           AUTH0_STAGING_CLIENT_ID: ${{ vars.AUTH0_STAGING_CLIENT_ID }}
           AUTH0_STAGING_ISSUER: ${{ vars.AUTH0_STAGING_ISSUER }}
           AUTH0_STAGING_AUDIENCE: ${{ vars.AUTH0_STAGING_AUDIENCE }}
+          EXERCISE_PIPELINE: ${{ inputs.exercise_pipeline }}
+          EVIDENCE_RECIPIENT_PUBLIC_KEY: ${{ vars.EVIDENCE_RECIPIENT_PUBLIC_KEY }}
         run: python -m scripts.github_staging_host
+      - name: Upload only owner-key encrypted rehearsal evidence
+        if: success() && inputs.exercise_pipeline
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sealed-staging-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .runtime/github-staging/evidence.enc.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 1
       - name: Stop only isolated disposable rehearsal services on any outcome
         if: always()
         timeout-minutes: 3
