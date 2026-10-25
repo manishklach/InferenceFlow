@@ -1,9 +1,46 @@
 import asyncio
 import os
+import time
 import httpx
 from apps.worker.engines import MockInferenceEngine, VllmInferenceEngine
 from packages.common.config import settings
 from packages.common.identity import model_identity
+
+
+async def control_post(client, path, *, retry_seconds=120, accepted_statuses=(), **kwargs):
+    """Retry temporary outages with the same credential, lease epoch and payload.
+
+    Never re-enroll on an authorization failure: registration changes the worker
+    generation and could invalidate in-flight work. The provider watchdog remains
+    responsible for terminating a paid resource if this bounded recovery fails.
+    """
+    deadline = time.monotonic() + retry_seconds
+    attempt = 0
+    failure: BaseException | None = None
+    while True:
+        if attempt and time.monotonic() >= deadline:
+            raise RuntimeError("Control-plane recovery deadline exceeded") from failure
+        try:
+            remaining = max(0.001, deadline - time.monotonic())
+            async with asyncio.timeout(remaining):
+                response = await client.post(path, timeout=min(30, remaining), **kwargs)
+            if response.status_code in accepted_statuses:
+                return response
+            response.raise_for_status()
+            return response
+        except httpx.HTTPStatusError as exc:
+            if exc.response.status_code != 429 and exc.response.status_code < 500:
+                raise
+            failure = exc
+        except (httpx.TransportError, asyncio.TimeoutError) as exc:
+            failure = exc
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise RuntimeError("Control-plane recovery deadline exceeded") from failure
+        # Deliberately omit URL, credentials, response body and request content.
+        print('{"event":"worker_control_retry"}', flush=True)
+        await asyncio.sleep(min(15, 2 ** min(attempt, 4), remaining))
+        attempt += 1
 
 
 async def main():
@@ -18,7 +55,7 @@ async def main():
     async with httpx.AsyncClient(
         base_url=os.getenv("CONTROL_PLANE_URL", "http://localhost:8080"), timeout=30, trust_env=False
     ) as client:
-        r = await client.post(
+        r = await control_post(client,
             "/internal/workers/register",
             headers={"Authorization": "Bearer " + cfg.worker_bootstrap_token},
             json={
@@ -35,6 +72,7 @@ async def main():
         client.headers["Authorization"] = "Bearer " + r.json()["worker_token"]
 
         active: dict[tuple[str, int], dict] = {}
+        failures: asyncio.Queue[BaseException] = asyncio.Queue()
 
         async def execute(item):
             try:
@@ -51,40 +89,30 @@ async def main():
                 payload = {"error": "transient"}
             payload["epoch"] = item["epoch"]
             # A lost finalization response is safe: retries are fenced; recovery never double bills.
-            attempt = 0
-            while True:
-                try:
-                    r = await client.post("/internal/workers/requests/" + item["id"] + "/finalize", json=payload)
-                    if r.status_code in (404, 409):
-                        active.pop((item["id"], item["epoch"]), None)
-                        return
-                    r.raise_for_status()
-                    active.pop((item["id"], item["epoch"]), None)
-                    return
-                except httpx.HTTPError:
-                    await asyncio.sleep(min(15, 2 ** min(attempt, 4)))
-                    attempt += 1
+            await control_post(client, "/internal/workers/requests/" + item["id"] + "/finalize",
+                               json=payload, accepted_statuses=(404, 409))
+            active.pop((item["id"], item["epoch"]), None)
 
         async def heartbeats():
             while True:
-                r = await client.post(
+                await control_post(client,
                     "/internal/workers/heartbeat", json={**await engine.telemetry(), "active": list(active.values())}
                 )
-                r.raise_for_status()
                 await asyncio.sleep(15)
 
         heartbeat = asyncio.create_task(heartbeats())
         tasks: set[asyncio.Task] = set()
         try:
             while True:
+                if not failures.empty():
+                    raise await failures.get()
                 if heartbeat.done():
                     await heartbeat
                 free = cfg.worker_capacity - len(tasks)
                 if free <= 0:
                     await asyncio.sleep(0.25)
                     continue
-                r = await client.post("/internal/workers/poll", json={"available_slots": free})
-                r.raise_for_status()
+                r = await control_post(client, "/internal/workers/poll", json={"available_slots": free})
                 for item in r.json()["items"]:
                     active[(item["id"], item["epoch"])] = {"id": item["id"], "epoch": item["epoch"]}
                     task = asyncio.create_task(execute(item))
@@ -93,7 +121,9 @@ async def main():
                     def finished(task, identity=(item["id"], item["epoch"])):
                         tasks.discard(task)
                         active.pop(identity, None)
-                        if not task.cancelled() and task.exception() is not None:
+                        error = None if task.cancelled() else task.exception()
+                        if error is not None:
+                            failures.put_nowait(error)
                             print('{"alert":"worker_task_failed"}', flush=True)
 
                     task.add_done_callback(finished)

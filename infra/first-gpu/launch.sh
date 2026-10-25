@@ -36,7 +36,7 @@ python3 -m vllm.entrypoints.openai.api_server \
   --model "$MODEL_REPO" --revision "$MODEL_REVISION" \
   --tokenizer-revision "$MODEL_REVISION" --served-model-name "$SERVED_MODEL_NAME" \
   --dtype bfloat16 --max-model-len 10240 --max-num-seqs 4 \
-  --gpu-memory-utilization 0.85 --api-key "$VLLM_API_KEY" \
+  --gpu-memory-utilization 0.85 \
   --generation-config vllm --disable-log-requests --no-enable-prefix-caching &
 engine_pid=$!
 until curl --silent --fail --max-time 5 http://127.0.0.1:8000/health >/dev/null; do

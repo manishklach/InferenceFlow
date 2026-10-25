@@ -194,6 +194,33 @@ def live_run(args):
         raise SystemExit("Missing or nonpositive usage")
 
 
+def compact_engine_sample(record):
+    """Keep provider stdout below its 16 KiB fragment size; raw data stays on disk."""
+    from prometheus_client.parser import text_string_to_metric_families
+
+    output = {key: record[key] for key in ("observed_at", "event", "metrics_error", "hardware_error") if key in record}
+    output["schema_version"] = 1
+    names = {"vllm:num_requests_running", "vllm:num_requests_waiting", "vllm:prompt_tokens_total",
+             "vllm:generation_tokens_total", "vllm:iteration_tokens_total_count", "vllm:iteration_tokens_total_sum",
+             "vllm:gpu_cache_usage_perc", "vllm:kv_cache_usage_perc", "vllm:request_success_total"}
+    if "prometheus" in record:
+        metrics = {}
+        try:
+            for family in text_string_to_metric_families(record["prometheus"]):
+                for sample in family.samples:
+                    if sample.name in names and math.isfinite(sample.value):
+                        metrics[sample.name] = metrics.get(sample.name, 0) + sample.value
+            output["engine_metrics"] = metrics
+        except ValueError:
+            output["metrics_error"] = "invalid_prometheus"
+    if "nvidia_smi_csv" in record:
+        if len(json.dumps(record["nvidia_smi_csv"]).encode("utf-8")) <= 4096:
+            output["nvidia_smi_csv"] = record["nvidia_smi_csv"]
+        else:
+            output["hardware_error"] = "sample_too_large"
+    return output
+
+
 def collect(args):
     require_execute(args)
     import httpx
@@ -217,9 +244,10 @@ def collect(args):
                 record["nvidia_smi_csv"] = sample.stdout
             except Exception as exc:
                 record["hardware_error"] = type(exc).__name__
+            record["observed_at"] = stamp()
             append(path, record)
             # Also export to provider container logs if the process exits before disk export.
-            print(json.dumps({"observed_at": stamp(), **record}), flush=True)
+            print(json.dumps(compact_engine_sample(record)), flush=True)
             time.sleep(args.interval)
 
 

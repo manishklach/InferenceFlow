@@ -1,5 +1,7 @@
 # InferenceFlow
 
+Recovery follow-up: [worker retry, restart and telemetry fixes](docs/validation/2026-10-25/recovery-fixes.md) address the first run's failure paths with local regression tests. No additional GPU was rented. Real GPU recovery and the remaining policy/load comparisons still require a separately approved experiment.
+
 Latest GPU result: [first real inference report](docs/validation/2026-10-25/real-inference-report.md). **110 real Qwen3-4B requests succeeded on one L4**: 10 requests in 7.98 seconds and 100 in 71.29 seconds, with clean usage/ledger audits and four active engine sequences observed. A transient HTTPS 502 killed the worker during the adaptive comparison; its 100 queued requests were canceled without charge. The 1,000-request test was not run. **NO-GO for public beta or savings claims.** Independent cleanup terminated the pod, a fresh GET returned 404, and no volumes remain. Provider cost is about **$0.11 estimated**, invoice pending; console credit remaining $9.88.
 
 Independent cleanup: the protected `gpu-experiment` environment requires owner review and main only. The [exact-experiment watchdog](docs/github-cleanup-host.md) successfully removed both the [teardown trial](docs/validation/2026-10-25/teardown-validation.md) and subsequent inference pod through its cancellation finalizer. Both runs are finished and unarmed. Each new approved resource needs fresh price/budget/credential checks and an armed heartbeat. Automatic deadline/budget and provider-outage paths remain unproven on live resources.
