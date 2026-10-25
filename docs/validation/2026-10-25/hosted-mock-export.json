@@ -1,0 +1,21 @@
+{
+  "run_id": 40228875061,
+  "mode": "mock",
+  "gpu_measurement": false,
+  "requests_succeeded": 10,
+  "unique_usage_records": 10,
+  "unique_capture_sources": 10,
+  "ledger_audit_passed": true,
+  "reserved_micro_usd_after": 0,
+  "ciphertext_bytes": 48305,
+  "ciphertext_sha256": "12c0c07dddda10db6a8f744fa43b58d7808c755aa9da68a20167fb29c06dde19",
+  "payload_sha256": "3dbdb5fe915e7847b0e57c0cdb7f679b1e2f640a0b1a2b8036db9d64f86bd9f9",
+  "archive_members": [
+    "pipeline.json",
+    "audit.json",
+    "database.sql"
+  ],
+  "decryption_verified": true,
+  "matching_job_in_database_dump": true,
+  "database_restore_tested": false
+}
