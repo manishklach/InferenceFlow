@@ -1,5 +1,7 @@
 # InferenceFlow
 
+Latest GPU preparation: [2026-10-25 real-mode staging resumption](docs/validation/2026-10-25/resumed-gpu-readiness.md). HTTPS/OIDC, the pinned CPU tokenizer and a separate synthetic test tenant are verified; no GPU execution has occurred. Live DELETE authority and explicit provisioning approval remain blockers.
+
 Independent cleanup preparation: the protected `gpu-experiment` GitHub environment requires owner review and permits `main` only. Its read-only authentication preflight passed. The [cleanup host guide](docs/github-cleanup-host.md) now includes a prepared exact-experiment watchdog with identity checks, conservative cost reserves, early termination and cancellation cleanup. **It has not been armed and DELETE authority remains unverified.** See the [refreshed GPU readiness report](docs/validation/2026-10-24/prearmed-gpu-readiness.md) for stock, cost estimates, staging lifetime and remaining NO-GO gates. No GPU provisioning is authorized.
 
 [Download v0.3.0 prerelease and read the detailed release notes](https://github.com/manishklach/InferenceFlow/releases/tag/v0.3.0).
