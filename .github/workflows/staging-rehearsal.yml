@@ -1,0 +1,42 @@
+name: Temporary no-GPU staging rehearsal
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: temporary-staging-rehearsal
+  cancel-in-progress: false
+jobs:
+  staging:
+    if: github.ref == 'refs/heads/main'
+    environment: staging-experiment
+    runs-on: ubuntu-24.04
+    timeout-minutes: 130
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Install pinned platform dependencies
+        run: python -m pip install -r requirements.lock
+      - name: Verify bounded supervision regressions
+        run: python -m unittest tests.test_staging_supervisor -q
+      - name: Download and verify official pinned Cloudflare tunnel binary
+        run: |
+          mkdir -p .runtime
+          curl --fail --silent --show-error --location https://github.com/cloudflare/cloudflared/releases/download/2026.10.3/cloudflared-linux-amd64 -o .runtime/cloudflared
+          echo '053b80b0a23031a038fdbf3c073f59f82b8f1f152aa67971d7383ffafc0dbab0  .runtime/cloudflared' | sha256sum --check
+          chmod 700 .runtime/cloudflared
+      - name: Start bounded mock-only HTTPS staging
+        env:
+          AUTH0_STAGING_CLIENT_SECRET: ${{ secrets.AUTH0_STAGING_CLIENT_SECRET }}
+          AUTH0_STAGING_CLIENT_ID: ${{ vars.AUTH0_STAGING_CLIENT_ID }}
+          AUTH0_STAGING_ISSUER: ${{ vars.AUTH0_STAGING_ISSUER }}
+          AUTH0_STAGING_AUDIENCE: ${{ vars.AUTH0_STAGING_AUDIENCE }}
+        run: python -m scripts.github_staging_host
+      - name: Stop only isolated disposable rehearsal services on any outcome
+        if: always()
+        timeout-minutes: 3
+        run: docker compose -f infra/github-staging/compose.yml down --volumes --timeout 15 >/dev/null 2>&1

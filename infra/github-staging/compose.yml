@@ -1,0 +1,54 @@
+name: inferenceflow-github-staging
+x-platform: &platform
+  image: inferenceflow-control:github-staging
+  build:
+    context: ../..
+    dockerfile: infra/Dockerfile
+  env_file: ../../.runtime/github-staging/control.env
+  restart: 'no'
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  logging:
+    driver: json-file
+    options: {max-size: 5m, max-file: '2'}
+services:
+  postgres:
+    image: postgres:16.9
+    env_file: ../../.runtime/github-staging/postgres.env
+    volumes: [experiment-db:/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U if_hosted_staging -d if_hosted_staging']
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  migrate:
+    <<: *platform
+    command: alembic upgrade head
+    depends_on:
+      postgres: {condition: service_healthy}
+  api:
+    <<: *platform
+    ports: ['127.0.0.1:18086:8080']
+    healthcheck:
+      test: [CMD, python, '-c', "import urllib.request; urllib.request.urlopen('http://localhost:8080/readyz',timeout=3)"]
+      interval: 3s
+      timeout: 4s
+      retries: 30
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+  scheduler:
+    <<: *platform
+    command: python -m apps.scheduler.main
+    depends_on:
+      api: {condition: service_healthy}
+  worker:
+    image: inferenceflow-control:github-staging
+    env_file: ../../.runtime/github-staging/worker.env
+    command: python -m apps.worker.main
+    restart: 'no'
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    depends_on:
+      api: {condition: service_healthy}
+volumes:
+  experiment-db:
