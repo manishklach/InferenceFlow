@@ -8,8 +8,9 @@ import httpx
 
 from packages.python_sdk import InferenceFlowClient
 from scripts import github_staging_host as host
-from scripts.experiment_commands import Mailbox, read_command
-from datetime import datetime, timedelta, timezone
+from scripts.experiment_commands import read_command
+from scripts.experiment_plan import run_plan, Stage
+from scripts.experiment_policy import switch
 from scripts.gpu_experiment import workload
 
 
@@ -35,10 +36,8 @@ def main():
         seeded = json.loads(host.docker("exec", "-T", "-e", "HOSTED_DISPOSABLE_MOCK=true", "api",
             "python", "-m", "scripts.hosted_mock_pipeline", "seed", "--run-id", identity).stdout)
         with InferenceFlowClient(seeded["key"], origin) as client:
-            mailbox = Mailbox(host.RUNTIME, origin, identity, clock=lambda: time.monotonic()*100)
-            for index, policy in enumerate(("sequential", "baseline", "adaptive", "baseline")):
-                mailbox.tick(fetch=lambda: {"run_id": identity, "sequence": index+1, "policy": policy,
-                    "expires_at": (datetime.now(timezone.utc)+timedelta(minutes=5)).isoformat()})
+            def transition(policy):
+                switch(policy, host.RUNTIME, origin)
                 # Keep the original worker process alive across API/scheduler restarts.
                 for _ in range(45):
                     with httpx.Client(base_url=origin, timeout=10, trust_env=False) as operator:
@@ -51,14 +50,26 @@ def main():
                     time.sleep(2)
                 else:
                     raise RuntimeError("Worker did not reconnect")
-                job = client.create_job(workload(10, f"policy-{index}"), idempotency_key=f"rehearsal-{index}")
+            def stage_run(stage, timeout):
+                job = client.create_job(workload(10, stage.name), idempotency_key="rehearsal-"+stage.name)
                 job = client.wait_for_job(job["id"], timeout=120, poll_interval=1)
                 if job["status"] != "succeeded":
                     raise RuntimeError("Mock stage failed")
+                return {"successful_requests": 10, "job_id": job["id"]}
+
+            def audit(stage, result):
                 host.docker("exec", "-T", "api", "python", "-m", "scripts.hosted_mock_pipeline", "audit",
-                    "--job-id", job["id"], "--output", "/tmp/policy-audit.json")
-                report["stages"].append({"policy": policy, "successful_requests": 10,
+                    "--job-id", result["job_id"], "--output", "/tmp/policy-audit.json")
+                report["stages"].append({"policy": stage.policy, "successful_requests": 10,
                     "audit_passed": True, "worker_reconnected": True})
+                return {"passed": True}
+
+            stages = tuple(Stage("mock-"+str(index), policy, 10, 120)
+                for index, policy in enumerate(("sequential", "baseline", "adaptive", "baseline")))
+            result = run_plan(host.RUNTIME / "mock-plan", time.monotonic()+900,
+                transition=transition, execute=stage_run, audit=audit, coverage=lambda *_: {"passed": True}, stages=stages)
+            if result["status"] != "completed":
+                raise RuntimeError("Hosted mock plan incomplete")
         report["passed"] = True
     finally:
         host.docker("down", "--volumes", "--timeout", "15")

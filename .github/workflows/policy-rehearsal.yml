@@ -21,7 +21,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.lock
-      - run: python -m unittest tests.test_experiment_policy tests.test_experiment_commands -q
+      - run: python -m unittest tests.test_experiment_policy tests.test_experiment_commands tests.test_hosted_experiment_plan -q
       - run: python -m scripts.rehearse_policy_controls
         env:
           HOST_COMMAND_GITHUB_TOKEN: ${{ github.token }}
