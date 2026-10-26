@@ -1,6 +1,6 @@
 {
   "run_id": "40288126492-1",
-  "sequence": 1,
-  "policy": "sequential",
-  "expires_at": "2026-10-26T08:03:06.520240+00:00"
+  "sequence": 2,
+  "policy": "audit",
+  "expires_at": "2026-10-26T08:04:49.488638+00:00"
 }
