@@ -154,7 +154,7 @@ def run(client, plan, armed_at, receipt_path, clock=None, sleep=time.sleep, stop
          creation_window_ends=(armed_at + timedelta(minutes=10)).isoformat(),
          terminate_by=(armed_at + timedelta(minutes=runtime_minutes(plan))).isoformat())
     receipt = None
-    while clock() < armed_at + timedelta(minutes=119):
+    while clock() < armed_at + timedelta(minutes=runtime_minutes(plan)+9):
         stamp = clock()
         try:
             if receipt is None:
