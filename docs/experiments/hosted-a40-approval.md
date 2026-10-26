@@ -1,4 +1,6 @@
-# One A40 hosted experiment — approval pending
+# One A40 hosted experiment — consumed approval
+
+The owner approved this exact rental. It was created and terminated before inference because of a provider-response validation bug; see the [attempt report](../validation/2026-10-26/hosted-a40-startup-report.md). This document is the historical proposal, not authorization for a replacement.
 
 Prepared October 26, 2026 PDT. No GPU has been created for this session. Prior H100 approval covered its completed single rental; this is a new request.
 

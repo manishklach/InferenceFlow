@@ -25,6 +25,20 @@ COMPOSE = host.COMPOSE + ["-f", str(host.ROOT / "infra/github-staging/real.yml")
 RUNTIME = host.RUNTIME
 
 
+def experiment_evidence(runtime):
+    files = {}
+    for path in (runtime / "experiment").rglob("*"):
+        if path.is_file() and not path.is_symlink() and path.suffix in {".json", ".jsonl", ".log"}:
+            files[str(path.relative_to(runtime / "experiment"))] = path.read_text(encoding="utf-8")
+    # Startup failures can precede session.json. Keep their diagnostics inside the
+    # owner-encrypted envelope, never the public Actions log or plaintext artifact.
+    for name in ("experiment-error.json", "experiment-driver.log", "host-error.json"):
+        path = runtime / name
+        if path.is_file() and not path.is_symlink():
+            files["diagnostics/"+name] = path.read_text(encoding="utf-8")
+    return files
+
+
 def real_configuration(oidc):
     values, postgres = host.configuration(oidc)
     values.update(EXECUTION_MODE="vllm", MODEL_REVISION=REVISION, MODEL_REPO="Qwen/Qwen3-4B",
@@ -189,10 +203,7 @@ def serve():
                 dump = host.docker("exec", "-T", "postgres", "pg_dump", "-U", "if_hosted_staging",
                                    "--no-owner", "--no-acl", "if_hosted_staging").stdout
                 reports = {path.name: json.loads(path.read_text()) for path in RUNTIME.glob("stage-audit-*.json")}
-                experiment_files = {}
-                for path in (RUNTIME / "experiment").rglob("*"):
-                    if path.is_file() and not path.is_symlink() and path.suffix in {".json", ".jsonl", ".log"}:
-                        experiment_files[str(path.relative_to(RUNTIME / "experiment"))] = path.read_text(encoding="utf-8")
+                experiment_files = experiment_evidence(RUNTIME)
                 private_write(RUNTIME / "final-evidence.enc.json", seal(json.dumps({"kind": "real-control-db",
                               "database_sql": dump, "stage_audits": reports, "experiment_files": experiment_files,
                               "run_id": os.environ["GITHUB_RUN_ID"]}).encode(), public_pem).decode())
