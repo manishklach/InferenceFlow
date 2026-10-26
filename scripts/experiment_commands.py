@@ -34,7 +34,10 @@ def receipt_for_log(runtime):
     path = runtime / "command-receipt.json"
     if not path.exists():
         return None
-    record = json.loads(path.read_text())
+    try:
+        record = json.loads(path.read_text())
+    except (OSError, json.JSONDecodeError):
+        return None  # A concurrent private-file write is retried on the next wait tick.
     # An explicit whitelist prevents private audit content reaching public logs.
     return {key: record[key] for key in ("run_id", "sequence", "policy", "status", "observed_at")}
 
