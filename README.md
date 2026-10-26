@@ -1,5 +1,7 @@
 # InferenceFlow
 
+Latest real GPU result: [partial H100 report](docs/validation/2026-10-26/h100-report.md): **110/110 requests succeeded**, 110 unique usage/capture records, zero wallet drift, and **$1.36398 posted GPU/disk cost**. The pod is confirmed gone. Concurrent/adaptive comparison and interruption stages were not run; no savings or production-readiness claim is supported.
+
 Newest validation: [third-run A40 smoke report](docs/validation/2026-10-25/third-a40-smoke-report.md): **10/10 real requests**, four active vLLM sequences, complete smoke-window telemetry and zero wallet drift in the exported snapshot. The pod is terminated. Larger comparison stages stopped at a hosted policy-control gap; no new savings claim is supported.
 
 [Hosted policy controls and no-GPU rehearsal](docs/experiments/hosted-policy-controls.md) address that experiment-control gap. The [H100 follow-up proposal](docs/experiments/h100-next-proposal.md) remains preparation only; it requires a fresh final quote, host/cleanup verification and explicit rental approval.
