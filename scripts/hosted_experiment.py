@@ -47,6 +47,8 @@ def verify_pod(pod, session, identity):
     if not cost.is_finite() or cost < 0 or cost > Decimal(str(session["all_in_hourly_usd"])):
         raise RuntimeError("Provider price is invalid or over quote")
     created, cutoff = utc(pod["createdAt"]), utc(env["IF_TERMINATE_BY"])
+    if not re.fullmatch(r"[0-9]+", env.get("IF_WATCHDOG_RUN_ID", "")):
+        raise RuntimeError("Independent watchdog run identity required")
     if not 0 < (cutoff-created).total_seconds() <= session["max_runtime_minutes"]*60:
         raise RuntimeError("Missing or inconsistent independent cutoff")
     # End normal work after 30 rented minutes or two minutes before independent cutoff.
@@ -54,6 +56,17 @@ def verify_pod(pod, session, identity):
     if stop_at <= time.time():
         raise RuntimeError("No safe execution time remains")
     return time.monotonic()+stop_at-time.time()
+
+
+def watchdog_active(run_id):
+    # Anonymous, fixed GitHub destination; provider/API credentials are never forwarded.
+    with httpx.Client(timeout=5, trust_env=False, follow_redirects=False) as public:
+        response = public.get("https://api.github.com/repos/manishklach/InferenceFlow/actions/runs/"+run_id)
+        response.raise_for_status()
+        data = response.json()
+    if (str(data.get("id")) != run_id or data.get("head_branch") != "main"
+            or data.get("name") != "GPU experiment independent watchdog" or data.get("status") != "in_progress"):
+        raise RuntimeError("Independent cleanup job is not active")
 
 
 def child_environment(connection):
@@ -102,6 +115,13 @@ def execute(identity, session, connection, directory):
                 time.sleep(1)
         collector.healthy()
         prepare(directory / "workloads", validation_count=500)
+        next_watchdog_check = [float("-inf")]
+
+        def healthy():
+            collector.healthy()
+            if time.monotonic() >= next_watchdog_check[0]:
+                watchdog_active(pod["env"]["IF_WATCHDOG_RUN_ID"])
+                next_watchdog_check[0] = time.monotonic()+60
 
         def transition(policy):
             switch(policy, host.RUNTIME, connection["CONTROL_PLANE_URL"])
@@ -120,7 +140,7 @@ def execute(identity, session, connection, directory):
                 until = time.monotonic()+seconds+5
                 try:
                     while child.poll() is None:
-                        collector.healthy()
+                        healthy()
                         if time.monotonic() >= until:
                             raise RuntimeError("Stage driver deadline reached")
                         time.sleep(1)
@@ -151,7 +171,7 @@ def execute(identity, session, connection, directory):
             return report
 
         return run_plan(directory / "plan", deadline, transition=transition, execute=stage_run, audit=audit,
-                        coverage=smoke_coverage, healthy=collector.healthy)
+                        coverage=smoke_coverage, healthy=healthy)
     finally:
         # Cancel only IDs recorded as accepted by this isolated experiment driver.
         # Ambiguous submissions retain their original intent/idempotency evidence.
