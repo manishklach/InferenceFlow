@@ -102,7 +102,7 @@ class SessionTests(unittest.TestCase):
             "disk": 80, "ports": [], "mounts": {}, "globalNetworking": False, "cost": 3.99,
             "createdAt": now.isoformat(), "env": {"IF_EXPERIMENT_ID": "ab"*16, "IF_OWNER": "inferenceflow",
                 "IF_CREATED_BY": "explicit-operator-approval", "IF_CONTROL_RUN_ID": "123-1",
-                "IF_WATCHDOG_RUN_ID": "456",
+                "IF_WATCHDOG_RUN_ID": "456", "IF_WATCHDOG_RUN_ATTEMPT": "1",
                 "IF_TERMINATE_BY": (now+timedelta(minutes=40)).isoformat()}}
 
     def test_wrong_run_overquote_or_cutoff_cannot_execute(self):

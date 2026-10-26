@@ -51,6 +51,8 @@ def verify_pod(pod, session, identity):
         raise RuntimeError("Provider creation time is in the future")
     if not re.fullmatch(r"[0-9]+", env.get("IF_WATCHDOG_RUN_ID", "")):
         raise RuntimeError("Independent watchdog run identity required")
+    if not re.fullmatch(r"[1-9][0-9]*", env.get("IF_WATCHDOG_RUN_ATTEMPT", "")):
+        raise RuntimeError("Independent watchdog attempt required")
     if not 0 < (cutoff-created).total_seconds() <= session["max_runtime_minutes"]*60:
         raise RuntimeError("Missing or inconsistent independent cutoff")
     # End normal work after 30 rented minutes or two minutes before independent cutoff.
@@ -60,13 +62,14 @@ def verify_pod(pod, session, identity):
     return time.monotonic()+stop_at-time.time()
 
 
-def watchdog_active(run_id):
+def watchdog_active(run_id, attempt):
     # Anonymous, fixed GitHub destination; provider/API credentials are never forwarded.
     with httpx.Client(timeout=5, trust_env=False, follow_redirects=False) as public:
         response = public.get("https://api.github.com/repos/manishklach/InferenceFlow/actions/runs/"+run_id)
         response.raise_for_status()
         data = response.json()
     if (str(data.get("id")) != run_id or data.get("head_branch") != "main"
+            or str(data.get("run_attempt")) != attempt
             or data.get("name") != "GPU experiment independent watchdog" or data.get("status") != "in_progress"):
         raise RuntimeError("Independent cleanup job is not active")
 
@@ -101,7 +104,10 @@ def execute(identity, session, connection, directory):
                         deadline = min(deadline, candidate_deadline)
                         pod = observed
                         if collector is None:
-                            watchdog_active(pod["env"]["IF_WATCHDOG_RUN_ID"])
+                            private_write(directory / "session.json", json.dumps({"pod_id": pod["id"],
+                                "created_at": pod["createdAt"], "gpu": session["gpu_id"],
+                                "cutoff": pod["env"]["IF_TERMINATE_BY"]}))
+                            watchdog_active(pod["env"]["IF_WATCHDOG_RUN_ID"], pod["env"]["IF_WATCHDOG_RUN_ATTEMPT"])
                             collector = Collector(reader, pod["id"], directory)
                             collector.thread.start()  # Capture startup, not only post-readiness samples.
                 if pod and time.time()-utc(pod["createdAt"]).timestamp() >= 900:
@@ -122,8 +128,6 @@ def execute(identity, session, connection, directory):
                 time.sleep(2)
             else:
                 raise RuntimeError("Approved manually provisioned worker did not arrive")
-        private_write(directory / "session.json", json.dumps({"pod_id": pod["id"],
-            "created_at": pod["createdAt"], "gpu": session["gpu_id"], "cutoff": pod["env"]["IF_TERMINATE_BY"]}))
         for _ in range(15):
             try:
                 collector.healthy()
@@ -137,7 +141,7 @@ def execute(identity, session, connection, directory):
         def healthy():
             collector.healthy()
             if time.monotonic() >= next_watchdog_check[0]:
-                watchdog_active(pod["env"]["IF_WATCHDOG_RUN_ID"])
+                watchdog_active(pod["env"]["IF_WATCHDOG_RUN_ID"], pod["env"]["IF_WATCHDOG_RUN_ATTEMPT"])
                 next_watchdog_check[0] = time.monotonic()+60
 
         def transition(policy):
