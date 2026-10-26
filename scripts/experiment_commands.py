@@ -2,6 +2,7 @@
 
 from datetime import datetime, timezone
 import json
+import os
 import re
 import time
 
@@ -10,7 +11,35 @@ import httpx
 from scripts.experiment_policy import POLICIES, switch
 from scripts.staging_supervisor import private_write
 
-COMMAND_URL = "https://raw.githubusercontent.com/manishklach/InferenceFlow/main/docs/experiments/host-command.json"
+COMMAND_URL = "https://api.github.com/repos/manishklach/InferenceFlow/contents/docs/experiments/host-command.json"
+
+
+def read_command(token, runtime, client_factory=httpx.Client):
+    if not token:
+        raise RuntimeError("Ephemeral contents-read GitHub job token required")
+    with client_factory(timeout=4, trust_env=False, follow_redirects=False) as client:
+        response = client.get(COMMAND_URL, params={"ref": "main"}, headers={
+            "Authorization": "Bearer "+token, "Accept": "application/vnd.github.raw+json"})
+        private_write(runtime / "command-read-status.json", json.dumps({
+            "http_status": response.status_code, "observed_at": datetime.now(timezone.utc).isoformat()}))
+        if response.status_code == 404:
+            return None
+        response.raise_for_status()
+        if len(response.content) > 2048:
+            raise ValueError("Oversized command")
+        return response.json()
+
+
+def receipt_for_log(runtime):
+    path = runtime / "command-receipt.json"
+    if not path.exists():
+        return None
+    try:
+        record = json.loads(path.read_text())
+    except (OSError, json.JSONDecodeError):
+        return None  # A concurrent private-file write is retried on the next wait tick.
+    # An explicit whitelist prevents private audit content reaching public logs.
+    return {key: record[key] for key in ("run_id", "sequence", "policy", "status", "observed_at")}
 
 
 def validate(command, run_id, previous, now):
@@ -49,14 +78,9 @@ class Mailbox:
         self.last_poll = self.clock()
         try:
             if fetch is None:
-                with httpx.Client(timeout=4, trust_env=False, follow_redirects=False) as client:
-                    response = client.get(COMMAND_URL, params={"fresh": time.time_ns()})
-                    if response.status_code == 404:
-                        return
-                    response.raise_for_status()
-                    if len(response.content) > 2048:
-                        raise ValueError("Oversized command")
-                    command = response.json()
+                command = read_command(os.environ.get("HOST_COMMAND_GITHUB_TOKEN", ""), self.runtime)
+                if command is None:
+                    return
             else:
                 command = fetch()
         except (httpx.HTTPError, ValueError):
@@ -67,7 +91,7 @@ class Mailbox:
         # Consume before any mutation. Ambiguous crashes cannot replay a restart.
         self.previous = command["sequence"]
         receipt = {"run_id": self.run_id, "sequence": self.previous, "policy": command["policy"],
-                   "status": "started"}
+                   "status": "started", "observed_at": datetime.now(timezone.utc).isoformat()}
         private_write(self.runtime / "command-receipt.json", json.dumps(receipt))
         try:
             if self.audit is not None:
@@ -85,6 +109,7 @@ class Mailbox:
             private_write(self.runtime / "STOP", "Policy command failed; stop this host")
             raise
         finally:
+            receipt["observed_at"] = datetime.now(timezone.utc).isoformat()
             private_write(self.runtime / "command-receipt.json", json.dumps(receipt))
         print(json.dumps({"host_policy_command": receipt}), flush=True)
 

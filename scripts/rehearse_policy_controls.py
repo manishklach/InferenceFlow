@@ -8,7 +8,7 @@ import httpx
 
 from packages.python_sdk import InferenceFlowClient
 from scripts import github_staging_host as host
-from scripts.experiment_commands import Mailbox
+from scripts.experiment_commands import Mailbox, read_command
 from datetime import datetime, timedelta, timezone
 from scripts.gpu_experiment import workload
 
@@ -17,6 +17,7 @@ def main():
     if os.environ.get("GITHUB_ACTIONS") != "true":
         raise RuntimeError("Disposable GitHub runner required")
     host.RUNTIME.mkdir(mode=0o700, parents=True, exist_ok=False)
+    read_command(os.environ["HOST_COMMAND_GITHUB_TOKEN"], host.RUNTIME)
     values, postgres = host.configuration({"OIDC_ISSUER": "https://rehearsal.invalid/",
         "OIDC_AUDIENCE": "offline-rehearsal", "OIDC_JWKS_URL": "https://rehearsal.invalid/jwks"})
     values.update(ESTIMATOR_CALIBRATED="false", SCHEDULER_V2_ENABLED="false")

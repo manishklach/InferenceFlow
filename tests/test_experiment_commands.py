@@ -2,8 +2,10 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
+import httpx
+import json
 
-from scripts.experiment_commands import Mailbox, validate
+from scripts.experiment_commands import Mailbox, validate, read_command, receipt_for_log, COMMAND_URL
 
 
 def command(**changes):
@@ -12,6 +14,25 @@ def command(**changes):
 
 
 class CommandTests(unittest.TestCase):
+    def test_authenticated_read_is_fixed_to_main_and_never_logs_credentials(self):
+        with TemporaryDirectory() as folder:
+            runtime = Path(folder)
+
+            def respond(request):
+                self.assertEqual(str(request.url).split('?')[0], COMMAND_URL)
+                self.assertEqual(request.url.params['ref'], 'main')
+                self.assertEqual(request.headers['authorization'], 'Bearer test-only')
+                return httpx.Response(200, json=command())
+
+            def factory(**kwargs):
+                return httpx.Client(transport=httpx.MockTransport(respond), **kwargs)
+
+            self.assertEqual(read_command('test-only', runtime, factory)['sequence'], 1)
+            self.assertNotIn('test-only', (runtime/'command-read-status.json').read_text())
+            record = {**command(), 'status': 'verified', 'observed_at': 'fixture', 'private_audit': 'never-log'}
+            (runtime/'command-receipt.json').write_text(json.dumps(record))
+            self.assertNotIn('never-log', json.dumps(receipt_for_log(runtime)))
+
     def test_wrong_host_replay_expiry_and_extra_fields(self):
         now = datetime.now(timezone.utc)
         for c in (command(run_id="321-1"), command(sequence=2), command(sequence=True),
