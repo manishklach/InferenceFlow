@@ -56,6 +56,24 @@ def test_budget_includes_fixed_cost_hour_rounding_and_early_deadline():
     assert state(candidate, START, START + timedelta(minutes=110))["terminate"]
 
 
+def test_shorter_h100_cutoff_preserves_reserve_and_legacy_default():
+    candidate = {**plan(), "all_in_hourly_usd": "4.001", "fixed_cost_usd": "0",
+                 "budget_usd": "6", "max_runtime_minutes": 45}
+    validate_plan(candidate)
+    assert not state(candidate, START, START+timedelta(minutes=44))["terminate"]
+    assert state(candidate, START, START+timedelta(minutes=45))["terminate"]
+    assert state(candidate, START, START)["estimated_cost_upper_usd"] == "4.001"
+    del candidate["max_runtime_minutes"]
+    with pytest.raises(ValueError):
+        validate_plan(candidate)
+
+
+@pytest.mark.parametrize("minutes", [True, 0, 14, 111, "45", 45.5])
+def test_runtime_cutoff_cannot_be_extended_or_coerced(minutes):
+    with pytest.raises(ValueError):
+        validate_plan({**plan(), "max_runtime_minutes": minutes})
+
+
 def test_binding_ignores_unrelated_and_rejects_ambiguous_preexisting_or_missing_marker():
     assert bind_pod([{"name": "another-project"}], plan(), START) is None
     assert bind_pod([pod()], plan(), START)["pod_id"] == "exact-pod"
