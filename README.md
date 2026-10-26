@@ -1,5 +1,7 @@
 # InferenceFlow
 
+Newest validation: [third-run A40 smoke report](docs/validation/2026-10-25/third-a40-smoke-report.md): **10/10 real requests**, four active vLLM sequences, complete smoke-window telemetry and zero wallet drift in the exported snapshot. The pod is terminated. Larger comparison stages stopped at a hosted policy-control gap; no new savings claim is supported.
+
 Latest GPU result: [second real inference report](docs/validation/2026-10-25/second-gpu-report.md). **410/410 real Qwen3-4B requests completed on one L4**, including controlled worker interruption and recovery, with 410 unique usage/capture records and zero ledger drift. Baseline concurrent completed 100 requests in 68.944 seconds; adaptive took 80.643 seconds. **No adaptive savings demonstrated; NO-GO for public beta or savings claims.** A local staging-supervisor failure prevented admission of the 1,000-request stage. The pod is terminated and no persistent storage was created.
 
 The second pod's posted provider bill is now **$0.21400138374883682**, including disk; see the report's billing addendum. The [first run](docs/validation/2026-10-25/real-inference-report.md) and [recovery fixes](docs/validation/2026-10-25/recovery-fixes.md) remain historical evidence. [Third-experiment preparation](docs/experiments/third-gpu-experiment.md) targets repeated matched 100-request comparisons and a gated 500-request interruption run. No new GPU rental is authorized by these instructions.
