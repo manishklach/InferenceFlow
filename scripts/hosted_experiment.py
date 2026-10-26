@@ -47,6 +47,8 @@ def verify_pod(pod, session, identity):
     if not cost.is_finite() or cost < 0 or cost > Decimal(str(session["all_in_hourly_usd"])):
         raise RuntimeError("Provider price is invalid or over quote")
     created, cutoff = utc(pod["createdAt"]), utc(env["IF_TERMINATE_BY"])
+    if created.timestamp() > time.time()+2:
+        raise RuntimeError("Provider creation time is in the future")
     if not re.fullmatch(r"[0-9]+", env.get("IF_WATCHDOG_RUN_ID", "")):
         raise RuntimeError("Independent watchdog run identity required")
     if not 0 < (cutoff-created).total_seconds() <= session["max_runtime_minutes"]*60:
@@ -86,6 +88,7 @@ def execute(identity, session, connection, directory):
     try:
         reader.authenticate()  # No paid operation; read authority must work before waiting.
         pod = None
+        deadline = float("inf")
         next_pod_read = 0.0
         with httpx.Client(base_url=connection["CONTROL_PLANE_URL"], timeout=10, trust_env=False) as client:
             wait_until = time.monotonic()+3600
@@ -95,7 +98,7 @@ def execute(identity, session, connection, directory):
                     next_pod_read = time.monotonic()+10
                     if observed:
                         candidate_deadline = verify_pod(observed, session, identity)
-                        deadline = min(deadline, candidate_deadline) if pod else candidate_deadline
+                        deadline = min(deadline, candidate_deadline)
                         pod = observed
                         if collector is None:
                             watchdog_active(pod["env"]["IF_WATCHDOG_RUN_ID"])
