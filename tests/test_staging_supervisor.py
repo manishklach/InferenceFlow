@@ -30,8 +30,9 @@ class SupervisionTests(unittest.TestCase):
             root = Path(folder)
             (root/"maintenance.json").write_text(json.dumps({"expires_at_epoch": 150}))
             with patch("scripts.staging_supervisor.time.time", return_value=100):
+                elapsed = [0]
                 monitor([], root, 10, {"postgres", "api"}, root/"STOP",
-                        clock=Mock(side_effect=[0, 0, 0, 10]), sleep=lambda _: None,
+                        clock=lambda: elapsed[0], sleep=lambda _: elapsed.__setitem__(0, 10),
                         read=Mock(return_value={"postgres"}))
                 with self.assertRaisesRegex(RuntimeError, "postgres"):
                     monitor([], root, 10, {"postgres", "api"}, root/"STOP", clock=lambda: 0,
@@ -86,6 +87,13 @@ class SupervisionTests(unittest.TestCase):
             monitor([], Path(folder), 10, {"api"}, Path(folder)/"STOP", clock=lambda: 10, read=read)
             (Path(folder)/"STOP").touch()
             monitor([], Path(folder), 10, {"api"}, Path(folder)/"STOP", clock=lambda: 0, read=read)
+            read.assert_not_called()
+
+    def test_policy_command_stop_prevents_following_health_read(self):
+        with tempfile.TemporaryDirectory() as folder:
+            stop = Path(folder)/"STOP"
+            read = Mock()
+            monitor([], Path(folder), 10, {"api"}, stop, clock=lambda: 0, read=read, tick=stop.touch)
             read.assert_not_called()
 
     def test_deadline_during_retry_prevents_next_query(self):
