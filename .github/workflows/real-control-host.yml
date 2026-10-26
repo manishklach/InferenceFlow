@@ -30,6 +30,8 @@ jobs:
           chmod 700 .runtime/cloudflared
       - name: Start private CPU control plane with pinned tokenizer
         env:
+          # Existing job-scoped contents:read token; never passed to containers or handoff.
+          HOST_COMMAND_GITHUB_TOKEN: ${{ github.token }}
           AUTH0_STAGING_CLIENT_SECRET: ${{ secrets.AUTH0_STAGING_CLIENT_SECRET }}
           AUTH0_STAGING_CLIENT_ID: ${{ vars.AUTH0_STAGING_CLIENT_ID }}
           AUTH0_STAGING_ISSUER: ${{ vars.AUTH0_STAGING_ISSUER }}

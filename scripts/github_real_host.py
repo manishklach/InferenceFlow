@@ -15,7 +15,7 @@ import httpx
 
 from scripts import github_staging_host as host
 from scripts.experiment_connection import seal_connection
-from scripts.experiment_commands import Mailbox
+from scripts.experiment_commands import Mailbox, receipt_for_log
 from scripts.sealed_evidence import seal
 from scripts.staging_supervisor import monitor, private_write
 
@@ -213,7 +213,12 @@ def main():
                     return
                 time.sleep(1)
     else:
+        last_receipt = None
         for _ in range(150*30):
+            receipt = receipt_for_log(RUNTIME)
+            if receipt and receipt != last_receipt:
+                print(json.dumps({"host_policy_command": receipt}), flush=True)
+                last_receipt = receipt
             if (RUNTIME / "real-stopped.json").exists():
                 stopped = json.loads((RUNTIME / "real-stopped.json").read_text())
                 if (RUNTIME / "host-error.json").exists() or not stopped["export_sealed"] or stopped["stop_returncode"]:
