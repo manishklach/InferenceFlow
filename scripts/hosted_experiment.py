@@ -85,9 +85,24 @@ def execute(identity, session, connection, directory):
     collector = None
     try:
         reader.authenticate()  # No paid operation; read authority must work before waiting.
+        pod = None
+        next_pod_read = 0.0
         with httpx.Client(base_url=connection["CONTROL_PLANE_URL"], timeout=10, trust_env=False) as client:
             wait_until = time.monotonic()+3600
             while time.monotonic() < wait_until:
+                if time.monotonic() >= next_pod_read:
+                    observed = reader.pod(pod["id"]) if pod else reader.find(session["experiment_id"])
+                    next_pod_read = time.monotonic()+10
+                    if observed:
+                        candidate_deadline = verify_pod(observed, session, identity)
+                        deadline = min(deadline, candidate_deadline) if pod else candidate_deadline
+                        pod = observed
+                        if collector is None:
+                            watchdog_active(pod["env"]["IF_WATCHDOG_RUN_ID"])
+                            collector = Collector(reader, pod["id"], directory)
+                            collector.thread.start()  # Capture startup, not only post-readiness samples.
+                if pod and time.time()-utc(pod["createdAt"]).timestamp() >= 900:
+                    raise RuntimeError("Cold start exceeded fifteen rented minutes")
                 r = client.get("/internal/scheduling/report", headers={"Authorization": "Bearer "+connection["METRICS_TOKEN"]})
                 r.raise_for_status()
                 workers = [w for w in r.json()["workers"] if w.get("telemetry_fresh")]
@@ -97,16 +112,15 @@ def execute(identity, session, connection, directory):
                     worker = workers[0]
                     if worker.get("mode") != "vllm" or worker.get("hard_limit") != 4:
                         raise RuntimeError("Wrong worker execution mode or hard cap")
-                    pod = reader.pod(worker["provider_instance_id"])
-                    deadline = verify_pod(pod, session, identity)
-                    break
+                    if pod and worker.get("provider_instance_id") == pod["id"]:
+                        break
+                    if pod:
+                        raise RuntimeError("Worker belongs to a different pod")
                 time.sleep(2)
             else:
                 raise RuntimeError("Approved manually provisioned worker did not arrive")
         private_write(directory / "session.json", json.dumps({"pod_id": pod["id"],
             "created_at": pod["createdAt"], "gpu": session["gpu_id"], "cutoff": pod["env"]["IF_TERMINATE_BY"]}))
-        collector = Collector(reader, pod["id"], directory)
-        collector.thread.start()
         for _ in range(15):
             try:
                 collector.healthy()

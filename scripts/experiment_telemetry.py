@@ -9,6 +9,7 @@ import time
 
 import httpx
 from scripts.second_gpu_experiment import coverage
+from scripts.prearmed_cleanup import inventory
 
 BASE = "https://api.runpod.io/v2"
 
@@ -32,6 +33,14 @@ class PodReader:
         r = self.client.get("/pods/"+pod_id)
         r.raise_for_status()
         return r.json()
+
+    def find(self, experiment_id):
+        if not re.fullmatch(r"[a-f0-9]{32}", experiment_id):
+            raise ValueError("Invalid experiment marker")
+        rows = [p for p in inventory(self.client) if p.get("name") == "inferenceflow-experiment-"+experiment_id]
+        if len(rows) > 1:
+            raise RuntimeError("Ambiguous experiment pod identity")
+        return rows[0] if rows else None
 
     def close(self):
         self.client.close()
