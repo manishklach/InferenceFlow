@@ -1,0 +1,37 @@
+# Hosted staged GPU experiment execution
+
+The partial H100 experiment completed smoke and sequential workloads but did not admit the remaining comparisons. Its control plane was hosted; the workload driver and log collection still depended on an interactive session. The new opt-in stage driver runs with the CPU control host on GitHub. It cannot create, update or delete a provider resource. This change does not identify what initiated the previous pod's early disappearance and does not establish real adaptive performance.
+
+## Default and secret boundaries
+
+`real-control-host.yml` defaults to `execute_plan: false`, retaining the existing supervised host/manual mailbox. No new GPU operation or secret is used in that mode. Plan mode is explicit, main-only and still protected by the `staging-experiment` owner review.
+
+Plan mode additionally needs **a dedicated read-only RunPod experiment key**, proposed as environment secret `RUNPOD_EXPERIMENT_READ_KEY` in `staging-experiment`. This is a new credential destination/use and requires owner approval before configuration. Do not reuse the read/write cleanup key, expose a key in chat/Git, or activate this mode before approval. The new reader has only fixed-host GET methods for pod authentication, exact-pod reads and SSE logs. It cannot enforce the provider-side key's scope itself; the owner must create it read-only. No secret has been created, transferred or configured by this implementation.
+
+The read-only key stays in the trusted runner's experiment process. API/PostgreSQL/scheduler container environment files retain an empty `RUNPOD_API_KEY`; the rented GPU receives only its existing scoped worker bootstrap/origin, not provider, database, Auth0 or GitHub credentials. The stage API-client child receives only the origin, synthetic API key and metrics token plus basic runtime variables. The independent cleanup key remains in the separate protected cleanup job.
+
+## Durable, bounded stages
+
+The runner prepares identical synthetic workload files and runs smoke 10, sequential 100, baseline/adaptive/adaptive/baseline 100, then an optional interruption 500: at most 1,010 requests. It switches policies directly through trusted Compose operations; the manual mailbox is disabled during a plan so two controllers cannot race. Every real submission retains the existing live engine-canary and exact-policy/model/slot guards.
+
+`experiment/plan/checkpoint.json` is written before admission and after each completed stage. Every completed stage requires a read-only PostgreSQL timing/billing audit; smoke also requires at least 90% joint compact engine/hardware coverage. Failed/incomplete stages, stale telemetry or inactive independent cleanup prevent further admissions. Stage child processes have deadlines, and known accepted job IDs are cancelled on exit where the API remains reachable. Unresolved/ambiguous intent is preserved for reconciliation. **An existing checkpoint is never automatically replayed.** This is durable evidence and fail-closed execution, not automatic recovery from an ambiguous submission.
+
+Normal work ends at the earlier of 30 rented minutes or two minutes before the independently armed cutoff. Each stage reserves transition/audit/export time; a stage that cannot fit is skipped with an explicit incomplete checkpoint. No estimator prediction is reported as measured attainment. SSE logs are collected continuously using opaque Last-Event-ID reconnects and duplicate suppression into private runner files. Only fresh validated engine/hardware samples keep admission healthy. Unknown intervals remain unknown; no full-utilization claim follows from a short smoke coverage gate.
+
+The foreground Actions step emits only aggregate status, completed-stage count and current stage/phase. Results, raw synthetic output, provider logs, checkpoints and audits join the existing owner-encrypted final evidence artifact. The private decryption key stays with the owner. Parent supervision stops/exports the CPU host when the stage process completes or fails, including its child process group.
+
+## Independent early cleanup
+
+The optional cleanup-plan fields `control_run_id` and `control_run_attempt` bind the watchdog to this exact CPU job attempt. The watchdog checks that public GitHub run at most once per minute through a separate **anonymous** client: its provider cleanup key is never forwarded to GitHub. When the bound control job finishes, the watchdog terminates only its already-bound exact experiment pod and verifies 404. A public API outage leaves the original independent time/budget/quote guards active; early cleanup is not guaranteed through an outage. Legacy plans without these fields keep their existing behavior. The real driver also checks the named cleanup job remains active before/while admitting work.
+
+No early cleanup path is yet claimed live-proven on a GPU. Deterministic tests cover control completion triggering deletion of the bound resource. A fresh owner-reviewed watchdog and authenticated armed heartbeat remain prerequisites before any manual GPU creation.
+
+## Next manually approved experiment
+
+1. Review the code, pass full CI and no-GPU Compose rehearsal, and approve the new read-only key destination. No GPU is required for these checks.
+2. Prepare a fresh quote/approval and non-secret session JSON with exactly `experiment_id`, `gpu_id`, `data_center_id`, `disk_gb` (80), `all_in_hourly_usd`, `budget_usd` and `max_runtime_minutes`. This is reviewed configuration, not independent proof of spending approval.
+3. Dispatch the protected CPU host with `execute_plan: true` and that `session_json`. Verify read authentication, HTTPS/auth boundaries and the prepared host before authorizing any rental. The host waits for a manually provisioned worker; it cannot provision one.
+4. Dispatch/review independent cleanup with the exact experiment marker and `control_run_id`/`control_run_attempt`. After observing it armed, prepare the one approved pod with `IF_CONTROL_RUN_ID=CPU_RUN_ID-ATTEMPT`, `IF_TERMINATE_BY=ARMED_CUTOFF_UTC`, and `IF_WATCHDOG_RUN_ID=CLEANUP_RUN_ID`, alongside the existing identity/bootstrap fields. The runner checks the pod marker, shape, price, ports/storage and cutoff against the reviewed session before admission.
+5. Let the hosted runner proceed without depending on this workstation. Observe receipts/checkpoints; on completion or failure, independently verify pod deletion, storage cleanup, posted billing and ledger reconciliation. Do not silently replace a failed/expired pod.
+
+No replacement rental, new provider credential configuration, live payments, public beta or automatic provisioning is authorized by this document. Real plan mode and its streaming integration still require the next approved GPU test; the mock rehearsal is not a GPU measurement.
