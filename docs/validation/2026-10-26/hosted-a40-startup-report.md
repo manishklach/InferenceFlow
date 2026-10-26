@@ -1,6 +1,6 @@
 # Hosted A40 attempt: stopped before inference
 
-October 26, 2026. **NO-GO for another rental until the provider-readback fix passes CI. No performance or savings result was produced.**
+October 26, 2026. **No performance or savings result was produced. The provider-readback fix passed CI; any new rental still requires fresh readiness checks and approval.**
 
 The owner approved exactly one A40 48 GB, Secure Cloud CA-MTL-1, at $0.59/hour GPU plus displayed $0.011/hour temporary 80 GB disk. The conservative guard was $0.61/hour with a $1 allocation inside the original $10 budget. No replacement was created.
 
@@ -19,7 +19,7 @@ The REST v2 read returns `globalNetworking: {"enabled": false}`. The hosted veri
 
 The fix accepts an explicit boolean false or an object with `enabled` exactly false, and rejects enabled, missing and malformed values. A regression test covers the actual provider readback and rejects ambiguous values. Another fix retains pre-session driver/error diagnostics inside the existing owner-encrypted final export; previously those files sat outside the exported experiment directory. Connection credentials remain excluded.
 
-Nine focused unittest checks passed locally, including both regressions; lint passed. Local pytest could not initialize its automatic PostgreSQL fixture because the configured local test database was unavailable. Full PostgreSQL-backed CI is required before declaring the fix ready.
+Nine focused unittest checks passed locally, including both regressions; lint and application type checks passed. Local pytest could not initialize its automatic PostgreSQL fixture because the configured local test database was unavailable. GitHub's PostgreSQL-backed [CI run 40384144967](https://github.com/manishklach/InferenceFlow/actions/runs/40384144967) subsequently passed **241 tests, one GPU skipped, 31 scheduler-v2 regressions**, lint, type checks, deterministic simulation and the dashboard production build. The separate pull-request CI also passed.
 
 ## Next gate
 
