@@ -12,6 +12,7 @@ import httpx
 from scripts.experiment_plan import Stage, run_plan
 from scripts.experiment_telemetry import PodReader, Collector, events
 from scripts.hosted_experiment import child_environment, validate_session, verify_pod
+from scripts.github_real_host import experiment_evidence
 
 
 class PlanTests(unittest.TestCase):
@@ -91,6 +92,17 @@ class ProviderReadTests(unittest.TestCase):
 
 
 class SessionTests(unittest.TestCase):
+    def test_pre_session_failure_diagnostics_are_preserved_without_connection(self):
+        with TemporaryDirectory() as folder:
+            runtime = Path(folder)
+            (runtime / "experiment-error.json").write_text('{"error_type":"RuntimeError"}')
+            (runtime / "experiment-driver.log").write_text("Hosted experiment failed")
+            (runtime / "runner-connection.json").write_text("private connection")
+            files = experiment_evidence(runtime)
+            self.assertIn("diagnostics/experiment-error.json", files)
+            self.assertIn("diagnostics/experiment-driver.log", files)
+            self.assertNotIn("private connection", files.values())
+
     def session(self):
         return {"experiment_id": "ab"*16, "gpu_id": "NVIDIA H100 80GB HBM3", "data_center_id": "CA-MTL-1",
                 "disk_gb": 80, "all_in_hourly_usd": "4.01", "budget_usd": "6", "max_runtime_minutes": 45}
@@ -124,6 +136,17 @@ class SessionTests(unittest.TestCase):
                                      "METRICS_TOKEN": "metrics", "WORKER_BOOTSTRAP_TOKEN": "bootstrap"})
         self.assertNotIn("private", env.values())
         self.assertNotIn("WORKER_BOOTSTRAP_TOKEN", env)
+
+    def test_provider_networking_readback_requires_explicitly_disabled(self):
+        for value in (False, {"enabled": False}):
+            pod = self.pod()
+            pod["globalNetworking"] = value
+            self.assertGreater(verify_pod(pod, self.session(), "123-1"), 0)
+        for value in (True, {"enabled": True}, {}, None, "false", {"enabled": 0}):
+            pod = self.pod()
+            pod["globalNetworking"] = value
+            with self.assertRaises(RuntimeError):
+                verify_pod(pod, self.session(), "123-1")
 
 
 if __name__ == "__main__":

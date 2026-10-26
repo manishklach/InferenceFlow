@@ -35,13 +35,17 @@ def validate_session(session):
 
 def verify_pod(pod, session, identity):
     env = pod.get("env", {})
+    # Create accepts a boolean; REST v2 reads return an object even when disabled.
+    networking = pod.get("globalNetworking")
+    networking_disabled = networking is False or (
+        isinstance(networking, dict) and networking.get("enabled") is False)
     if (pod.get("name") != "inferenceflow-experiment-"+session["experiment_id"]
             or env.get("IF_EXPERIMENT_ID") != session["experiment_id"]
             or env.get("IF_CONTROL_RUN_ID") != identity or env.get("IF_OWNER") != "inferenceflow"
             or env.get("IF_CREATED_BY") != "explicit-operator-approval"
             or pod.get("cloud") != "SECURE" or pod.get("dataCenterId") != session["data_center_id"]
             or pod.get("gpu", {}).get("id") != session["gpu_id"] or pod.get("gpu", {}).get("count") != 1
-            or pod.get("disk") != 80 or pod.get("ports") or pod.get("mounts") or pod.get("globalNetworking")):
+            or pod.get("disk") != 80 or pod.get("ports") or pod.get("mounts") or not networking_disabled):
         raise RuntimeError("Worker pod does not match this approved session")
     cost = Decimal(str(pod.get("cost")))
     if not cost.is_finite() or cost < 0 or cost > Decimal(str(session["all_in_hourly_usd"])):
