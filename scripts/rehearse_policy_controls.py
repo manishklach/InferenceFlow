@@ -8,7 +8,8 @@ import httpx
 
 from packages.python_sdk import InferenceFlowClient
 from scripts import github_staging_host as host
-from scripts.experiment_policy import switch
+from scripts.experiment_commands import Mailbox
+from datetime import datetime, timedelta, timezone
 from scripts.gpu_experiment import workload
 
 
@@ -33,8 +34,10 @@ def main():
         seeded = json.loads(host.docker("exec", "-T", "-e", "HOSTED_DISPOSABLE_MOCK=true", "api",
             "python", "-m", "scripts.hosted_mock_pipeline", "seed", "--run-id", identity).stdout)
         with InferenceFlowClient(seeded["key"], origin) as client:
+            mailbox = Mailbox(host.RUNTIME, origin, identity, clock=lambda: time.monotonic()*100)
             for index, policy in enumerate(("sequential", "baseline", "adaptive", "baseline")):
-                switch(policy, host.RUNTIME, origin)
+                mailbox.tick(fetch=lambda: {"run_id": identity, "sequence": index+1, "policy": policy,
+                    "expires_at": (datetime.now(timezone.utc)+timedelta(minutes=5)).isoformat()})
                 # Keep the original worker process alive across API/scheduler restarts.
                 for _ in range(45):
                     with httpx.Client(base_url=origin, timeout=10, trust_env=False) as operator:

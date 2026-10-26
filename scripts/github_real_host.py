@@ -15,6 +15,7 @@ import httpx
 
 from scripts import github_staging_host as host
 from scripts.experiment_connection import seal_connection
+from scripts.experiment_commands import Mailbox
 from scripts.sealed_evidence import seal
 from scripts.staging_supervisor import monitor, private_write
 
@@ -138,8 +139,13 @@ def serve():
             private_write(RUNTIME / "real-ready.json", json.dumps({"endpoint": url, "execution_mode": "vllm",
                           "expires_at": expires.isoformat(), "gpu_created": False, "worker_ready": False,
                           "owner_login_verified": False}))
+            def audit_experiment():
+                return json.loads(host.docker("exec", "-T", "api", "python", "-m",
+                    "scripts.hosted_real_audit", "--identity", identity).stdout)
+
+            mailbox = Mailbox(RUNTIME, url, identity, audit=audit_experiment)
             monitor(COMPOSE, RUNTIME, deadline, {"postgres", "api", "scheduler"}, RUNTIME / "STOP",
-                    stopped=lambda: stopping or tunnel.poll() is not None)
+                    stopped=lambda: stopping or tunnel.poll() is not None, tick=mailbox.tick)
     except Exception as exc:
         private_write(RUNTIME / "host-error.json", json.dumps({"error_type": type(exc).__name__}))
         raise SystemExit("Real control host failed; no credentials printed") from None
@@ -148,8 +154,10 @@ def serve():
             try:
                 dump = host.docker("exec", "-T", "postgres", "pg_dump", "-U", "if_hosted_staging",
                                    "--no-owner", "--no-acl", "if_hosted_staging").stdout
+                reports = {path.name: json.loads(path.read_text()) for path in RUNTIME.glob("stage-audit-*.json")}
                 private_write(RUNTIME / "final-evidence.enc.json", seal(json.dumps({"kind": "real-control-db",
-                              "database_sql": dump, "run_id": os.environ["GITHUB_RUN_ID"]}).encode(), public_pem).decode())
+                              "database_sql": dump, "stage_audits": reports,
+                              "run_id": os.environ["GITHUB_RUN_ID"]}).encode(), public_pem).decode())
             except Exception as exc:
                 private_write(RUNTIME / "export-error.json", json.dumps({"error_type": type(exc).__name__}))
         if tunnel is not None and tunnel.poll() is None:

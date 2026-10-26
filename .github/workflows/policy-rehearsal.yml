@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - scripts/experiment_policy.py
+      - scripts/experiment_commands.py
       - scripts/rehearse_policy_controls.py
       - .github/workflows/policy-rehearsal.yml
 permissions:
@@ -20,7 +21,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.lock
-      - run: python -m unittest tests.test_experiment_policy -q
+      - run: python -m unittest tests.test_experiment_policy tests.test_experiment_commands -q
       - run: python -m scripts.rehearse_policy_controls
       - name: Always clean the exact disposable Compose project
         if: always()

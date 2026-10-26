@@ -46,8 +46,11 @@ def running_services(command, diagnostics, *, attempts=3, timeout=10, sleep=time
 
 
 def monitor(command, diagnostics, deadline, required, stop_file, *, clock=time.monotonic,
-            sleep=time.sleep, read=running_services, stopped=lambda: False):
+            sleep=time.sleep, read=running_services, stopped=lambda: False, tick=lambda: None):
     while clock() < deadline and not stop_file.exists() and not stopped():
+        tick()
+        if clock() >= deadline or stop_file.exists() or stopped():
+            break
         def permitted():
             return clock() < deadline and not stop_file.exists() and not stopped()
         services = read(command, diagnostics, permitted=permitted)
