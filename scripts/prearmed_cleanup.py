@@ -29,8 +29,9 @@ def utc(value):
 def validate_plan(plan):
     required = {"pod_name", "experiment_id", "all_in_hourly_usd", "fixed_cost_usd",
                 "budget_usd", "cleanup_approved", "all_in_cost_confirmed"}
-    if set(plan) != required:
+    if set(plan) not in (required, required | {"max_runtime_minutes"}):
         raise ValueError("Exact cleanup plan schema required; no credentials allowed")
+    minutes = runtime_minutes(plan)
     if plan["cleanup_approved"] is not True or plan["all_in_cost_confirmed"] is not True:
         raise ValueError("Reviewed cleanup authority and full costs required")
     if not re.fullmatch(r"[a-f0-9]{32}", plan["experiment_id"]):
@@ -43,9 +44,17 @@ def validate_plan(plan):
         raise ValueError("Finite costs required")
     if rate <= 0 or fixed < 0 or not 0 < budget <= 10 or fixed >= budget * Decimal(".7"):
         raise ValueError("Costs must allow reserve within budget <=10")
-    if fixed + 2 * rate >= budget * Decimal(".7"):
-        raise ValueError("Two-hour all-in estimate must stay below 70% of budget")
+    reserved_hours = Decimal((minutes+59)//60)
+    if fixed + reserved_hours * rate >= budget * Decimal(".7"):
+        raise ValueError("Rounded cutoff all-in estimate must stay below 70% of budget")
     return rate, fixed, budget
+
+
+def runtime_minutes(plan):
+    value = plan.get("max_runtime_minutes", 110)
+    if type(value) is not int or not 15 <= value <= 110:
+        raise ValueError("Integer runtime cutoff between 15 and 110 minutes required")
+    return value
 
 
 def inventory(client):
@@ -108,7 +117,7 @@ def state(plan, armed_at, stamp, receipt=None):
     return {"estimated_cost_upper_usd": str(estimate),
             "stop_admissions_required": estimate >= budget * Decimal(".7"),
             "terminate": estimate >= budget * Decimal(".8")
-            or stamp >= armed_at + timedelta(minutes=110)}
+            or stamp >= armed_at + timedelta(minutes=runtime_minutes(plan))}
 
 
 def cleanup(client, receipt):
@@ -143,7 +152,7 @@ def run(client, plan, armed_at, receipt_path, clock=None, sleep=time.sleep, stop
         json.dumps({"armed_at": armed_at.isoformat()}), encoding="utf-8")
     emit(armed=True, delete_permission_verified=False,
          creation_window_ends=(armed_at + timedelta(minutes=10)).isoformat(),
-         terminate_by=(armed_at + timedelta(minutes=110)).isoformat())
+         terminate_by=(armed_at + timedelta(minutes=runtime_minutes(plan))).isoformat())
     receipt = None
     while clock() < armed_at + timedelta(minutes=119):
         stamp = clock()
