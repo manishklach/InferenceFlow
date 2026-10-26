@@ -17,6 +17,7 @@ from scripts.experiment_telemetry import Collector, PodReader
 from scripts.prearmed_cleanup import utc, validate_plan
 from scripts.second_gpu_experiment import prepare, coverage, parse_time
 from scripts.staging_supervisor import private_write
+from scripts.experiment_http import get, failure_receipt
 
 
 def validate_session(session):
@@ -69,8 +70,7 @@ def verify_pod(pod, session, identity):
 def watchdog_active(run_id, attempt):
     # Anonymous, fixed GitHub destination; provider/API credentials are never forwarded.
     with httpx.Client(timeout=5, trust_env=False, follow_redirects=False) as public:
-        response = public.get("https://api.github.com/repos/manishklach/InferenceFlow/actions/runs/"+run_id)
-        response.raise_for_status()
+        response = get(public, "https://api.github.com/repos/manishklach/InferenceFlow/actions/runs/"+run_id)
         data = response.json()
     if (str(data.get("id")) != run_id or data.get("head_branch") != "main"
             or str(data.get("run_attempt")) != attempt
@@ -116,8 +116,7 @@ def execute(identity, session, connection, directory):
                             collector.thread.start()  # Capture startup, not only post-readiness samples.
                 if pod and time.time()-utc(pod["createdAt"]).timestamp() >= 900:
                     raise RuntimeError("Cold start exceeded fifteen rented minutes")
-                r = client.get("/internal/scheduling/report", headers={"Authorization": "Bearer "+connection["METRICS_TOKEN"]})
-                r.raise_for_status()
+                r = get(client, "/internal/scheduling/report", headers={"Authorization": "Bearer "+connection["METRICS_TOKEN"]})
                 workers = [w for w in r.json()["workers"] if w.get("telemetry_fresh")]
                 if len(workers) > 1:
                     raise RuntimeError("Multiple fresh workers; no admissions allowed")
@@ -239,7 +238,7 @@ def main():
             json.loads(os.environ["HOSTED_EXPERIMENT_SESSION"]),
             json.loads((host.RUNTIME / "runner-connection.json").read_text()), host.RUNTIME / "experiment")
     except BaseException as error:
-        private_write(host.RUNTIME / "experiment-error.json", json.dumps({"error_type": type(error).__name__}))
+        private_write(host.RUNTIME / "experiment-error.json", json.dumps(failure_receipt(error)))
         raise SystemExit("Hosted experiment failed; inspect encrypted evidence") from None
 
 

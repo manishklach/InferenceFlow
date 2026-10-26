@@ -1,5 +1,7 @@
 # InferenceFlow
 
+Newest attempt: [hosted A40 retry report](docs/validation/2026-10-26/hosted-a40-retry-report.md). Startup stopped on an HTTP read error before inference; the independent watchdog detected control-job completion and terminated the pod. Zero requests were admitted. Bounded read retries and private HTTP diagnostics are under validation; no further GPU has been rented.
+
 Latest attempt: [hosted A40 startup report](docs/validation/2026-10-26/hosted-a40-startup-report.md). The pod was terminated before inference after a provider networking-response mismatch; zero requests were admitted. The regression fix passed 241 tests (one GPU skipped), 31 scheduler regressions and the production build. No new performance or savings claim is supported.
 
 Latest real GPU result: [partial H100 report](docs/validation/2026-10-26/h100-report.md): **110/110 requests succeeded**, 110 unique usage/capture records, zero wallet drift, and **$1.36398 posted GPU/disk cost**. The pod is confirmed gone. Concurrent/adaptive comparison and interruption stages were not run; no savings or production-readiness claim is supported.
