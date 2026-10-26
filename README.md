@@ -4,7 +4,7 @@ Newest validation: [third-run A40 smoke report](docs/validation/2026-10-25/third
 
 [Hosted policy controls and no-GPU rehearsal](docs/experiments/hosted-policy-controls.md) address that experiment-control gap. The [H100 follow-up proposal](docs/experiments/h100-next-proposal.md) remains preparation only; it requires a fresh final quote, host/cleanup verification and explicit rental approval.
 
-The replacement real-mode CPU host has now verified policy delivery, visible read-only audit receipts and staging OIDC without a GPU. The [exact H100 NVL approval request](docs/experiments/h100-nvl-approval.md) records the current $3.201/hour displayed quote and 45-minute cleanup plan. **Rental remains unapproved; no H100 pod exists from this work.**
+The replacement real-mode CPU host has verified policy delivery, visible read-only audit receipts and staging OIDC without a GPU. After NVL stock disappeared, the operator approved the [one-H100 SXM substitution](docs/experiments/h100-sxm-substitution.md), displayed $4.001/hour with a 45-minute independent cutoff. Creation still requires the fresh armed watchdog; no H100 results are claimed.
 
 Latest GPU result: [second real inference report](docs/validation/2026-10-25/second-gpu-report.md). **410/410 real Qwen3-4B requests completed on one L4**, including controlled worker interruption and recovery, with 410 unique usage/capture records and zero ledger drift. Baseline concurrent completed 100 requests in 68.944 seconds; adaptive took 80.643 seconds. **No adaptive savings demonstrated; NO-GO for public beta or savings claims.** A local staging-supervisor failure prevented admission of the 1,000-request stage. The pod is terminated and no persistent storage was created.
 
