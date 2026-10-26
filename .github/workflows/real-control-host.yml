@@ -1,6 +1,15 @@
 name: Private real-GPU control host (no provisioning)
 on:
   workflow_dispatch:
+    inputs:
+      execute_plan:
+        description: 'Run the reviewed staged workload after manual GPU approval/provisioning (never creates a pod)'
+        type: boolean
+        default: false
+      session_json:
+        description: 'Reviewed non-secret experiment marker, GPU, placement and budget configuration'
+        type: string
+        default: '{}'
 permissions:
   contents: read
 concurrency:
@@ -32,6 +41,9 @@ jobs:
         env:
           # Existing job-scoped contents:read token; never passed to containers or handoff.
           HOST_COMMAND_GITHUB_TOKEN: ${{ github.token }}
+          HOSTED_EXPERIMENT_PLAN: ${{ inputs.execute_plan }}
+          HOSTED_EXPERIMENT_SESSION: ${{ inputs.session_json }}
+          RUNPOD_EXPERIMENT_READ_KEY: ${{ inputs.execute_plan && secrets.RUNPOD_EXPERIMENT_READ_KEY || '' }}
           AUTH0_STAGING_CLIENT_SECRET: ${{ secrets.AUTH0_STAGING_CLIENT_SECRET }}
           AUTH0_STAGING_CLIENT_ID: ${{ vars.AUTH0_STAGING_CLIENT_ID }}
           AUTH0_STAGING_ISSUER: ${{ vars.AUTH0_STAGING_ISSUER }}

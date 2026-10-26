@@ -16,6 +16,7 @@ import httpx
 from scripts import github_staging_host as host
 from scripts.experiment_connection import seal_connection
 from scripts.experiment_commands import Mailbox, receipt_for_log
+from scripts.experiment_connection import connection_payload
 from scripts.sealed_evidence import seal
 from scripts.staging_supervisor import monitor, private_write
 
@@ -66,7 +67,19 @@ def serve():
     expires = datetime.now(timezone.utc)+timedelta(minutes=150)
     stopping = False
     tunnel = None
+    experiment = None
+    experiment_log = None
     database_started = False
+    automatic_plan = os.environ.get("HOSTED_EXPERIMENT_PLAN") == "true"
+    if automatic_plan:
+        from scripts.hosted_experiment import validate_session
+        from scripts.experiment_telemetry import PodReader
+        validate_session(json.loads(os.environ["HOSTED_EXPERIMENT_SESSION"]))
+        reader = PodReader(os.environ.get("RUNPOD_EXPERIMENT_READ_KEY", ""))
+        try:
+            reader.authenticate()
+        finally:
+            reader.close()
 
     def signal_stop(signum, frame):
         nonlocal stopping
@@ -144,19 +157,44 @@ def serve():
                     "scripts.hosted_real_audit", "--identity", identity).stdout)
 
             mailbox = Mailbox(RUNTIME, url, identity, audit=audit_experiment)
+            if automatic_plan:
+                private_write(RUNTIME / "runner-connection.json", json.dumps(connection_payload(url,
+                    values["WORKER_BOOTSTRAP_TOKEN"], values["METRICS_TOKEN"], seeded["key"])))
+                experiment_log = (RUNTIME / "experiment-driver.log").open("w", encoding="utf-8")
+                experiment = subprocess.Popen([sys.executable, "-m", "scripts.hosted_experiment", "--execute"],
+                    stdout=experiment_log, stderr=subprocess.STDOUT, start_new_session=True)
             monitor(COMPOSE, RUNTIME, deadline, {"postgres", "api", "scheduler"}, RUNTIME / "STOP",
-                    stopped=lambda: stopping or tunnel.poll() is not None, tick=mailbox.tick)
+                    stopped=lambda: stopping or tunnel.poll() is not None or
+                        (experiment is not None and experiment.poll() is not None),
+                    tick=(lambda: None) if automatic_plan else mailbox.tick)
+            if experiment is not None and experiment.poll() not in (None, 0):
+                raise RuntimeError("Hosted stage driver failed")
     except Exception as exc:
         private_write(RUNTIME / "host-error.json", json.dumps({"error_type": type(exc).__name__}))
         raise SystemExit("Real control host failed; no credentials printed") from None
     finally:
+        if experiment is not None:
+            try:
+                os.killpg(experiment.pid, signal.SIGTERM)
+                experiment.wait(timeout=15)
+            except ProcessLookupError:
+                pass
+            except subprocess.TimeoutExpired:
+                os.killpg(experiment.pid, signal.SIGKILL)
+                experiment.wait(timeout=5)
+        if experiment_log is not None:
+            experiment_log.close()
         if database_started:
             try:
                 dump = host.docker("exec", "-T", "postgres", "pg_dump", "-U", "if_hosted_staging",
                                    "--no-owner", "--no-acl", "if_hosted_staging").stdout
                 reports = {path.name: json.loads(path.read_text()) for path in RUNTIME.glob("stage-audit-*.json")}
+                experiment_files = {}
+                for path in (RUNTIME / "experiment").rglob("*"):
+                    if path.is_file() and not path.is_symlink() and path.suffix in {".json", ".jsonl", ".log"}:
+                        experiment_files[str(path.relative_to(RUNTIME / "experiment"))] = path.read_text(encoding="utf-8")
                 private_write(RUNTIME / "final-evidence.enc.json", seal(json.dumps({"kind": "real-control-db",
-                              "database_sql": dump, "stage_audits": reports,
+                              "database_sql": dump, "stage_audits": reports, "experiment_files": experiment_files,
                               "run_id": os.environ["GITHUB_RUN_ID"]}).encode(), public_pem).decode())
             except Exception as exc:
                 private_write(RUNTIME / "export-error.json", json.dumps({"error_type": type(exc).__name__}))
@@ -215,6 +253,17 @@ def main():
     else:
         last_receipt = None
         for _ in range(150*30):
+            checkpoint = RUNTIME / "experiment/plan/checkpoint.json"
+            if checkpoint.exists():
+                try:
+                    state = json.loads(checkpoint.read_text())
+                    summary = {"status": state["status"], "completed_stages": len(state["stages"]),
+                               "in_progress": state["in_progress"]}
+                    if summary != last_receipt:
+                        print(json.dumps({"hosted_experiment": summary}), flush=True)
+                        last_receipt = summary
+                except json.JSONDecodeError:
+                    pass
             receipt = receipt_for_log(RUNTIME)
             if receipt and receipt != last_receipt:
                 print(json.dumps({"host_policy_command": receipt}), flush=True)

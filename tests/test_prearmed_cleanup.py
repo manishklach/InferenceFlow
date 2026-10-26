@@ -43,6 +43,36 @@ def test_plan_disallows_extra_fields_including_credentials():
         validate_plan(candidate)
 
 
+def test_control_run_pair_must_be_exact_positive_integers():
+    validate_plan({**plan(), "control_run_id": 123, "control_run_attempt": 1})
+    for extra in ({"control_run_id": 123}, {"control_run_id": True, "control_run_attempt": 1},
+                  {"control_run_id": 123, "control_run_attempt": "1"}):
+        with pytest.raises(ValueError):
+            validate_plan({**plan(), **extra})
+
+
+def test_control_completion_terminates_only_the_bound_pod(tmp_path):
+    deleted = False
+    reads = 0
+
+    def respond(request):
+        nonlocal deleted, reads
+        if request.url.path.endswith("/pods"):
+            reads += 1
+            return httpx.Response(200, json={"pods": [] if reads == 1 else [pod()],
+                "pagination": {"hasNextPage": False}})
+        if request.method == "DELETE":
+            deleted = True
+            return httpx.Response(204)
+        return httpx.Response(404) if deleted else httpx.Response(200, json=pod())
+
+    candidate = {**plan(), "control_run_id": 123, "control_run_attempt": 1}
+    with httpx.Client(base_url="https://unit.invalid", transport=httpx.MockTransport(respond)) as client:
+        run(client, candidate, START, tmp_path/"receipt.json", clock=lambda: START,
+            sleep=lambda _: None, control_check=lambda _: True)
+    assert deleted
+
+
 @pytest.mark.parametrize("cost,exceeds", [(0.6, False), (0, False), (0.7, True), (None, True), ("NaN", True)])
 def test_provider_price_overrun_or_invalid_price_requires_cleanup(cost, exceeds):
     assert cost_exceeds_quote({"cost": cost}, plan()) is exceeds

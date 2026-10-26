@@ -29,8 +29,14 @@ def utc(value):
 def validate_plan(plan):
     required = {"pod_name", "experiment_id", "all_in_hourly_usd", "fixed_cost_usd",
                 "budget_usd", "cleanup_approved", "all_in_cost_confirmed"}
-    if set(plan) not in (required, required | {"max_runtime_minutes"}):
+    optional = {"max_runtime_minutes", "control_run_id", "control_run_attempt"}
+    if not required <= set(plan) or set(plan)-required-optional:
         raise ValueError("Exact cleanup plan schema required; no credentials allowed")
+    if ("control_run_id" in plan) != ("control_run_attempt" in plan):
+        raise ValueError("Both control run and attempt required")
+    if "control_run_id" in plan and any(type(plan[k]) is not int or plan[k] < 1
+                                        for k in ("control_run_id", "control_run_attempt")):
+        raise ValueError("Positive control run/attempt integers required")
     minutes = runtime_minutes(plan)
     if plan["cleanup_approved"] is not True or plan["all_in_cost_confirmed"] is not True:
         raise ValueError("Reviewed cleanup authority and full costs required")
@@ -141,7 +147,19 @@ def emit(**values):
     print(json.dumps({"observed_at": datetime.now(timezone.utc).isoformat(), **values}), flush=True)
 
 
-def run(client, plan, armed_at, receipt_path, clock=None, sleep=time.sleep, stopping=lambda: False):
+def control_finished(plan):
+    # Separate anonymous client: NEVER send the RunPod cleanup key to GitHub.
+    with httpx.Client(timeout=5, trust_env=False, follow_redirects=False) as public:
+        response = public.get("https://api.github.com/repos/manishklach/InferenceFlow/actions/runs/"+str(plan["control_run_id"]))
+        response.raise_for_status()
+        data = response.json()
+    if data.get("id") != plan["control_run_id"] or data.get("run_attempt") != plan["control_run_attempt"]:
+        raise ValueError("Control run identity mismatch")
+    return data.get("status") == "completed"
+
+
+def run(client, plan, armed_at, receipt_path, clock=None, sleep=time.sleep, stopping=lambda: False,
+        control_check=control_finished):
     clock = clock or (lambda: datetime.now(timezone.utc))
     validate_plan(plan)
     # Successful authentication before reporting armed. No read implies DELETE proof.
@@ -154,15 +172,24 @@ def run(client, plan, armed_at, receipt_path, clock=None, sleep=time.sleep, stop
          creation_window_ends=(armed_at + timedelta(minutes=10)).isoformat(),
          terminate_by=(armed_at + timedelta(minutes=runtime_minutes(plan))).isoformat())
     receipt = None
+    next_control_read = armed_at
+    finished = False
     while clock() < armed_at + timedelta(minutes=runtime_minutes(plan)+9):
         stamp = clock()
         try:
+            if "control_run_id" in plan and stamp >= next_control_read:
+                next_control_read = stamp+timedelta(seconds=60)
+                try:
+                    finished = control_check(plan)
+                except (httpx.HTTPError, ValueError):
+                    emit(control_status_unknown=True)
+                    # API outages cannot extend the independent hard deadline.
             if receipt is None:
                 receipt = bind_pod(inventory(client), plan, armed_at)
                 if receipt:
                     receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
                     emit(bound=True)
-                elif stopping() or stamp >= armed_at + timedelta(minutes=10):
+                elif stopping() or finished or stamp >= armed_at + timedelta(minutes=10):
                     emit(armed=False, no_pod_found=True)
                     return
             if receipt:
@@ -175,9 +202,10 @@ def run(client, plan, armed_at, receipt_path, clock=None, sleep=time.sleep, stop
                 verify_bound(observed, receipt)
                 current = state(plan, armed_at, stamp, receipt)
                 current["provider_cost_exceeds_quote"] = cost_exceeds_quote(observed, plan)
+                current["control_run_finished"] = finished
                 emit(**current)
                 if (current["terminate"] or stopping() or current["stop_admissions_required"]
-                        or current["provider_cost_exceeds_quote"]):
+                        or current["provider_cost_exceeds_quote"] or finished):
                     # There is no remote admission-pause endpoint. Delete instead
                     # of claiming a log flag prevents further customer execution.
                     if cleanup(client, receipt):
