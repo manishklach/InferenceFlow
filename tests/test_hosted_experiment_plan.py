@@ -5,7 +5,7 @@ import os
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 
 import httpx
 
@@ -13,6 +13,8 @@ from scripts.experiment_plan import Stage, run_plan
 from scripts.experiment_telemetry import PodReader, Collector, events
 from scripts.hosted_experiment import child_environment, validate_session, verify_pod
 from scripts.github_real_host import experiment_evidence
+from scripts.experiment_http import get, failure_receipt
+from scripts.hosted_experiment import execute
 
 
 class PlanTests(unittest.TestCase):
@@ -59,6 +61,19 @@ class PlanTests(unittest.TestCase):
 
 
 class ProviderReadTests(unittest.TestCase):
+    def test_stream_auth_failure_is_retained_without_key_or_response_body(self):
+        reader = PodReader('secret-read-key', httpx.MockTransport(lambda _: httpx.Response(403, text='private body')))
+        with TemporaryDirectory() as folder:
+            collector = Collector(reader, 'owned', Path(folder))
+            with patch.object(collector.stop, 'wait', side_effect=lambda _: collector.stop.set()):
+                collector.run()
+            receipt = json.loads((Path(folder)/'collector-error.json').read_text())
+            self.assertEqual(receipt['http_status'], 403)
+            self.assertEqual(receipt['http_path'], '/v2/pods/owned/logs')
+            self.assertNotIn('secret-read-key', json.dumps(receipt))
+            self.assertNotIn('private body', json.dumps(receipt))
+        reader.close()
+
     def test_authenticated_provider_surface_is_get_only(self):
         requests = []
 
@@ -92,6 +107,57 @@ class ProviderReadTests(unittest.TestCase):
 
 
 class SessionTests(unittest.TestCase):
+    def test_temporary_read_errors_are_bounded_and_diagnostics_exclude_secrets(self):
+        for statuses, expected in (([503, 200], 2), ([429, 502, 504], 3), ([401], 1)):
+            seen = []
+            def respond(request):
+                self.assertEqual(request.method, "GET")
+                status = statuses[len(seen)]
+                seen.append(request)
+                return httpx.Response(status, json={"error": "private response"})
+            with httpx.Client(transport=httpx.MockTransport(respond)) as client, patch('scripts.experiment_http.time.sleep'):
+                if statuses[-1] == 200:
+                    get(client, 'https://example.invalid/report?secret=hidden')
+                else:
+                    with self.assertRaises(httpx.HTTPStatusError) as caught:
+                        get(client, 'https://example.invalid/report?secret=hidden', headers={'Authorization':'Bearer hidden'})
+                    receipt = failure_receipt(caught.exception)
+                    self.assertEqual(receipt['http_status'], statuses[-1])
+                    self.assertNotIn('hidden', json.dumps(receipt))
+                    self.assertNotIn('private response', json.dumps(receipt))
+            self.assertEqual(len(seen), expected)
+
+    def test_real_driver_startup_recovers_from_temporary_control_read_failure(self):
+        pod = self.pod()
+        pod['globalNetworking'] = {'enabled': False}
+        calls = []
+        def respond(request):
+            self.assertEqual(request.url.path, '/internal/scheduling/report')
+            calls.append(request)
+            if len(calls) == 1:
+                return httpx.Response(503)
+            return httpx.Response(200, json={'workers': [{'telemetry_fresh': True, 'mode': 'vllm',
+                'hard_limit': 4, 'provider_instance_id': 'owned'}]})
+        client = httpx.Client(base_url='https://example.invalid', transport=httpx.MockTransport(respond))
+        cleanup_client = httpx.Client(base_url='https://example.invalid', transport=httpx.MockTransport(respond))
+        reader, collector = Mock(), Mock()
+        reader.find.return_value = pod
+        collector.snapshot.return_value = []
+        with TemporaryDirectory() as folder, patch.dict(os.environ, {'RUNPOD_EXPERIMENT_READ_KEY':'read-only'}), \
+             patch('scripts.hosted_experiment.PodReader', return_value=reader), \
+             patch('scripts.hosted_experiment.Collector', return_value=collector), \
+             patch('scripts.hosted_experiment.watchdog_active'), \
+             patch('scripts.hosted_experiment.httpx.Client', side_effect=[client, cleanup_client]), \
+             patch('scripts.experiment_http.time.sleep'), patch('scripts.hosted_experiment.prepare'), \
+             patch('scripts.hosted_experiment.run_plan', return_value={'status':'completed'}) as plan:
+            result = execute('123-1', self.session(), {'CONTROL_PLANE_URL':'https://example.invalid',
+                'METRICS_TOKEN':'metrics','INFERENCEFLOW_API_KEY':'synthetic'}, Path(folder)/'experiment')
+            self.assertEqual(result['status'], 'completed')
+            self.assertTrue(plan.called)
+            self.assertEqual(len(calls), 2)
+            collector.thread.start.assert_called_once()
+            reader.close.assert_called_once()
+
     def test_pre_session_failure_diagnostics_are_preserved_without_connection(self):
         with TemporaryDirectory() as folder:
             runtime = Path(folder)

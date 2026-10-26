@@ -10,6 +10,8 @@ import time
 import httpx
 from scripts.second_gpu_experiment import coverage
 from scripts.prearmed_cleanup import inventory
+from scripts.experiment_http import get, retry_read, failure_receipt
+from scripts.staging_supervisor import private_write
 
 BASE = "https://api.runpod.io/v2"
 
@@ -22,22 +24,21 @@ class PodReader:
             timeout=httpx.Timeout(10, read=8), trust_env=False, follow_redirects=False, transport=transport)
 
     def authenticate(self):
-        r = self.client.get("/pods", params={"limit": 1})
-        r.raise_for_status()
+        r = get(self.client, "/pods", params={"limit": 1})
         if not isinstance(r.json().get("pods"), list):
             raise RuntimeError("Pod-read authentication failed")
 
     def pod(self, pod_id):
         if not re.fullmatch(r"[A-Za-z0-9_-]+", pod_id):
             raise ValueError("Invalid pod ID")
-        r = self.client.get("/pods/"+pod_id)
-        r.raise_for_status()
+        r = get(self.client, "/pods/"+pod_id)
         return r.json()
 
     def find(self, experiment_id):
         if not re.fullmatch(r"[a-f0-9]{32}", experiment_id):
             raise ValueError("Invalid experiment marker")
-        rows = [p for p in inventory(self.client) if p.get("name") == "inferenceflow-experiment-"+experiment_id]
+        rows = [p for p in retry_read(lambda: inventory(self.client))
+                if p.get("name") == "inferenceflow-experiment-"+experiment_id]
         if len(rows) > 1:
             raise RuntimeError("Ambiguous experiment pod identity")
         return rows[0] if rows else None
@@ -112,7 +113,8 @@ class Collector:
                             self.accept(event_id, record, output)
                             if self.stop.is_set():
                                 break
-                except (httpx.HTTPError, ValueError, TypeError):
+                except (httpx.HTTPError, ValueError, TypeError) as error:
+                    private_write(self.directory / "collector-error.json", json.dumps(failure_receipt(error)))
                     self.stop.wait(2)  # Reconnect with the same cursor; no provider mutations.
 
     def snapshot(self):
