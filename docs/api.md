@@ -11,6 +11,7 @@ Interactive schemas: `/docs`; machine-readable `/openapi.json`. Requests/respons
 | GET | /v1/jobs/{id} | Status, counts, timing, usage and money |
 | GET | /v1/jobs/{id}/results | Ordered paginated partial results |
 | GET | /v1/jobs/{id}/results.jsonl | Authenticated download |
+| GET | /v1/jobs/{id}/receipts | Tenant-scoped, paginated terminal execution/settlement receipts |
 | POST | /v1/jobs/{id}/cancel | Cancel queued/leased, signal running cancellation |
 | GET | /v1/wallet | Available/reserved/total micro-USD |
 | GET | /v1/wallet/transactions | Immutable paginated ledger |

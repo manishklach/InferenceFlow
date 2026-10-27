@@ -354,6 +354,19 @@ def jsonl(request: Request, jid: str, t=Depends(customer), s=Depends(db)):
     )
 
 
+@app.get("/v1/jobs/{jid}/receipts")
+def receipts(request: Request, jid: str, cursor: int = Query(0, ge=0),
+             limit: int = Query(100, ge=1, le=100), t=Depends(customer), s=Depends(db)):
+    from packages.common.receipts import execution_receipt
+    j = svc.owned(s, t, jid)
+    rows = svc.works(s, jid)
+    if any(row.status not in svc.TERMINAL for row in rows):
+        raise svc.Problem(409, "receipts_require_terminal_job")
+    return result(request, {"job_id": jid,
+        "items": [execution_receipt(s, j, row) for row in rows[cursor:cursor+limit]],
+        "next_cursor": cursor+limit if cursor+limit < len(rows) else None})
+
+
 @app.post("/v1/jobs/{jid}/cancel")
 def cancel(request: Request, jid: str, t=Depends(customer), s=Depends(db)):
     return result(request, svc.cancel(s, svc.owned(s, t, jid)))

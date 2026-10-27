@@ -6,7 +6,7 @@ import time
 
 import httpx
 
-from packages.python_sdk import InferenceFlowClient
+from packages.python_sdk import InferenceFlowClient, verify_receipt
 from scripts import github_staging_host as host
 from scripts.experiment_commands import read_command
 from scripts.experiment_plan import run_plan, Stage
@@ -60,8 +60,14 @@ def main():
             def audit(stage, result):
                 host.docker("exec", "-T", "api", "python", "-m", "scripts.hosted_mock_pipeline", "audit",
                     "--job-id", result["job_id"], "--output", "/tmp/policy-audit.json")
+                receipts = client.get_receipts(result["job_id"])["items"]
+                if len(receipts) != 10 or any(not verify_receipt(envelope)
+                        or envelope["receipt"]["model"]["execution_mode"] != "mock"
+                        or not envelope["receipt"]["billing"]["request_settlement_reconciled"]
+                        for envelope in receipts):
+                    raise RuntimeError("Mock customer receipts failed validation")
                 report["stages"].append({"policy": stage.policy, "successful_requests": 10,
-                    "audit_passed": True, "worker_reconnected": True})
+                    "audit_passed": True, "worker_reconnected": True, "verified_customer_receipts": len(receipts)})
                 return {"passed": True}
 
             stages = tuple(Stage("mock-"+str(index), policy, 10, 120)

@@ -31,6 +31,15 @@ jobs:
       - run: python -m pip install -r requirements.lock
       - name: Check real-host configuration and credential encryption contracts
         run: python -m unittest tests.test_real_control_host tests.test_experiment_connection tests.test_sealed_evidence -q
+      - name: Check real-mode read routes before starting a paid experiment host
+        if: inputs.execute_plan
+        env:
+          RUNPOD_EXPERIMENT_READ_KEY: ${{ secrets.RUNPOD_EXPERIMENT_READ_KEY }}
+          # These are this project's already terminated pod and completed cleanup job.
+          # A 404 probes route/auth behavior; it does not prove live SSE ingestion.
+          EXPERIMENT_PROBE_ABSENT_POD_ID: k9phtgkzl01tgi
+          EXPERIMENT_PROBE_GITHUB_RUN_ID: '40386640164'
+        run: python -m scripts.experiment_read_preflight
       - name: Verify pinned tunnel binary
         run: |
           mkdir -p .runtime

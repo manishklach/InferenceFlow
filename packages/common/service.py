@@ -8,6 +8,7 @@ from packages.common.config import settings
 from packages.common.tokenizer import count_prompt, cost
 from packages.common.db import ModelVersion, ModelPrice, User, Membership, ExecutionAttempt
 from sqlalchemy.dialects.postgresql import insert
+from packages.common.receipt_format import canonical_sha256, text_sha256
 
 TERMINAL = {"succeeded", "failed", "canceled", "expired"}
 
@@ -175,6 +176,8 @@ def submit(s, tenant, body, idem, readiness=None, received_at=None):
             ordinal=i,
             custom_id=data["custom_id"],
             payload=encrypt(data),
+            prompt_sha256=canonical_sha256(data["messages"]),
+            payload_sha256=canonical_sha256(data),
             model_revision=cfg.model_revision,
             price_id=price_id,
             prompt_tokens=n,
@@ -346,6 +349,7 @@ def finalize(s, worker, rid, body):
         finish_attempt(s, r, "usage_mismatch")
         r.error = "usage_mismatch"
         r.output = encrypt(body.output_text)
+        r.output_sha256 = text_sha256(body.output_text) if body.output_text is not None else None
         s.add(Audit(kind="billing_pending", reference=r.id))
         return
     charge = cost(body.input_tokens, r.input_rate) + cost(body.output_tokens, r.output_rate)
@@ -353,6 +357,7 @@ def finalize(s, worker, rid, body):
     settle(s, r, charge)
     r.status = "succeeded"
     r.output = encrypt(body.output_text)
+    r.output_sha256 = text_sha256(body.output_text)
     r.input_tokens = body.input_tokens
     r.output_tokens = body.output_tokens
     r.finish_reason = body.finish_reason

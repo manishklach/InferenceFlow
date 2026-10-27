@@ -181,8 +181,14 @@ def execute(identity, session, connection, directory):
             return json.loads((output / "summary.json").read_text())
 
         def audit(stage, result):
+            from scripts.experiment_receipts import collect
             report = json.loads(host.docker("exec", "-T", "api", "python", "-m",
                 "scripts.hosted_real_audit", "--identity", identity).stdout)
+            if report.get("passed"):
+                count = collect(connection, directory / stage.name)
+                if count != stage.count:
+                    raise RuntimeError("Stage receipt count mismatch")
+                report["verified_customer_receipts"] = count
             private_write(directory / (stage.name+"-audit.json"), json.dumps(report))
             return report
 

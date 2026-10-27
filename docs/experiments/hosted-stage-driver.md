@@ -1,5 +1,8 @@
 # Hosted staged GPU experiment execution
 
+Current gate: the real host now checks authenticated pod-list/detail/log routes against this project's already terminated pod and anonymous GitHub run-status access before startup. A returned 404 does not prove live stream ingestion. Precise HTTP diagnostics are retained without credentials or response bodies. Every real stage also collects and verifies customer execution receipts against its outputs and SQL settlement audit; raw receipts remain in the existing owner-encrypted export.
+
+The owner has given standing financial approval for further experiments while retaining at least **$5 RunPod credit**. Before each manually operated single pod, verify current balance, pending bills, full quote and independent cleanup; reserve enough for shutdown and do not rent if projected remaining funds could cross $5. The provider does not enforce this floor. Keep the reviewed per-attempt allocation and cutoff; no concurrent rentals, automatic provisioning, security-permission bypass or unbounded retry is authorized. GitHub's protected-environment owner reviews remain mandatory.
 The partial H100 experiment completed smoke and sequential workloads but did not admit the remaining comparisons. Its control plane was hosted; the workload driver and log collection still depended on an interactive session. The new opt-in stage driver runs with the CPU control host on GitHub. It cannot create, update or delete a provider resource. This change does not identify what initiated the previous pod's early disappearance and does not establish real adaptive performance.
 
 ## Default and secret boundaries
