@@ -1,5 +1,7 @@
 # InferenceFlow
 
+Latest GPU attempt: [A40 startup/log-contract report](docs/validation/2026-10-27/a40-log-contract-report.md). Qwen3-4B initialized and fit the configured context/slots, but an invalid REST log-source query blocked telemetry and all customer admissions. The pod is terminated. The exact collector/preflight contract fix is under validation; no new throughput or savings result is claimed.
+
 [Auditable execution receipts](docs/auditable-execution-receipts.md) connect each terminal request to its recorded model revision, durable prompt/output hashes, token usage and request settlement. The API and Python SDK support tenant-scoped export and digest verification; receipts are unsigned operator records, not independent attestation. Wallet algorithms are unchanged. This is a defensibility foundation, not a proven moat or cost advantage.
 
 Newest attempt: [hosted A40 retry report](docs/validation/2026-10-26/hosted-a40-retry-report.md). Startup stopped on an HTTP read error before inference; the independent watchdog detected control-job completion and terminated the pod. Zero requests were admitted. Bounded read retries and private HTTP diagnostics are under validation; no further GPU has been rented.

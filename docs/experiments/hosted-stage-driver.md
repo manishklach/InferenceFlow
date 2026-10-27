@@ -1,5 +1,7 @@
 # Hosted staged GPU experiment execution
 
+REST log collection omits `source` to receive both streams; `source=both` is an MCP adapter option, not a valid REST enum. The preflight and collector share the exact initial/reconnect request builder. Permanent query/auth errors stop startup before admissions; see the [October 27 failure evidence and fix](../validation/2026-10-27/a40-log-contract-report.md).
+
 Current gate: the real host now checks authenticated pod-list/detail/log routes against this project's already terminated pod and anonymous GitHub run-status access before startup. A returned 404 does not prove live stream ingestion. Precise HTTP diagnostics are retained without credentials or response bodies. Every real stage also collects and verifies customer execution receipts against its outputs and SQL settlement audit; raw receipts remain in the existing owner-encrypted export.
 
 The owner has given standing financial approval for further experiments while retaining at least **$5 RunPod credit**. Before each manually operated single pod, verify current balance, pending bills, full quote and independent cleanup; reserve enough for shutdown and do not rent if projected remaining funds could cross $5. The provider does not enforce this floor. Keep the reviewed per-attempt allocation and cutoff; no concurrent rentals, automatic provisioning, security-permission bypass or unbounded retry is authorized. GitHub's protected-environment owner reviews remain mandatory.

@@ -61,6 +61,32 @@ class PlanTests(unittest.TestCase):
 
 
 class ProviderReadTests(unittest.TestCase):
+    def test_rest_stream_omits_both_source_value_and_preserves_reconnect_cursor(self):
+        seen = []
+        cursor = '2026-10-27T09:00:00Z/000000001'
+        record = {'source':'container','ts':'2026-10-27T09:00:00Z','line':'model starting'}
+        def respond(request):
+            self.assertEqual(request.method, 'GET')
+            self.assertNotIn('source', request.url.params)
+            seen.append(request)
+            if len(seen) == 1:
+                self.assertEqual(dict(request.url.params), {'tail':'5000'})
+                self.assertNotIn('last-event-id', request.headers)
+                return httpx.Response(200, content='id: '+cursor+'\ndata: '+json.dumps(record)+'\n\n',
+                                      headers={'Content-Type':'text/event-stream'})
+            self.assertEqual(dict(request.url.params), {})
+            self.assertEqual(request.headers['Last-Event-ID'], cursor)
+            return httpx.Response(403)
+        reader = PodReader('test-only-key', httpx.MockTransport(respond))
+        with TemporaryDirectory() as folder:
+            collector = Collector(reader,'owned',Path(folder))
+            collector.run()
+            self.assertEqual(len(seen),2)
+            self.assertEqual(collector.cursor,cursor)
+            self.assertEqual(collector.fatal_error['http_status'],403)
+            self.assertEqual(len((Path(folder)/'provider-logs.jsonl').read_text().splitlines()),1)
+        reader.close()
+
     def test_stream_auth_failure_is_retained_without_key_or_response_body(self):
         reader = PodReader('secret-read-key', httpx.MockTransport(lambda _: httpx.Response(403, text='private body')))
         with TemporaryDirectory() as folder:
@@ -107,6 +133,22 @@ class ProviderReadTests(unittest.TestCase):
 
 
 class SessionTests(unittest.TestCase):
+    def test_permanent_collector_error_stops_before_worker_wait_or_admissions(self):
+        reader, collector = Mock(), Mock()
+        reader.find.return_value = self.pod()
+        collector.fatal_error = {'http_status':422}
+        with TemporaryDirectory() as folder, patch.dict(os.environ, {'RUNPOD_EXPERIMENT_READ_KEY':'read-only'}), \
+             patch('scripts.hosted_experiment.PodReader', return_value=reader), \
+             patch('scripts.hosted_experiment.Collector', return_value=collector), \
+             patch('scripts.hosted_experiment.watchdog_active'), \
+             patch('scripts.hosted_experiment.run_plan') as plan:
+            with self.assertRaisesRegex(RuntimeError,'query rejected'):
+                execute('123-1',self.session(),{'CONTROL_PLANE_URL':'https://example.invalid',
+                    'METRICS_TOKEN':'metrics','INFERENCEFLOW_API_KEY':'synthetic'},Path(folder)/'experiment')
+            plan.assert_not_called()
+            collector.close.assert_called_once()
+            reader.close.assert_called_once()
+
     def test_temporary_read_errors_are_bounded_and_diagnostics_exclude_secrets(self):
         for statuses, expected in (([503, 200], 2), ([429, 502, 504], 3), ([401], 1)):
             seen = []
@@ -141,6 +183,7 @@ class SessionTests(unittest.TestCase):
         client = httpx.Client(base_url='https://example.invalid', transport=httpx.MockTransport(respond))
         cleanup_client = httpx.Client(base_url='https://example.invalid', transport=httpx.MockTransport(respond))
         reader, collector = Mock(), Mock()
+        collector.fatal_error = None
         reader.find.return_value = pod
         collector.snapshot.return_value = []
         with TemporaryDirectory() as folder, patch.dict(os.environ, {'RUNPOD_EXPERIMENT_READ_KEY':'read-only'}), \

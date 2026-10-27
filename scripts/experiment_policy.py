@@ -9,6 +9,7 @@ import httpx
 
 from scripts import github_staging_host as host
 from scripts.staging_supervisor import private_write
+from scripts.experiment_http import get
 
 POLICIES = {"sequential": (False, False, 1), "baseline": (False, False, 4),
             "deadline_fixed": (True, False, 4), "adaptive": (True, True, 4)}
@@ -53,9 +54,8 @@ def switch(policy, runtime, origin, *, docker=host.docker, write_env=host.write_
         docker("up", "-d", "--wait", "api", "scheduler")
         if fetch is None:
             with httpx.Client(base_url=origin, timeout=15, trust_env=False) as client:
-                response = client.get("/internal/scheduling/report",
+                response = get(client, "/internal/scheduling/report",
                                       headers={"Authorization": "Bearer "+values["METRICS_TOKEN"]})
-                response.raise_for_status()
                 config = response.json()["configuration"]
         else:
             config = fetch()

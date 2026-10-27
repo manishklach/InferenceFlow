@@ -16,6 +16,13 @@ from scripts.staging_supervisor import private_write
 BASE = "https://api.runpod.io/v2"
 
 
+def stream_request(cursor=None):
+    # REST accepts only source=container|system. Omission selects both sources;
+    # the MCP tool's source="both" option is an adapter feature, not a REST value.
+    return {"headers": {"Last-Event-ID": cursor} if cursor else {},
+            "params": {} if cursor else {"tail": 5000}}
+
+
 class PodReader:
     def __init__(self, key, transport=None):
         if not key:
@@ -74,6 +81,7 @@ class Collector:
         self.stop = threading.Event()
         self.samples, self.seen, self.cursor = {}, set(), None
         self.last_valid = float("-inf")
+        self.fatal_error = None
         self.lock = threading.Lock()
         self.thread = threading.Thread(target=self.run, daemon=True)
 
@@ -104,10 +112,8 @@ class Collector:
         with os.fdopen(fd, "w", encoding="utf-8") as output:
             while not self.stop.is_set():
                 try:
-                    headers = {"Last-Event-ID": self.cursor} if self.cursor else {}
-                    params = {"source": "both"} if self.cursor else {"source": "both", "tail": 5000}
                     with self.reader.client.stream("GET", "/pods/"+self.pod_id+"/logs",
-                                                   params=params, headers=headers) as response:
+                                                   **stream_request(self.cursor)) as response:
                         response.raise_for_status()
                         for event_id, record in events(response.iter_lines()):
                             self.accept(event_id, record, output)
@@ -115,6 +121,10 @@ class Collector:
                                 break
                 except (httpx.HTTPError, ValueError, TypeError) as error:
                     private_write(self.directory / "collector-error.json", json.dumps(failure_receipt(error)))
+                    if isinstance(error, httpx.HTTPStatusError) and error.response.status_code in {401, 403, 422}:
+                        self.fatal_error = failure_receipt(error)
+                        self.stop.set()
+                        return  # Permanent authorization/query errors cannot recover by waiting for the model.
                     self.stop.wait(2)  # Reconnect with the same cursor; no provider mutations.
 
     def snapshot(self):

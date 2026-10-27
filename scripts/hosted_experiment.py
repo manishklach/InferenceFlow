@@ -114,6 +114,8 @@ def execute(identity, session, connection, directory):
                             watchdog_active(pod["env"]["IF_WATCHDOG_RUN_ID"], pod["env"]["IF_WATCHDOG_RUN_ATTEMPT"])
                             collector = Collector(reader, pod["id"], directory)
                             collector.thread.start()  # Capture startup, not only post-readiness samples.
+                if collector and collector.fatal_error:
+                    raise RuntimeError("Provider log authorization or query rejected; stop before inference")
                 if pod and time.time()-utc(pod["createdAt"]).timestamp() >= 900:
                     raise RuntimeError("Cold start exceeded fifteen rented minutes")
                 r = get(client, "/internal/scheduling/report", headers={"Authorization": "Bearer "+connection["METRICS_TOKEN"]})
