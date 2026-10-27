@@ -12,6 +12,10 @@ Matched 100-request arms averaged **46.80 seconds baseline concurrent** versus *
 
 The code passed **254 tests** (one real-GPU pytest skipped), **31 scheduler-v2 regressions**, lint/type checks, the dashboard production build and a **40/40 mock hosted rehearsal with 40 verified receipts** before the real run. Real GPU evidence is in the separate experiment report above.
 
+## Model-specific throughput tooling
+
+The [evidence-driven throughput controller](docs/performance/model-throughput-controller.md) provides a working offline profiler, bounded benchmark client, hash-bound evidence review and token-aware dispatch replay. Synthetic data cannot qualify a profile; live scheduling is unchanged. Latest DeepSeek has a pinned proposal manifest, with runtime/hardware validation still blocked. No throughput improvement or GPU savings is claimed.
+
 ## Earlier experiment evidence
 
 | Experiment | Outcome |
