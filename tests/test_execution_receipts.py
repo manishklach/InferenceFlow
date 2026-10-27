@@ -12,7 +12,8 @@ def test_receipts_are_tenant_scoped_paginated_and_read_only(client, headers, ten
     submitted = client.post('/v1/jobs', json=body(2), headers=headers).json()
     path = '/v1/jobs/'+submitted['id']+'/receipts'
     assert client.get(path, headers=headers).status_code == 409
-    drain(client, register(client))
+    worker_headers = register(client)
+    drain(client, worker_headers)
     before_wallet = client.get('/v1/wallet', headers=headers).json()
     page = client.get(path+'?limit=1', headers=headers).json()
     assert page['next_cursor'] == 1
@@ -34,6 +35,13 @@ def test_receipts_are_tenant_scoped_paginated_and_read_only(client, headers, ten
     assert client.get(path, headers={'Authorization':'Bearer '+key}).status_code == 404
     repeat = client.get(path+'?limit=1', headers=headers).json()['items'][0]
     assert repeat == envelope
+    with Session.begin() as session:
+        work = session.scalar(select(Work).where(Work.job_id == submitted['id'], Work.ordinal == 0))
+        rid, epoch = work.id, work.epoch
+    stale = client.post('/internal/workers/requests/'+rid+'/finalize', headers=worker_headers,
+        json={'epoch':epoch,'output_text':'different stale output'})
+    assert stale.status_code == 409
+    assert client.get(path+'?limit=1', headers=headers).json()['items'][0] == envelope
     after_wallet = client.get('/v1/wallet', headers=headers).json()
     assert {k:v for k,v in before_wallet.items() if k!='request_id'} == {
         k:v for k,v in after_wallet.items() if k!='request_id'}

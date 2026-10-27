@@ -23,4 +23,6 @@ Nine focused unittest checks passed locally, including both regressions; lint an
 
 ## Next gate
 
+Billing addendum, October 27: RunPod's daily read now reports GPU **$0.010427430272102356**, disk **$0**, total **$0.010427430272102356** for this exact pod. These are the currently posted amounts; they replace the earlier pending-bill observation, not the historical guard estimate.
+
 Verify CI, exercise the real response fixture without renting, then prepare a fresh bounded CPU session and independent watchdog. Any further pod needs a fresh unchanged quote, readiness checks and explicit one-pod approval. Do not reuse this consumed rental approval. Sequential/concurrent/adaptive comparisons, interruption, batching, utilization, deadline attainment and economic advantage remain unmeasured for this attempt. Public beta, live Stripe and automatic provisioning remain disabled.

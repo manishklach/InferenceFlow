@@ -20,6 +20,8 @@ Creation to independent absence confirmation was at most **82.35 seconds**, appr
 
 ## Changes and next gate
 
+Billing addendum, October 27: RunPod's daily read now reports GPU **$0.013441183604300022**, disk **$0**, total **$0.013441183604300022** for this exact pod. These are the currently posted amounts, separate from the earlier upper-bound estimate.
+
 - Experiment GET reads retry only transport errors and HTTP 429/502/503/504, at most three attempts with one- and two-second pauses. Authentication errors fail immediately. Job submissions and cancellation mutations are never retried by this helper. Existing experiment cutoffs remain unchanged.
 - Owner-encrypted failure receipts retain status, method, host and path without query strings, headers or response bodies. Collector failures receive a separate private receipt rather than silently leaving an unexplained empty log file.
 - A real-driver startup test uses the actual disabled-networking response shape and a temporary 503 followed by a compatible worker, then reaches the plan boundary. Contract tests verify exhaustion, immediate 401 failure and private stream-error diagnostics. These are deterministic tests, not GPU results.
