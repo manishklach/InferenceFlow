@@ -12,6 +12,9 @@ class ReadPreflightTests(unittest.TestCase):
             seen.append(request)
             self.assertEqual(request.method, 'GET')
             self.assertEqual(request.url.host, 'api.runpod.io')
+            if request.url.path.endswith('/logs'):
+                self.assertEqual(dict(request.url.params), {'tail':'5000'})
+                self.assertNotIn('source',request.url.params)
             return httpx.Response(404)
         reader = PodReader('test-only-key', httpx.MockTransport(respond))
         result = probe_absent_pod(reader, 'previous-owned')

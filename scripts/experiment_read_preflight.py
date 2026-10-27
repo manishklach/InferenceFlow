@@ -5,7 +5,7 @@ import os
 import re
 import httpx
 
-from scripts.experiment_telemetry import PodReader
+from scripts.experiment_telemetry import PodReader, stream_request
 from scripts.experiment_http import get, failure_receipt
 
 
@@ -15,7 +15,8 @@ def probe_absent_pod(reader, pod_id):
     results = {}
     for name, path in (("pod_detail_status", "/pods/"+pod_id), ("pod_logs_status", "/pods/"+pod_id+"/logs")):
         try:
-            with reader.client.stream("GET", path) as response:
+            options = stream_request() if name == "pod_logs_status" else {}
+            with reader.client.stream("GET", path, **options) as response:
                 response.raise_for_status()
                 raise RuntimeError("Probe expected an already terminated pod; no changes made")
         except httpx.HTTPStatusError as error:
