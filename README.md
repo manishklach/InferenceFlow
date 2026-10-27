@@ -1,32 +1,30 @@
 # InferenceFlow
 
-Latest GPU attempt: [A40 startup/log-contract report](docs/validation/2026-10-27/a40-log-contract-report.md). Qwen3-4B initialized and fit the configured context/slots, but an invalid REST log-source query blocked telemetry and all customer admissions. The pod is terminated. The exact collector/preflight contract fix is under validation; no new throughput or savings result is claimed.
+**Experimental auditable asynchronous inference.** Submit batches, retrieve results and verify usage/settlement receipts.
 
-[Auditable execution receipts](docs/auditable-execution-receipts.md) connect each terminal request to its recorded model revision, durable prompt/output hashes, token usage and request settlement. The API and Python SDK support tenant-scoped export and digest verification; receipts are unsigned operator records, not independent attestation. Wallet algorithms are unchanged. This is a defensibility foundation, not a proven moat or cost advantage.
+Latest real GPU validation: [complete hosted A40 report](docs/validation/2026-10-27/a40-hosted-1010-report.md) and [aggregate measurements](docs/validation/2026-10-27/a40-hosted-1010-metrics.json). **1,010/1,010 real requests succeeded**, including a controlled worker interruption, with **1,010 verified receipts, 1,010 unique usage/capture records and zero wallet drift**. The independent watchdog terminated the pod; no paid resources remain. Displayed remaining credit: **$7.94**.
 
-Newest attempt: [hosted A40 retry report](docs/validation/2026-10-26/hosted-a40-retry-report.md). Startup stopped on an HTTP read error before inference; the independent watchdog detected control-job completion and terminated the pod. Zero requests were admitted. Bounded read retries and private HTTP diagnostics are under validation; no further GPU has been rented.
+Matched 100-request arms averaged **46.80 seconds baseline concurrent** versus **53.31 seconds adaptive** from API receipt through completion: adaptive was **13.9% slower**. Pooled baseline output throughput was **2.67x sequential**. Estimated full validation-rental cost is **$0.21523** at the displayed all-in quote; the provider's itemized bill is pending. These results support supervised execution/audit demonstrations, **not a cheapest-inference or adaptive-savings claim**. Public beta, live Stripe and automatic provisioning remain disabled.
 
-Latest attempt: [hosted A40 startup report](docs/validation/2026-10-26/hosted-a40-startup-report.md). The pod was terminated before inference after a provider networking-response mismatch; zero requests were admitted. The regression fix passed 241 tests (one GPU skipped), 31 scheduler regressions and the production build. No new performance or savings claim is supported.
+[Auditable execution receipts](docs/auditable-execution-receipts.md) preserve model identity, prompt/payload/output hashes, token usage and request settlement checks through the API and Python SDK. They are unsigned operator records, not independent attestation or proof of zero retention. Wallet algorithms are unchanged. The hosted experiment verified all 1,010 real receipts against results and a separate SQL audit. This is a defensibility foundation; customer value and competitive economics remain to be established.
 
-Latest real GPU result: [partial H100 report](docs/validation/2026-10-26/h100-report.md): **110/110 requests succeeded**, 110 unique usage/capture records, zero wallet drift, and **$1.36398 posted GPU/disk cost**. The pod is confirmed gone. Concurrent/adaptive comparison and interruption stages were not run; no savings or production-readiness claim is supported.
+The code passed **254 tests** (one real-GPU pytest skipped), **31 scheduler-v2 regressions**, lint/type checks, the dashboard production build and a **40/40 mock hosted rehearsal with 40 verified receipts** before the real run. Real GPU evidence is in the separate experiment report above.
 
-[Hosted stage execution](docs/experiments/hosted-stage-driver.md) prepares the next experiment to run its driver, telemetry and audit gates on GitHub. It is opt-in and needs approval for a dedicated read-only log key; no replacement GPU is provisioned by it.
+## Earlier experiment evidence
 
-Newest validation: [third-run A40 smoke report](docs/validation/2026-10-25/third-a40-smoke-report.md): **10/10 real requests**, four active vLLM sequences, complete smoke-window telemetry and zero wallet drift in the exported snapshot. The pod is terminated. Larger comparison stages stopped at a hosted policy-control gap; no new savings claim is supported.
+| Experiment | Outcome |
+| --- | --- |
+| [A40 REST log-contract failure](docs/validation/2026-10-27/a40-log-contract-report.md) | Model initialized; zero customer admissions. Invalid source query fixed before the completed run. |
+| [A40 HTTP startup retry](docs/validation/2026-10-26/hosted-a40-retry-report.md) | Zero admissions; independent cleanup confirmed. |
+| [A40 networking readback failure](docs/validation/2026-10-26/hosted-a40-startup-report.md) | Zero admissions; provider response handling fixed. |
+| [Partial H100 run](docs/validation/2026-10-26/h100-report.md) | 110/110 succeeded; comparison stages incomplete. Posted GPU/disk cost $1.36398. |
+| [Earlier A40 smoke](docs/validation/2026-10-25/third-a40-smoke-report.md) | 10/10 succeeded with four active sequences; later stages not admitted. |
+| [Second L4 run](docs/validation/2026-10-25/second-gpu-report.md) | 410/410 succeeded with interruption recovery and no ledger drift; adaptive slower. Posted provider cost $0.21400138374883682. |
+| [First L4 run](docs/validation/2026-10-25/real-inference-report.md) | Initial real baseline evidence; subsequent recovery fixes documented separately. |
 
-[Hosted policy controls and no-GPU rehearsal](docs/experiments/hosted-policy-controls.md) address that experiment-control gap. The [H100 follow-up proposal](docs/experiments/h100-next-proposal.md) remains preparation only; it requires a fresh final quote, host/cleanup verification and explicit rental approval.
+[Hosted stage execution](docs/experiments/hosted-stage-driver.md) keeps the driver, telemetry, policy transitions and audits on GitHub. Provider read authority and independent cleanup credentials stay separate. GitHub protected environments require owner review. The owner has given standing financial approval while preserving a **$5 RunPod credit floor**, with fresh quote/balance/pending-cost checks, one pod at a time and an authenticated armed watchdog before each manual creation. The provider does not enforce that floor. Hard-deadline, provider-outage and all possible failure paths are not claimed live-proven.
 
-The replacement real-mode CPU host has verified policy delivery, visible read-only audit receipts and staging OIDC without a GPU. After NVL stock disappeared, the operator approved the [one-H100 SXM substitution](docs/experiments/h100-sxm-substitution.md), displayed $4.001/hour with a 45-minute independent cutoff. Creation still requires the fresh armed watchdog; no H100 results are claimed.
-
-Latest GPU result: [second real inference report](docs/validation/2026-10-25/second-gpu-report.md). **410/410 real Qwen3-4B requests completed on one L4**, including controlled worker interruption and recovery, with 410 unique usage/capture records and zero ledger drift. Baseline concurrent completed 100 requests in 68.944 seconds; adaptive took 80.643 seconds. **No adaptive savings demonstrated; NO-GO for public beta or savings claims.** A local staging-supervisor failure prevented admission of the 1,000-request stage. The pod is terminated and no persistent storage was created.
-
-The second pod's posted provider bill is now **$0.21400138374883682**, including disk; see the report's billing addendum. The [first run](docs/validation/2026-10-25/real-inference-report.md) and [recovery fixes](docs/validation/2026-10-25/recovery-fixes.md) remain historical evidence. [Third-experiment preparation](docs/experiments/third-gpu-experiment.md) targets repeated matched 100-request comparisons and a gated 500-request interruption run. No new GPU rental is authorized by these instructions.
-
-Licensed under [Apache License 2.0](LICENSE). Model weights, container images and dependencies retain their own licenses. [Extraction customer hypotheses and interview guide](docs/research/auditable-extraction-discovery.md) remain research only.
-
-Independent cleanup: the protected `gpu-experiment` environment requires owner review and main only. The [exact-experiment watchdog](docs/github-cleanup-host.md) successfully removed both the [teardown trial](docs/validation/2026-10-25/teardown-validation.md) and subsequent inference pod through its cancellation finalizer. Both runs are finished and unarmed. Each new approved resource needs fresh price/budget/credential checks and an armed heartbeat. Automatic deadline/budget and provider-outage paths remain unproven on live resources.
-
-[Download v0.3.0 prerelease and read the detailed release notes](https://github.com/manishklach/InferenceFlow/releases/tag/v0.3.0).
+Licensed under [Apache License 2.0](LICENSE); model weights, images and dependencies retain their own licenses. [Three extraction customer hypotheses and interview guide](docs/research/auditable-extraction-discovery.md) remain research only. [Download v0.3.0 prerelease and release notes](https://github.com/manishklach/InferenceFlow/releases/tag/v0.3.0).
 
 ## October 24 local backend validation (historical)
 

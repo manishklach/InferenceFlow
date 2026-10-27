@@ -1,15 +1,15 @@
-> Current evidence: [October 25 real L4 results](validation/2026-10-25/real-inference-report.md). Baseline 10/100 passed; transient reconnect failed during adaptive preparation. Pod terminated, no volumes remain. 1,000 requests, matched policy comparison, interruption recovery, invoice economics and full-lifetime GPU utilization remain unverified. Historical preparation statements below refer to their original dates. No public-beta or savings claim is supported.
+> Current evidence, October 27: [complete hosted A40 report](validation/2026-10-27/a40-hosted-1010-report.md). All 1,010 requests and receipts passed, including repeated comparison arms and controlled interruption. The independent watchdog terminated the pod. Adaptive savings and competitive economics were not established; the itemized bill is pending and full-rental utilization coverage is incomplete. Public beta, live payments and automatic provisioning remain off.
 
-> Recovery follow-up: [locally validated worker retry, restart and compact telemetry changes](validation/2026-10-25/recovery-fixes.md). No new GPU has been rented for these fixes. Revalidate a fresh HTTPS endpoint, source hashes, current quote and armed independent cleanup before another approved run.
+> Recovery follow-up: [locally validated worker retry, restart and compact telemetry changes](validation/2026-10-25/recovery-fixes.md). These fixes were subsequently exercised in the completed October 27 run. Revalidate a fresh HTTPS endpoint, source hashes, current quote and armed independent cleanup before another approved run.
 
 # Rented NVIDIA deployment
-Historical proposals selected [RTX 4090 Community Cloud](rtx4090-community-experiment.md); the actual October 25 experiment used an explicitly approved L4 Secure pod, now terminated. No capacity is reserved. Read current stock and all-in prices before proposing another run; the $10 total ceiling and final explicit approval remain required.
+Historical proposals selected [RTX 4090 Community Cloud](rtx4090-community-experiment.md); completed validation used L4/A40 Secure pods, all terminated. No capacity is reserved. Current standing financial authority requires preserving $5 RunPod credit with pending-cost/shutdown headroom, one pod at a time, fresh pricing and an armed independent watchdog. Protected GitHub environment reviews remain required. The provider does not enforce the credit floor.
 For the first approved experiment, use the [dated RunPod readiness review and 10/100/1,000-request plan](first-gpu-experiment.md), including its proposed payload, $10 all-in ceiling, preflight gaps and teardown requirements. The generic commands below describe a conventional Docker-capable GPU host; do not run Docker-in-Docker inside a RunPod Pod. Preparing or pushing these files does not authorize rental or execution.
 
-The pinned image/model initialized successfully on the L4 and completed the two baseline workloads in the report above. The generic commands below are deployment guidance, not a successful larger-load/recovery test or current expense authorization. Prefer manually attached capacity; PROVISIONING_ENABLED stays false.
+The pinned image/model completed the seven-stage A40 validation linked above. The generic commands below are deployment guidance, not a successful larger-load/recovery test or current expense authorization. Prefer manually attached capacity; PROVISIONING_ENABLED stays false.
 
 1. CPU control plane: deploy API/scheduler/PostgreSQL behind HTTPS, restrict DB access, install managed OIDC settings, configure independent session, credential-HMAC and versioned encryption keys, and rotate the worker bootstrap token (see the audit remediation guide). Set EXECUTION_MODE=vllm, MODEL_REVISION to a reviewed 40-character Qwen/Qwen3-4B commit SHA, PUBLIC_BETA_ENABLED=false and REVIEWED_GPU_EXPERIMENT_ENABLED=true only after private experiment license/rate review. The same tokenizer revision must be installed on the CPU API. Install `.[gpu]`.
-2. On an approved 24–48 GB NVIDIA machine install NVIDIA container toolkit. Download reviewed revision; never use floating main for a deployment. Select and record a tested vLLM image digest before release. Reference compatibility image: `vllm/vllm-openai@sha256:6cf9808ca8810fc6c3fd0451c2e7784fb224590d81f7db338e7eaf3c02a33d33` (not validated on a GPU here).
+2. On an approved 24–48 GB NVIDIA machine install NVIDIA container toolkit. Download reviewed revision; never use floating main for a deployment. Select and record a tested vLLM image digest before release. Reference image: `vllm/vllm-openai@sha256:6cf9808ca8810fc6c3fd0451c2e7784fb224590d81f7db338e7eaf3c02a33d33`, validated on A40 in the linked synthetic experiment. Other hardware needs its own validation.
 3. Start the private model server:
 ```bash
 export MODEL_REVISION=1cfa9a7208912126459214e8b04321603b3df60c
@@ -19,12 +19,12 @@ export PUBLIC_BETA_ENABLED=false REVIEWED_GPU_EXPERIMENT_ENABLED=true
 export SERVED_MODEL_NAME=$(python -m packages.common.identity)
 export VLLM_API_KEY=<random-local-engine-secret>
 docker run --gpus all --rm --name inferenceflow-vllm \
-  -p 127.0.0.1:8000:8000 --ipc=host \
+  -p 127.0.0.1:8000:8000 --ipc=host -e VLLM_API_KEY \
   vllm/vllm-openai@sha256:6cf9808ca8810fc6c3fd0451c2e7784fb224590d81f7db338e7eaf3c02a33d33 \
   --model Qwen/Qwen3-4B --revision "$MODEL_REVISION" \
   --tokenizer-revision "$MODEL_REVISION" --served-model-name "$SERVED_MODEL_NAME" \
   --dtype bfloat16 --max-model-len 10240 --max-num-seqs 4 \
-  --gpu-memory-utilization 0.85 --api-key "$VLLM_API_KEY" \
+  --gpu-memory-utilization 0.85 \
   --generation-config vllm --disable-log-requests --no-enable-prefix-caching
 ```
 Check the selected image's `--help` before deployment; version-specific flags must be verified during the smoke test. Do not expose vLLM publicly; its API key does not authenticate all endpoints. Disable cross-tenant prefix caching.

@@ -1,10 +1,10 @@
-> Current evidence: [October 25 real L4 results](validation/2026-10-25/real-inference-report.md). Baseline 10/100 passed; transient reconnect failed during adaptive preparation. Pod terminated, no volumes remain. 1,000 requests, matched policy comparison, interruption recovery, invoice economics and full-lifetime GPU utilization remain unverified. Historical preparation statements below refer to their original dates. No public-beta or savings claim is supported.
+> Current evidence, October 27: [complete hosted A40 run](validation/2026-10-27/a40-hosted-1010-report.md): 1,010/1,010 real requests, repeated matched 100 arms, four active vLLM sequences, 500-request interruption/recovery, 1,010 verified receipts and zero wallet drift. Adaptive was 13.9% slower by mean server span. Cohort joint telemetry coverage was 100%; full-rental coverage remains incomplete and the itemized bill is pending. The pod is terminated. No public-beta, competitive-savings or production-readiness claim is supported.
 
 > Updated audit: [October23 readiness](validation/2026-10-23/readiness-report.md) supersedes the older two-arm plan and prior test counts below. The current runner adds sequential mode and rejects public beta/Stripe.
 
 # Multi-provider and continuous-batching readiness
 
-Prepared 2026-10-23. **No paid infrastructure, real GPU inference, automated provisioning or provider failover was activated.** Runpod remains the only selectable execution adapter. Optional Vast.ai/Lambda adapters are read-only; customer wallet/rates/settlement algorithms and financial schema are unchanged.
+The implementation/default audit below was prepared 2026-10-23, before paid validation. The October 27 evidence above supersedes its unverified-GPU statements. RunPod remains the only selectable execution adapter; optional Vast.ai/Lambda adapters are read-only. Wallet/rate/settlement algorithms remain unchanged; receipt metadata is additive.
 
 ## What is implemented, tested and enabled
 
@@ -14,7 +14,7 @@ Defaults were verified in `packages/common/config.py` and `.env.example`; the lo
 |---|---|---|---|
 | Durable queue, artifact affinity | PostgreSQL leases, tenant limits, exact model/tokenizer/mode matching | Database lifecycle, tenant, concurrency and stale-worker tests | Active in mock stack |
 | Concurrent outbound execution | Worker creates asyncio tasks; each calls `/v1/chat/completions` without a serial model lock | Actual worker loop reaches four overlapping fake vLLM HTTP calls, then four finalizations | Enabled; worker hard cap defaults 16, approved 4090 overlay uses 4 |
-| Continuous token batching | Delegated to vLLM; no prompt concatenation or Python batch buffer | HTTP protocol verified; real engine/GPU batching NOT tested | Real mode dormant; local mode mock |
+| Continuous token batching | Delegated to vLLM; no prompt concatenation or Python batch buffer | Four active engine sequences observed in matched real A40 arms; baseline pooled output throughput 2.67x sequential | Enabled only in the bounded real experiment; local default remains mock |
 | DeadlineEstimator | Conservative prefill+decode work, compatible backlog, warm slots, tenant cap, explicit calibration/source | Boundary/admission/uncalibrated rejection tests | V2 false; calibration false |
 | DispatchPolicy | V2 ranking combines served/tier weight, bounded age bonus and urgency; legacy ranking retained | Weight/aging/urgency/fairness tests | Legacy ranking active until v2 true |
 | AdaptiveDispatch | Fresh KV/running/waiting telemetry, cooldown, additive increase and halving on pressure, hard-cap fence | Controller/stale/malformed/KV/error/latency tests | False; independent of v2 flag |

@@ -1,0 +1,713 @@
+{
+  "schema": "inferenceflow.aggregate-experiment-report.v1",
+  "kind": "real_gpu_measurements_with_explicit_cost_estimates",
+  "date_utc": "2026-10-27",
+  "source_commit": "b0f419789e191c5db3413d37a1f351ec94a6a9e0",
+  "pod_id": "aal5d2kold5svl",
+  "control_run": 40485130409,
+  "watchdog_run": 40485215398,
+  "gpu": "NVIDIA A40 48 GB",
+  "cloud": "RunPod Secure",
+  "data_center": "CA-MTL-1",
+  "model": "Qwen/Qwen3-4B",
+  "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+  "vllm_version": "0.8.5",
+  "model_context_limit": 10240,
+  "engine_sequence_cap": 4,
+  "model_dtype": "bfloat16",
+  "matched_100_workload_sha256": "1c2cd763e6c3a2d7587de5586342808daa3714a5a023538632f6414ca803a3f5",
+  "total_requests": 1010,
+  "statuses": {
+    "succeeded": 1010
+  },
+  "usage_records": 1010,
+  "capture_records": 1010,
+  "unique_capture_sources": 1010,
+  "verified_receipts": 1010,
+  "execution_attempts": 1014,
+  "retry_attempts": 4,
+  "usage_charge_micro_usd_test_only": 47797,
+  "capture_charge_micro_usd_test_only": 47797,
+  "wallet_drift_fields": [],
+  "rental": {
+    "start": "2026-10-27T10:05:45.546Z",
+    "absence_confirmed": "2026-10-27T10:27:14.783375Z",
+    "seconds_upper_bound": 1289.2373750209808,
+    "minutes_upper_bound": 21.487289583683015,
+    "quoted_all_in_rate_usd": 0.601,
+    "guard_rate_usd": 0.61,
+    "quote_estimate_upper_usd": 0.2152310173298915,
+    "guard_estimate_upper_usd": 0.21845411076744398,
+    "posted_bill_pending": true,
+    "successful_input_tokens": 366758,
+    "successful_output_tokens": 35095,
+    "quote_estimated_usd_per_million_successful_output": 6.132811435529035,
+    "successful_output_tokens_per_rented_second": 27.221519232972028,
+    "observed_credit_usd": "7.94",
+    "full_rental_joint_telemetry": {
+      "passed": false,
+      "required_coverage_fraction": 0.9,
+      "coverage_fraction": 0.6423459124501513,
+      "covered_seconds": 828.1363580226898,
+      "unknown_seconds": 461.101016998291,
+      "valid_unique_samples": 757,
+      "invalid_samples": 133,
+      "gpu_utilization_percent_covered_intervals_only": 32.95669869385656,
+      "method": "Zero-order hold capped at 1.5 seconds per sample; duplicates deduplicated. Uncovered intervals are unknown, never zero. Applied retrospectively to the entire rental; the 90% smoke gate is not a full-rental pass."
+    },
+    "hardware_coverage_fraction": 0.7497990795012441,
+    "hardware_covered_seconds": 966.6689970493317,
+    "hardware_unknown_seconds": 322.56837797164917,
+    "hardware_utilization_percent_covered_only": 31.43477479072265
+  },
+  "comparison": {
+    "baseline_mean_seconds": 46.80425000190735,
+    "adaptive_mean_seconds": 53.30963957309723,
+    "adaptive_time_increase_fraction": 0.13899142857592572,
+    "baseline_pooled_output_tps": 73.3373571814551,
+    "adaptive_pooled_output_tps": 65.00700488226276,
+    "sequential_output_tps": 27.440398991015474,
+    "baseline_vs_sequential_output_tps_speedup": 2.6726053511637056,
+    "four_slot_output_scaling_efficiency": 0.6681513377909264,
+    "baseline_warm_quoted_usd_per_million_output": 2.2763902444886557,
+    "adaptive_warm_quoted_usd_per_million_output": 2.5680993109404957,
+    "adaptive_warm_output_cost_increase_fraction": 0.1281454562362907
+  },
+  "stages": {
+    "smoke": {
+      "requests": 10,
+      "statuses": {
+        "succeeded": 10
+      },
+      "input_tokens": 3618,
+      "output_tokens": 342,
+      "server_span_seconds": 5.941370010375977,
+      "request_completion_latency_seconds": {
+        "50": 4.834098,
+        "95": 5.94137,
+        "99": 5.94137
+      },
+      "within_60_minutes": 10,
+      "deadline_met": 10,
+      "verified_receipts": 10,
+      "execution_attempts": 10,
+      "attempt_outcomes": {
+        "succeeded": 10
+      },
+      "peak_active_sequences": 4.0,
+      "peak_waiting_sequences": 0.0,
+      "mean_active_sequences_covered": 0.7850149711604119,
+      "four_slot_sequence_occupancy_covered": 0.19625374279010296,
+      "dispatch_components_seconds": {
+        "lease_assignment": {
+          "50": 2.3e-05,
+          "95": 5.9e-05,
+          "99": 5.9e-05
+        },
+        "lease_to_worker_poll": {
+          "50": 0.109954,
+          "95": 0.302651,
+          "99": 0.302651
+        },
+        "worker_poll_receipt_to_execution_start": {
+          "50": 0.002484897035174072,
+          "95": 0.005955333006568253,
+          "99": 0.005955333006568253
+        },
+        "queue_until_scheduler_observation": {
+          "50": 1.019336,
+          "95": 1.021789,
+          "99": 1.021789
+        },
+        "admission": {
+          "50": 0.841441,
+          "95": 0.841441,
+          "99": 0.841441
+        },
+        "scheduler_not_before": {
+          "50": 0.0,
+          "95": 0.0,
+          "99": 0.0
+        },
+        "worker_engine_call": {
+          "50": 0.8263817538972944,
+          "95": 0.9359324810793623,
+          "99": 0.9359324810793623
+        },
+        "scheduler_capacity_and_policy_wait": {
+          "50": 2.03251,
+          "95": 3.047155,
+          "99": 3.047155
+        }
+      },
+      "dispatch_components_known_requests": {
+        "lease_assignment": 10,
+        "lease_to_worker_poll": 10,
+        "worker_poll_receipt_to_execution_start": 10,
+        "queue_until_scheduler_observation": 10,
+        "admission": 10,
+        "scheduler_not_before": 10,
+        "worker_engine_call": 10,
+        "scheduler_capacity_and_policy_wait": 10
+      },
+      "output_tokens_per_second": 57.562481280030205,
+      "input_tokens_per_second": 608.9504598571616,
+      "warm_quoted_usd_per_million_output": 2.900230162634797,
+      "joint_coverage_fraction": 1.0,
+      "gpu_utilization_percent_covered_intervals_only": 18.644105565059782
+    },
+    "sequential": {
+      "requests": 100,
+      "statuses": {
+        "succeeded": 100
+      },
+      "input_tokens": 36270,
+      "output_tokens": 3471,
+      "server_span_seconds": 126.49232983589172,
+      "request_completion_latency_seconds": {
+        "50": 65.343151,
+        "95": 118.383599,
+        "99": 124.527924
+      },
+      "within_60_minutes": 100,
+      "deadline_met": 100,
+      "verified_receipts": 100,
+      "execution_attempts": 100,
+      "attempt_outcomes": {
+        "succeeded": 100
+      },
+      "peak_active_sequences": 1.0,
+      "peak_waiting_sequences": 0.0,
+      "mean_active_sequences_covered": 0.4138593452608093,
+      "four_slot_sequence_occupancy_covered": 0.10346483631520233,
+      "dispatch_components_seconds": {
+        "lease_assignment": {
+          "50": 0.000201,
+          "95": 0.000335,
+          "99": 0.000367
+        },
+        "lease_to_worker_poll": {
+          "50": 0.163692,
+          "95": 0.292601,
+          "99": 0.314162
+        },
+        "worker_poll_receipt_to_execution_start": {
+          "50": 0.00022306595928967,
+          "95": 0.00030384003184735775,
+          "99": 0.00033121497835963964
+        },
+        "queue_until_scheduler_observation": {
+          "50": 0.537193,
+          "95": 0.557324,
+          "99": 0.559268
+        },
+        "admission": {
+          "50": 1.029528,
+          "95": 1.029528,
+          "99": 1.029528
+        },
+        "scheduler_not_before": {
+          "50": 0.0,
+          "95": 0.0,
+          "99": 0.0
+        },
+        "worker_engine_call": {
+          "50": 0.6837201250018552,
+          "95": 0.758987004053779,
+          "99": 0.8476269629318267
+        },
+        "scheduler_capacity_and_policy_wait": {
+          "50": 62.839417,
+          "95": 115.853758,
+          "99": 121.933608
+        }
+      },
+      "dispatch_components_known_requests": {
+        "lease_assignment": 100,
+        "lease_to_worker_poll": 100,
+        "worker_poll_receipt_to_execution_start": 100,
+        "queue_until_scheduler_observation": 100,
+        "admission": 100,
+        "scheduler_not_before": 100,
+        "worker_engine_call": 100,
+        "scheduler_capacity_and_policy_wait": 100
+      },
+      "output_tokens_per_second": 27.440398991015474,
+      "input_tokens_per_second": 286.7367535016224,
+      "warm_quoted_usd_per_million_output": 6.083892748757236,
+      "joint_coverage_fraction": 1.0,
+      "gpu_utilization_percent_covered_intervals_only": 44.71212316542153
+    },
+    "baseline-a": {
+      "requests": 100,
+      "statuses": {
+        "succeeded": 100
+      },
+      "input_tokens": 36270,
+      "output_tokens": 3439,
+      "server_span_seconds": 44.98645210266113,
+      "request_completion_latency_seconds": {
+        "50": 23.617839,
+        "95": 42.937359,
+        "99": 44.06301
+      },
+      "within_60_minutes": 100,
+      "deadline_met": 100,
+      "verified_receipts": 100,
+      "execution_attempts": 100,
+      "attempt_outcomes": {
+        "succeeded": 100
+      },
+      "peak_active_sequences": 4.0,
+      "peak_waiting_sequences": 0.0,
+      "mean_active_sequences_covered": 1.6378177873714743,
+      "four_slot_sequence_occupancy_covered": 0.4094544468428686,
+      "dispatch_components_seconds": {
+        "lease_assignment": {
+          "50": 0.00019,
+          "95": 0.000322,
+          "99": 0.000391
+        },
+        "lease_to_worker_poll": {
+          "50": 0.121257,
+          "95": 0.285732,
+          "99": 0.303286
+        },
+        "worker_poll_receipt_to_execution_start": {
+          "50": 0.001978483982384205,
+          "95": 0.005881738034076989,
+          "99": 0.007146885036490858
+        },
+        "queue_until_scheduler_observation": {
+          "50": 0.719655,
+          "95": 0.73641,
+          "99": 0.73781
+        },
+        "admission": {
+          "50": 1.116057,
+          "95": 1.116057,
+          "99": 1.116057
+        },
+        "scheduler_not_before": {
+          "50": 0.0,
+          "95": 0.0,
+          "99": 0.0
+        },
+        "worker_engine_call": {
+          "50": 0.8201091589871794,
+          "95": 0.909573984099552,
+          "99": 0.9378061819588766
+        },
+        "scheduler_capacity_and_policy_wait": {
+          "50": 20.740495,
+          "95": 40.181256,
+          "99": 41.197348
+        }
+      },
+      "dispatch_components_known_requests": {
+        "lease_assignment": 100,
+        "lease_to_worker_poll": 100,
+        "worker_poll_receipt_to_execution_start": 100,
+        "queue_until_scheduler_observation": 100,
+        "admission": 100,
+        "scheduler_not_before": 100,
+        "worker_engine_call": 100,
+        "scheduler_capacity_and_policy_wait": 100
+      },
+      "output_tokens_per_second": 76.4452371605577,
+      "input_tokens_per_second": 806.2427309722093,
+      "warm_quoted_usd_per_million_output": 2.1838436329762643,
+      "joint_coverage_fraction": 1.0,
+      "gpu_utilization_percent_covered_intervals_only": 65.00724578292831
+    },
+    "adaptive-a": {
+      "requests": 100,
+      "statuses": {
+        "succeeded": 100
+      },
+      "input_tokens": 36270,
+      "output_tokens": 3486,
+      "server_span_seconds": 56.60252499580383,
+      "request_completion_latency_seconds": {
+        "50": 29.130137,
+        "95": 52.820798,
+        "99": 54.719865
+      },
+      "within_60_minutes": 100,
+      "deadline_met": 100,
+      "verified_receipts": 100,
+      "execution_attempts": 100,
+      "attempt_outcomes": {
+        "succeeded": 100
+      },
+      "peak_active_sequences": 4.0,
+      "peak_waiting_sequences": 0.0,
+      "mean_active_sequences_covered": 1.1049544847855444,
+      "four_slot_sequence_occupancy_covered": 0.2762386211963861,
+      "dispatch_components_seconds": {
+        "lease_assignment": {
+          "50": 0.000275,
+          "95": 0.000484,
+          "99": 0.000551
+        },
+        "lease_to_worker_poll": {
+          "50": 0.143643,
+          "95": 0.323759,
+          "99": 0.339156
+        },
+        "worker_poll_receipt_to_execution_start": {
+          "50": 0.002241521026007831,
+          "95": 0.004464655998162925,
+          "99": 0.006488999002613127
+        },
+        "queue_until_scheduler_observation": {
+          "50": 0.859022,
+          "95": 0.881295,
+          "99": 0.883153
+        },
+        "admission": {
+          "50": 1.082737,
+          "95": 1.082737,
+          "99": 1.082737
+        },
+        "scheduler_not_before": {
+          "50": 0.0,
+          "95": 0.0,
+          "99": 0.0
+        },
+        "worker_engine_call": {
+          "50": 0.8030460980953649,
+          "95": 0.9368366489652544,
+          "99": 0.9631168430205435
+        },
+        "scheduler_capacity_and_policy_wait": {
+          "50": 26.059575,
+          "95": 49.725223,
+          "99": 51.752622
+        }
+      },
+      "dispatch_components_known_requests": {
+        "lease_assignment": 100,
+        "lease_to_worker_poll": 100,
+        "worker_poll_receipt_to_execution_start": 100,
+        "queue_until_scheduler_observation": 100,
+        "admission": 100,
+        "scheduler_not_before": 100,
+        "worker_engine_call": 100,
+        "scheduler_capacity_and_policy_wait": 100
+      },
+      "output_tokens_per_second": 61.58735851904894,
+      "input_tokens_per_second": 640.7841346775402,
+      "warm_quoted_usd_per_million_output": 2.7106933705040874,
+      "joint_coverage_fraction": 1.0,
+      "gpu_utilization_percent_covered_intervals_only": 49.4260710762232
+    },
+    "adaptive-b": {
+      "requests": 100,
+      "statuses": {
+        "succeeded": 100
+      },
+      "input_tokens": 36270,
+      "output_tokens": 3445,
+      "server_span_seconds": 50.016754150390625,
+      "request_completion_latency_seconds": {
+        "50": 26.495542,
+        "95": 47.942465,
+        "99": 48.987139
+      },
+      "within_60_minutes": 100,
+      "deadline_met": 100,
+      "verified_receipts": 100,
+      "execution_attempts": 100,
+      "attempt_outcomes": {
+        "succeeded": 100
+      },
+      "peak_active_sequences": 4.0,
+      "peak_waiting_sequences": 0.0,
+      "mean_active_sequences_covered": 1.5592587650683456,
+      "four_slot_sequence_occupancy_covered": 0.3898146912670864,
+      "dispatch_components_seconds": {
+        "lease_assignment": {
+          "50": 0.000267,
+          "95": 0.000678,
+          "99": 0.000762
+        },
+        "lease_to_worker_poll": {
+          "50": 0.110503,
+          "95": 0.321387,
+          "99": 0.348358
+        },
+        "worker_poll_receipt_to_execution_start": {
+          "50": 0.0027060889406129718,
+          "95": 0.006498223054222763,
+          "99": 0.006875092978589237
+        },
+        "queue_until_scheduler_observation": {
+          "50": 0.132215,
+          "95": 0.157832,
+          "99": 0.160474
+        },
+        "admission": {
+          "50": 1.112147,
+          "95": 1.112147,
+          "99": 1.112147
+        },
+        "scheduler_not_before": {
+          "50": 0.0,
+          "95": 0.0,
+          "99": 0.0
+        },
+        "worker_engine_call": {
+          "50": 0.8386667630402371,
+          "95": 0.9400397229474038,
+          "99": 1.0246705350000411
+        },
+        "scheduler_capacity_and_policy_wait": {
+          "50": 24.072899,
+          "95": 45.788625,
+          "99": 46.814756
+        }
+      },
+      "dispatch_components_known_requests": {
+        "lease_assignment": 100,
+        "lease_to_worker_poll": 100,
+        "worker_poll_receipt_to_execution_start": 100,
+        "queue_until_scheduler_observation": 100,
+        "admission": 100,
+        "scheduler_not_before": 100,
+        "worker_engine_call": 100,
+        "scheduler_capacity_and_policy_wait": 100
+      },
+      "output_tokens_per_second": 68.8769205143052,
+      "input_tokens_per_second": 725.1570122072133,
+      "warm_quoted_usd_per_million_output": 2.4238081958058992,
+      "joint_coverage_fraction": 1.0,
+      "gpu_utilization_percent_covered_intervals_only": 44.42204091234687
+    },
+    "baseline-b": {
+      "requests": 100,
+      "statuses": {
+        "succeeded": 100
+      },
+      "input_tokens": 36270,
+      "output_tokens": 3426,
+      "server_span_seconds": 48.622047901153564,
+      "request_completion_latency_seconds": {
+        "50": 27.149345,
+        "95": 46.9088,
+        "99": 48.587172
+      },
+      "within_60_minutes": 100,
+      "deadline_met": 100,
+      "verified_receipts": 100,
+      "execution_attempts": 100,
+      "attempt_outcomes": {
+        "succeeded": 100
+      },
+      "peak_active_sequences": 4.0,
+      "peak_waiting_sequences": 0.0,
+      "mean_active_sequences_covered": 1.130432839966921,
+      "four_slot_sequence_occupancy_covered": 0.28260820999173025,
+      "dispatch_components_seconds": {
+        "lease_assignment": {
+          "50": 0.000169,
+          "95": 0.000336,
+          "99": 0.000368
+        },
+        "lease_to_worker_poll": {
+          "50": 0.178402,
+          "95": 0.326269,
+          "99": 0.332149
+        },
+        "worker_poll_receipt_to_execution_start": {
+          "50": 0.0026561730774119496,
+          "95": 0.005976398941129446,
+          "99": 0.007342108990997076
+        },
+        "queue_until_scheduler_observation": {
+          "50": 0.515922,
+          "95": 0.537438,
+          "99": 0.538886
+        },
+        "admission": {
+          "50": 0.937639,
+          "95": 0.937639,
+          "99": 0.937639
+        },
+        "scheduler_not_before": {
+          "50": 0.0,
+          "95": 0.0,
+          "99": 0.0
+        },
+        "worker_engine_call": {
+          "50": 0.8421617939602584,
+          "95": 0.9473492699908093,
+          "99": 0.9954273720504716
+        },
+        "scheduler_capacity_and_policy_wait": {
+          "50": 24.784238,
+          "95": 44.289126,
+          "99": 46.32265
+        }
+      },
+      "dispatch_components_known_requests": {
+        "lease_assignment": 100,
+        "lease_to_worker_poll": 100,
+        "worker_poll_receipt_to_execution_start": 100,
+        "queue_until_scheduler_observation": 100,
+        "admission": 100,
+        "scheduler_not_before": 100,
+        "worker_engine_call": 100,
+        "scheduler_capacity_and_policy_wait": 100
+      },
+      "output_tokens_per_second": 70.46186139598447,
+      "input_tokens_per_second": 745.9578846562629,
+      "warm_quoted_usd_per_million_output": 2.36928802527999,
+      "joint_coverage_fraction": 1.0,
+      "gpu_utilization_percent_covered_intervals_only": 48.2087780042381
+    },
+    "interruption": {
+      "requests": 500,
+      "statuses": {
+        "succeeded": 500
+      },
+      "input_tokens": 181790,
+      "output_tokens": 17486,
+      "server_span_seconds": 270.865611076355,
+      "request_completion_latency_seconds": {
+        "50": 149.23321,
+        "95": 255.705012,
+        "99": 263.876129
+      },
+      "within_60_minutes": 500,
+      "deadline_met": 500,
+      "verified_receipts": 500,
+      "execution_attempts": 504,
+      "attempt_outcomes": {
+        "succeeded": 500,
+        "lease_lost": 4
+      },
+      "peak_active_sequences": 4.0,
+      "peak_waiting_sequences": 0.0,
+      "mean_active_sequences_covered": 1.1835670232393252,
+      "four_slot_sequence_occupancy_covered": 0.2958917558098313,
+      "dispatch_components_seconds": {
+        "lease_assignment": {
+          "50": 0.030304,
+          "95": 0.075327,
+          "99": 0.084095
+        },
+        "lease_to_worker_poll": {
+          "50": 0.23926,
+          "95": 0.512112,
+          "99": 0.577325
+        },
+        "worker_poll_receipt_to_execution_start": {
+          "50": 0.00246440595947206,
+          "95": 0.006228938931599259,
+          "99": 0.007015359005890787
+        },
+        "queue_until_scheduler_observation": {
+          "50": 0.882697,
+          "95": 2.078445,
+          "99": 2.087346
+        },
+        "admission": {
+          "50": 0.191135,
+          "95": 0.937878,
+          "99": 0.937878
+        },
+        "scheduler_not_before": {
+          "50": 0.0,
+          "95": 0.0,
+          "99": 0.0
+        },
+        "worker_engine_call": {
+          "50": 0.8611136890249327,
+          "95": 0.9400837310822681,
+          "99": 0.9845255740219727
+        },
+        "scheduler_capacity_and_policy_wait": {
+          "50": 145.668878,
+          "95": 253.910155,
+          "99": 262.037191
+        }
+      },
+      "dispatch_components_known_requests": {
+        "lease_assignment": 500,
+        "lease_to_worker_poll": 500,
+        "worker_poll_receipt_to_execution_start": 496,
+        "queue_until_scheduler_observation": 500,
+        "admission": 500,
+        "scheduler_not_before": 500,
+        "worker_engine_call": 496,
+        "scheduler_capacity_and_policy_wait": 500
+      },
+      "output_tokens_per_second": 64.55599856517344,
+      "input_tokens_per_second": 671.1446287980601,
+      "warm_quoted_usd_per_million_output": 2.5860407732041084,
+      "joint_coverage_fraction": 1.0,
+      "gpu_utilization_percent_covered_intervals_only": 39.915570191015995
+    }
+  },
+  "startup_phases": [
+    {
+      "event": "experiment_phase",
+      "phase": "container_bootstrap_started",
+      "observed_at": "2026-10-27T10:10:01.878305+00:00"
+    },
+    {
+      "event": "experiment_phase",
+      "phase": "worker_environment_ready",
+      "observed_at": "2026-10-27T10:10:27.193755+00:00"
+    },
+    {
+      "event": "experiment_phase",
+      "phase": "model_download_started",
+      "observed_at": "2026-10-27T10:10:27.712098+00:00"
+    },
+    {
+      "event": "experiment_phase",
+      "phase": "model_download_finished",
+      "observed_at": "2026-10-27T10:10:34.570933+00:00"
+    },
+    {
+      "event": "experiment_phase",
+      "phase": "engine_launch_requested",
+      "observed_at": "2026-10-27T10:10:34.767812+00:00"
+    },
+    {
+      "event": "experiment_phase",
+      "phase": "engine_health_ready",
+      "observed_at": "2026-10-27T10:12:50.116429+00:00"
+    }
+  ],
+  "economics_sensitivity": {
+    "kind": "modeled_direct_gpu_rental_only_not_measured_provider_comparison",
+    "startup_to_first_admission_seconds": 451.1341218948364,
+    "last_completion_to_absence_seconds": 50.49206805229187,
+    "warm_baseline_cost_per_request": 7.81370951420731e-05,
+    "fixed_startup_and_shutdown_quoted_cost": 0.0837437055995067,
+    "break_even_requests_by_hypothetical_comparable_hosted_usd_per_1000_requests": {
+      "0.05": null,
+      "0.1": 3831,
+      "0.15": 1166,
+      "0.2": 688
+    }
+  },
+  "vllm_counters_including_noncustomer_work": {
+    "prompt_tokens": 368516,
+    "generation_tokens": 35292,
+    "initial_values": 0,
+    "monotone": true,
+    "includes": "readiness canaries and retried generation; not billable customer usage"
+  },
+  "bill_reconciliation": "Provider returned no records at initial post-run queries; cost fields are estimates, not posted invoice amounts.",
+  "limitations": [
+    "Two matched baseline and two adaptive runs on one pod; no confidence interval or broad hardware claim.",
+    "Full-rental telemetry incomplete; unobserved intervals are unknown, not zero.",
+    "Configured maximum context allocated successfully; actual synthetic prompts do not stress four full 10,240-token sequences.",
+    "No equivalent pinned Qwen3-4B hosted-provider comparison or extraction-quality evaluation was run.",
+    "Production control-plane, engineering and support costs are not priced here."
+  ]
+}

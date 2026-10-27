@@ -1,5 +1,7 @@
 # Hosted staged GPU experiment execution
 
+October 27 measured outcome: [1,010/1,010 real A40 requests completed](../validation/2026-10-27/a40-hosted-1010-report.md), including all matched arms and controlled interruption. All receipts and SQL settlement checks passed. The independent watchdog initiated termination on control-job completion and verified absence. Adaptive was slower; cost advantage remains unproven. Earlier proposal/default descriptions below are historical; the dedicated read-only secret was owner-approved and used for this run.
+
 REST log collection omits `source` to receive both streams; `source=both` is an MCP adapter option, not a valid REST enum. The preflight and collector share the exact initial/reconnect request builder. Permanent query/auth errors stop startup before admissions; see the [October 27 failure evidence and fix](../validation/2026-10-27/a40-log-contract-report.md).
 
 Current gate: the real host now checks authenticated pod-list/detail/log routes against this project's already terminated pod and anonymous GitHub run-status access before startup. A returned 404 does not prove live stream ingestion. Precise HTTP diagnostics are retained without credentials or response bodies. Every real stage also collects and verifies customer execution receipts against its outputs and SQL settlement audit; raw receipts remain in the existing owner-encrypted export.
