@@ -2,6 +2,8 @@
 
 This is the first foundation for auditable batch inference, not a demonstrated competitive moat. A receipt connects a finished request to its recorded model identity, content hashes, usage and settlement. Customer trust, useful recovery history and independently demonstrated economics still have to be earned.
 
+The [October 27 hosted A40 experiment](validation/2026-10-27/a40-hosted-1010-report.md) verified 1,010 real receipts against outputs and independent SQL settlement records, including controlled worker interruption with four repeated attempts and no duplicate capture. This validates the tested path, not every possible failure mode.
+
 ## API and SDK
 
 `GET /v1/jobs/{job_id}/receipts?cursor=0&limit=100` uses the same tenant authentication as results. Another tenant receives 404. A job with any nonterminal request returns 409, including unresolved `billing_pending` work. Terminal failed/canceled/expired requests receive zero-usage receipts where appropriate. Pages contain `items` and `next_cursor`; no prompts, outputs, worker credentials or tenant-independent data are returned.
