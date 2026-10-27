@@ -29,7 +29,7 @@ def utc(value):
 def validate_plan(plan):
     required = {"pod_name", "experiment_id", "all_in_hourly_usd", "fixed_cost_usd",
                 "budget_usd", "cleanup_approved", "all_in_cost_confirmed"}
-    optional = {"max_runtime_minutes", "control_run_id", "control_run_attempt"}
+    optional = {"max_runtime_minutes", "control_run_id", "control_run_attempt", "billing_quantum_seconds"}
     if not required <= set(plan) or set(plan)-required-optional:
         raise ValueError("Exact cleanup plan schema required; no credentials allowed")
     if ("control_run_id" in plan) != ("control_run_attempt" in plan):
@@ -50,8 +50,14 @@ def validate_plan(plan):
         raise ValueError("Finite costs required")
     if rate <= 0 or fixed < 0 or not 0 < budget <= 10 or fixed >= budget * Decimal(".7"):
         raise ValueError("Costs must allow reserve within budget <=10")
-    reserved_hours = Decimal((minutes+59)//60)
-    if fixed + reserved_hours * rate >= budget * Decimal(".7"):
+    quantum = plan.get("billing_quantum_seconds", 3600)
+    if type(quantum) is not int or quantum not in {1, 3600}:
+        raise ValueError("Explicit verified one-second or legacy hourly billing interval required")
+    # Per-second opt-in rounds up the provider's millisecond billing and reserves
+    # two additional minutes for DELETE/read-back. Legacy plans are unchanged.
+    reserve_seconds = minutes*60 + (120 if quantum == 1 else 0)
+    units = (reserve_seconds+quantum-1)//quantum
+    if fixed + Decimal(units*quantum)/3600 * rate >= budget * Decimal(".7"):
         raise ValueError("Rounded cutoff all-in estimate must stay below 70% of budget")
     return rate, fixed, budget
 
@@ -117,9 +123,11 @@ def state(plan, armed_at, stamp, receipt=None):
         raise ValueError("Clock moved backwards")
     created = utc(receipt["provider_created_at"]) if receipt else armed_at
     seconds = max(0, (stamp - created).total_seconds())
-    # Round elapsed compute/disk time up to a full hour for conservative reserve.
-    hours = (Decimal(str(seconds)) / 3600).to_integral_value(rounding="ROUND_CEILING")
-    estimate = fixed + rate * max(Decimal(1), hours)
+    # Whole-hour reserve remains the default. Explicit per-second plans must be
+    # backed by a fresh all-in quote and the provider's billing-interval evidence.
+    quantum = Decimal(plan.get("billing_quantum_seconds", 3600))
+    units = (Decimal(str(seconds))/quantum).to_integral_value(rounding="ROUND_CEILING")
+    estimate = fixed + rate * max(Decimal(1), units)*quantum/3600
     return {"estimated_cost_upper_usd": str(estimate),
             "stop_admissions_required": estimate >= budget * Decimal(".7"),
             "terminate": estimate >= budget * Decimal(".8")

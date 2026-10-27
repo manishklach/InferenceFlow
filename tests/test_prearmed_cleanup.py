@@ -98,6 +98,38 @@ def test_shorter_h100_cutoff_preserves_reserve_and_legacy_default():
         validate_plan(candidate)
 
 
+def test_verified_per_second_h100_plan_preserves_shutdown_reserve_and_deadline():
+    from decimal import Decimal
+    from scripts.hosted_experiment import validate_session
+    candidate = {**plan(), "all_in_hourly_usd": "3.21", "fixed_cost_usd": "0",
+                 "budget_usd": "2.2", "max_runtime_minutes": 25, "billing_quantum_seconds": 1}
+    validate_plan(candidate)
+    validate_session({"experiment_id": IDENTITY, "gpu_id": "NVIDIA H100 NVL",
+                      "data_center_id": "US-KS-2", "disk_gb": 80,
+                      **{k: candidate[k] for k in ("all_in_hourly_usd", "budget_usd",
+                                                 "max_runtime_minutes", "billing_quantum_seconds")}})
+    early = state(candidate, START, START+timedelta(seconds=60.1))
+    assert Decimal(early["estimated_cost_upper_usd"]) == Decimal("3.21")*61/3600
+    assert not early["stop_admissions_required"] and not early["terminate"]
+    assert not state(candidate, START, START+timedelta(minutes=24))["terminate"]
+    assert state(candidate, START, START+timedelta(minutes=25))["terminate"]
+    # Runtime plus two-minute DELETE reserve must fit strictly below 70%.
+    with pytest.raises(ValueError):
+        validate_plan({**candidate, "budget_usd": "2"})
+    with pytest.raises(ValueError):
+        validate_plan({**candidate, "max_runtime_minutes": 35})
+    with pytest.raises(ValueError):
+        validate_plan({k: v for k, v in candidate.items() if k != "billing_quantum_seconds"})
+    over = state(candidate, START, START+timedelta(minutes=30))
+    assert over["stop_admissions_required"] and over["terminate"]
+
+
+@pytest.mark.parametrize("quantum", [True, 0, -1, 0.001, "1", 60, None])
+def test_billing_interval_rejects_invalid_or_unreviewed_values(quantum):
+    with pytest.raises(ValueError):
+        validate_plan({**plan(), "billing_quantum_seconds": quantum})
+
+
 @pytest.mark.parametrize("minutes", [True, 0, 14, 111, "45", 45.5])
 def test_runtime_cutoff_cannot_be_extended_or_coerced(minutes):
     with pytest.raises(ValueError):

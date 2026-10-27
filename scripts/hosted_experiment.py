@@ -23,7 +23,7 @@ from scripts.experiment_http import get, failure_receipt
 def validate_session(session):
     fields = {"experiment_id", "gpu_id", "data_center_id", "disk_gb", "all_in_hourly_usd",
               "budget_usd", "max_runtime_minutes"}
-    if set(session) != fields or session["disk_gb"] != 80:
+    if not fields <= set(session) or set(session)-fields-{"billing_quantum_seconds"} or session["disk_gb"] != 80:
         raise ValueError("Exact reviewed session configuration required")
     if not isinstance(session["gpu_id"], str) or not re.fullmatch(r"[A-Z0-9-]+", session["data_center_id"]):
         raise ValueError("Invalid approved hardware/placement")
@@ -31,7 +31,9 @@ def validate_session(session):
         "experiment_id": session["experiment_id"], "all_in_hourly_usd": session["all_in_hourly_usd"],
         "fixed_cost_usd": "0", "budget_usd": session["budget_usd"],
         "max_runtime_minutes": session["max_runtime_minutes"], "cleanup_approved": True,
-        "all_in_cost_confirmed": True})
+        "all_in_cost_confirmed": True,
+        **({"billing_quantum_seconds": session["billing_quantum_seconds"]}
+           if "billing_quantum_seconds" in session else {})})
 
 
 def verify_pod(pod, session, identity):
