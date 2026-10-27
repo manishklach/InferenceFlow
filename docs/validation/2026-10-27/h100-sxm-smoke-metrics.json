@@ -1,0 +1,221 @@
+{
+  "schema": "inferenceflow.aggregate-experiment-report.v1",
+  "date_utc": "2026-10-27",
+  "scope": "real_h100_smoke_only_comparison_plan_incomplete",
+  "source_commit": "73969fb33d3a6e4fd23c4cbd3567f30a7d859f97",
+  "control_run": 40493606626,
+  "watchdog_run": 40493690060,
+  "pod_id": "iqxickl6fa3uix",
+  "gpu": "NVIDIA H100 SXM 80 GB",
+  "cloud": "RunPod Secure",
+  "data_center": "CA-MTL-1",
+  "model": "Qwen/Qwen3-4B",
+  "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+  "vllm_version": "0.8.5",
+  "image_digest": "sha256:6cf9808ca8810fc6c3fd0451c2e7784fb224590d81f7db338e7eaf3c02a33d33",
+  "context": 10240,
+  "worker_and_engine_slots": 4,
+  "dtype": "bfloat16",
+  "thinking_enabled": false,
+  "prefix_cache_enabled": false,
+  "created_at": "2026-10-27T11:12:24.958Z",
+  "watchdog_armed_at": "2026-10-27T11:08:06.165078+00:00",
+  "termination_confirmed_at": "2026-10-27T11:22:36.366739+00:00",
+  "independent_hard_cutoff": "2026-10-27T11:28:05.846787+00:00",
+  "quoted_gpu_hourly_usd": 3.99,
+  "quoted_temporary_disk_hourly_usd": 0.011,
+  "quoted_total_hourly_usd": 4.001,
+  "guard_hourly_usd": 4.01,
+  "allocation_usd": 2.2,
+  "credit_floor_usd": 5,
+  "observed_post_run_credit_usd": 7.46,
+  "itemized_provider_bill_pending": true,
+  "provider_get_after_cleanup": 404,
+  "remaining_pods": 0,
+  "remaining_network_volumes": 0,
+  "plan_status": "incomplete",
+  "skip_reason": "insufficient_time",
+  "first_skipped_stage": "sequential",
+  "completed_stages": [
+    "smoke"
+  ],
+  "not_executed": [
+    "sequential-100",
+    "baseline-a-100",
+    "adaptive-a-100",
+    "adaptive-b-100",
+    "baseline-b-100",
+    "interruption-500"
+  ],
+  "measurements": {
+    "request_count": 10,
+    "successful_requests": 10,
+    "successful_input_tokens": 3618,
+    "successful_output_tokens": 345,
+    "verified_receipts": 10,
+    "usage_records": 10,
+    "capture_records": 10,
+    "unique_capture_sources": 10,
+    "execution_attempts": 10,
+    "wallet_drift_fields": [],
+    "synthetic_customer_charge_micro_usd": 473,
+    "server_span_seconds": 4.366757869720459,
+    "p50_p95_p99_seconds": {
+      "50": 3.488239,
+      "95": 4.366758,
+      "99": 4.366758
+    },
+    "successful_output_tokens_per_server_second": 79.00598345336822,
+    "observed_deadline_met": 10,
+    "peak_active_sequences": 4.0,
+    "smoke_telemetry": {
+      "passed": true,
+      "required_coverage_fraction": 0.9,
+      "coverage_fraction": 1.0,
+      "covered_seconds": 4.366757869720459,
+      "unknown_seconds": 0,
+      "valid_unique_samples": 40,
+      "invalid_samples": 113,
+      "gpu_utilization_percent_covered_intervals_only": 16.258908105752994,
+      "method": "Zero-order hold capped at 1.5 seconds per sample; duplicates deduplicated. Uncovered intervals are unknown, never zero. This gate covers only the specified smoke window, not the entire rental."
+    },
+    "rented_seconds_upper_bound": 611.4087390899658,
+    "quoted_rental_upper_estimate_usd": 0.6795128791941537,
+    "guard_rental_upper_estimate_usd": 0.6810414010418785,
+    "quote_estimated_usd_per_million_successful_output": 1969.6025483888513,
+    "full_rental_joint_telemetry": {
+      "passed": false,
+      "required_coverage_fraction": 0.9,
+      "coverage_fraction": 0.07064342600464231,
+      "covered_seconds": 43.19200801849365,
+      "unknown_seconds": 568.2167310714722,
+      "valid_unique_samples": 40,
+      "invalid_samples": 113,
+      "gpu_utilization_percent_covered_intervals_only": 2.8108896109156563,
+      "method": "Zero-order hold capped at 1.5 seconds; unknown intervals remain unknown. Applied to the entire rental, not the smoke gate."
+    },
+    "cold_seconds_allocation_image_until_bootstrap": 347.90171813964844,
+    "model_download_seconds": 5.137499094009399,
+    "engine_launch_to_health_seconds": 115.30607318878174,
+    "created_to_health_seconds": 499.8469741344452,
+    "a40_smoke_span_seconds": 5.941370010375977,
+    "a40_smoke_output_tokens": 342,
+    "a40_smoke_output_tokens_per_second": 57.562481280030205,
+    "a40_smoke_warm_quote_usd_per_million_output": 2.900230162634797,
+    "h100_smoke_warm_quote_usd_per_million_output": 14.06714833876937,
+    "smoke_workload_sha256": "4c66cda4205b39dee1cad61e7848c457c1aede65a322f27f83fb001ac879ac16"
+  },
+  "phases": [
+    {
+      "event": "experiment_phase",
+      "phase": "container_bootstrap_started",
+      "observed_at": "2026-10-27T11:18:12.859718+00:00"
+    },
+    {
+      "event": "experiment_phase",
+      "phase": "worker_environment_ready",
+      "observed_at": "2026-10-27T11:18:43.464243+00:00"
+    },
+    {
+      "event": "experiment_phase",
+      "phase": "model_download_started",
+      "observed_at": "2026-10-27T11:18:44.174124+00:00"
+    },
+    {
+      "event": "experiment_phase",
+      "phase": "model_download_finished",
+      "observed_at": "2026-10-27T11:18:49.311623+00:00"
+    },
+    {
+      "event": "experiment_phase",
+      "phase": "engine_launch_requested",
+      "observed_at": "2026-10-27T11:18:49.498901+00:00"
+    },
+    {
+      "event": "experiment_phase",
+      "phase": "engine_health_ready",
+      "observed_at": "2026-10-27T11:20:44.804974+00:00"
+    }
+  ],
+  "dispatch_components_seconds": {
+    "admission": {
+      "measured": 10,
+      "missing": 0,
+      "percentiles": {
+        "p50": 1.212975,
+        "p95": 1.212975,
+        "p99": 1.212975
+      }
+    },
+    "scheduler_not_before": {
+      "measured": 10,
+      "missing": 0,
+      "percentiles": {
+        "p50": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      }
+    },
+    "queue_until_scheduler_observation": {
+      "measured": 10,
+      "missing": 0,
+      "percentiles": {
+        "p50": 0.628321,
+        "p95": 0.633584,
+        "p99": 0.633584
+      }
+    },
+    "scheduler_capacity_and_policy_wait": {
+      "measured": 10,
+      "missing": 0,
+      "percentiles": {
+        "p50": 1.034535,
+        "p95": 2.062727,
+        "p99": 2.062727
+      }
+    },
+    "lease_assignment": {
+      "measured": 10,
+      "missing": 0,
+      "percentiles": {
+        "p50": 5.2e-05,
+        "p95": 0.000111,
+        "p99": 0.000111
+      }
+    },
+    "lease_to_worker_poll": {
+      "measured": 10,
+      "missing": 0,
+      "percentiles": {
+        "p50": 0.205997,
+        "p95": 0.334791,
+        "p99": 0.334791
+      }
+    },
+    "worker_poll_receipt_to_execution_start": {
+      "measured": 10,
+      "missing": 0,
+      "percentiles": {
+        "p50": 0.002224004943855107,
+        "p95": 0.004950308008119464,
+        "p99": 0.004950308008119464
+      }
+    },
+    "worker_engine_call": {
+      "measured": 10,
+      "missing": 0,
+      "percentiles": {
+        "p50": 0.320977168972604,
+        "p95": 0.36439966200850904,
+        "p99": 0.36439966200850904
+      }
+    }
+  },
+  "limitations": [
+    "Only ten requests; no sustained hardware comparison, adaptive or interruption measurement on this pod.",
+    "Full-rental utilization coverage incomplete; covered means are not whole-rental averages.",
+    "Quoted estimates are not posted provider charges or customer charges.",
+    "Same smoke inputs, different hardware/host/startup conditions; no statistical significance or competitive savings established.",
+    "Unsigned operator receipts are not independent attestation."
+  ]
+}

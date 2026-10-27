@@ -2,6 +2,8 @@
 
 Prepared October 27, 2026 under the owner’s standing RunPod spending authority, preserving at least $5 credit. No GPU is created by this document or the hosted driver.
 
+Outcome: NVL stock disappeared before creation. A separately configured H100 SXM ran ten real requests; the comparison stopped at its time gate. See the [measured follow-up and cleanup report](../validation/2026-10-27/h100-sxm-smoke-report.md). The NVL preparation below is historical and was not provisioned.
+
 ## Selection and budget
 
 Fresh authenticated catalog reads list H100 NVL 94 GB, Secure US-KS-2, LOW stock, at $3.19/hour; H100 SXM $3.99/hour and H200 SXM $5.29/hour. Select one NVL if fresh stock and placement still pass. No automatic substitution/replacement. Checkout shows 80 GB temporary disk $0.011/hour, total quote $3.201/hour and per-millisecond billing. Use $3.21/hour guard, 25 minutes from watchdog arming, $2.20 allocation and a separate $0.30 pending-charge reserve. Displayed balance at preparation: $7.94; require a fresh balance before creation and projected remaining credit above $5. No provider-enforced budget is assumed.
