@@ -2,7 +2,9 @@
 
 **Experimental auditable asynchronous inference.** Submit batches, retrieve results and verify usage/settlement receipts.
 
-Latest real GPU validation: [complete hosted A40 report](docs/validation/2026-10-27/a40-hosted-1010-report.md) and [aggregate measurements](docs/validation/2026-10-27/a40-hosted-1010-metrics.json). **1,010/1,010 real requests succeeded**, including a controlled worker interruption, with **1,010 verified receipts, 1,010 unique usage/capture records and zero wallet drift**. The independent watchdog terminated the pod; no paid resources remain. Displayed remaining credit: **$7.94**.
+Latest high-end follow-up: [H100 SXM smoke report](docs/validation/2026-10-27/h100-sxm-smoke-report.md). **10/10 real requests and receipts passed**, zero drift; larger stages were skipped by the time gate after cold startup. The pod is terminated. Quoted rental estimate **$0.68**, itemized bill pending; displayed credit **$7.46**. This does not complete the sustained hardware comparison or demonstrate H100 savings.
+
+Latest complete multi-stage GPU validation: [complete hosted A40 report](docs/validation/2026-10-27/a40-hosted-1010-report.md) and [aggregate measurements](docs/validation/2026-10-27/a40-hosted-1010-metrics.json). **1,010/1,010 real requests succeeded**, including a controlled worker interruption, with **1,010 verified receipts, 1,010 unique usage/capture records and zero wallet drift**. The independent watchdog terminated the pod; no paid resources remain. Displayed credit after that A40 run: **$7.94** (historical).
 
 Matched 100-request arms averaged **46.80 seconds baseline concurrent** versus **53.31 seconds adaptive** from API receipt through completion: adaptive was **13.9% slower**. Pooled baseline output throughput was **2.67x sequential**. Estimated full validation-rental cost is **$0.21523** at the displayed all-in quote; the provider's itemized bill is pending. These results support supervised execution/audit demonstrations, **not a cheapest-inference or adaptive-savings claim**. Public beta, live Stripe and automatic provisioning remain disabled.
 
