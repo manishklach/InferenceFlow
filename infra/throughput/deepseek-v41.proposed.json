@@ -1,0 +1,46 @@
+{
+  "status": "proposal_only_not_deployable",
+  "model": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+  "revision": "1bae0e1088993b9b82de08f59de5be5a34e42170",
+  "tokenizer_revision": "1bae0e1088993b9b82de08f59de5be5a34e42170",
+  "config_sha256": "8be45ce0476004a3f529fd896115a4a2e800a129ad2d3ec05b16050f52e21879",
+  "architecture": "DeepseekV41ForCausalLM",
+  "checkpoint_quantization": {
+    "quant_method": "fp8",
+    "activation_scheme": "dynamic",
+    "weight_block_size": [
+      32,
+      32
+    ],
+    "scale_fmt": "ue8m0",
+    "expert_dtype": "fp4"
+  },
+  "runtime_candidates": [
+    {
+      "engine": "vllm",
+      "minimum_recipe_version": "0.31.0",
+      "validated_image_digest": null
+    },
+    {
+      "engine": "deepinfer",
+      "validated_image_digest": null,
+      "service_adapter_implemented": false
+    }
+  ],
+  "platform_default_engine_changed": false,
+  "hardware_topology_selected": false,
+  "profile_qualified": false,
+  "provisioning_enabled": false,
+  "verified_at_utc": "2026-10-27",
+  "sources": [
+    "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017",
+    "https://github.com/vllm-project/recipes/blob/main/models/deepseek-ai/DeepSeek-V4.1-Flash.yaml",
+    "https://github.com/deepseek-ai/DeepInfer"
+  ],
+  "blockers": [
+    "Validated serving image/runtime and hardware-memory topology required",
+    "No latest-DeepSeek real benchmark, telemetry, quality evaluation or invoiced cost evidence",
+    "The current platform vLLM 0.8.5 image is not this proposed runtime",
+    "Multi-GPU capacity requires separate budget and independent cleanup; preserve owner credit floor"
+  ]
+}
