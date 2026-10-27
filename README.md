@@ -1,5 +1,7 @@
 # InferenceFlow
 
+[Auditable execution receipts](docs/auditable-execution-receipts.md) connect each terminal request to its recorded model revision, durable prompt/output hashes, token usage and request settlement. The API and Python SDK support tenant-scoped export and digest verification; receipts are unsigned operator records, not independent attestation. Wallet algorithms are unchanged. This is a defensibility foundation, not a proven moat or cost advantage.
+
 Newest attempt: [hosted A40 retry report](docs/validation/2026-10-26/hosted-a40-retry-report.md). Startup stopped on an HTTP read error before inference; the independent watchdog detected control-job completion and terminated the pod. Zero requests were admitted. Bounded read retries and private HTTP diagnostics are under validation; no further GPU has been rented.
 
 Latest attempt: [hosted A40 startup report](docs/validation/2026-10-26/hosted-a40-startup-report.md). The pod was terminated before inference after a provider networking-response mismatch; zero requests were admitted. The regression fix passed 241 tests (one GPU skipped), 31 scheduler regressions and the production build. No new performance or savings claim is supported.

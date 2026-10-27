@@ -51,6 +51,9 @@ class InferenceFlowClient:
     def cancel_job(self, job_id):
         return self._call("POST", f"/v1/jobs/{job_id}/cancel")
 
+    def get_receipts(self, job_id, cursor=0, limit=100):
+        return self._call("GET", f"/v1/jobs/{job_id}/receipts", params={"cursor": cursor, "limit": limit})
+
     def get_models(self):
         return self._call("GET", "/v1/models")
 

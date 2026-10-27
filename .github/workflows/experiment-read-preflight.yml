@@ -1,6 +1,15 @@
 name: Experiment read-key preflight (no GPU)
 on:
   workflow_dispatch:
+    inputs:
+      absent_pod_id:
+        description: 'Optional previously terminated experiment pod; require 404 on detail and logs'
+        type: string
+        default: ''
+      github_run_id:
+        description: 'Optional public cleanup run ID to check anonymous GitHub reads'
+        type: string
+        default: ''
 permissions:
   contents: read
 jobs:
@@ -20,4 +29,6 @@ jobs:
       - name: Verify read-only experiment authentication
         env:
           RUNPOD_EXPERIMENT_READ_KEY: ${{ secrets.RUNPOD_EXPERIMENT_READ_KEY }}
+          EXPERIMENT_PROBE_ABSENT_POD_ID: ${{ inputs.absent_pod_id }}
+          EXPERIMENT_PROBE_GITHUB_RUN_ID: ${{ inputs.github_run_id }}
         run: python -m scripts.experiment_read_preflight
