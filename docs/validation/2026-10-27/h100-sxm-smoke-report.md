@@ -1,5 +1,7 @@
 # H100 SXM follow-up: real smoke passed, comparison incomplete
 
+> Billing addendum, October 27 (2026-10-27T12:33:16.074973+00:00): RunPod now reports posted GPU $0.67727368 + disk $0.00185185 = **$0.67912553** for this exact pod. This is **$1968.47979/M successful output tokens** for this experiment, excluding production control-plane/support costs. Earlier pending-bill statements below describe the initial report time; original quote estimates are preserved. See aggregate JSON for the query and exact figures.
+
 October 27, 2026. **10/10 real requests passed on one H100 SXM, with ten verified receipts and zero wallet drift.** The hosted driver then stopped at the time gate before sequential 100. This is a successful smoke validation and an incomplete comparison experiment, not a completed 100/500-request performance study. The pod is terminated; no paid resources remain.
 
 ## Provenance and configuration

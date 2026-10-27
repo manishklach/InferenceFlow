@@ -1,5 +1,7 @@
 # Complete hosted A40 experiment: 1,010 real requests
 
+> Billing addendum, October 27 (2026-10-27T12:33:16.074973+00:00): RunPod now reports posted GPU $0.21122836 + disk $0.00370370 = **$0.21493206** for this exact pod. This is **$6.12429/M successful output tokens** for this experiment, excluding production control-plane/support costs. Earlier pending-bill statements below describe the initial report time; original quote estimates are preserved. See aggregate JSON for the query and exact figures.
+
 October 27, 2026. **1,010/1,010 requests succeeded, 1,010 receipts verified, zero wallet drift, and the independent watchdog terminated the pod. Adaptive did not outperform baseline concurrency.** GO for supervised private execution/audit demonstrations; NO-GO for a cheapest-inference claim, adaptive savings claim, public beta, live payments or automatic provisioning.
 
 ## Evidence and reproducibility

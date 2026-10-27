@@ -1,0 +1,102 @@
+{
+  "schema": "inferenceflow.deepinfer-readiness.v1",
+  "checked_at_utc": "2026-10-27T12:32:34.766424+00:00",
+  "decision": "NO_GO_FOR_PAID_GPU_RUN",
+  "deepinfer_commit": "553741557a57df44a46fb3ab72b6aafeaf945337",
+  "model_revision": "1bae0e1088993b9b82de08f59de5be5a34e42170",
+  "source_audit": {
+    "source_commit": "553741557a57df44a46fb3ab72b6aafeaf945337",
+    "source_contract_passed": true,
+    "contract_files_verified": 16,
+    "vendor_pins_verified": 4,
+    "vendor_checkouts_initialized": {
+      "vendor/DeepEP": false,
+      "vendor/DeepGEMM": false,
+      "vendor/DeepSelect": false,
+      "vendor/FlashMLA": false
+    },
+    "shell_contract_files_with_crlf": [
+      "build.sh",
+      "scripts/build.sh",
+      "scripts/build_vendor.sh"
+    ],
+    "requires_linux_lf_checkout": true,
+    "python_syntax_checked": false,
+    "native_cuda_build_verified": false,
+    "model_downloaded": false,
+    "gpu_execution_verified": false,
+    "deployable": false,
+    "limitations": "Source/gitlink audit only; not dependency resolution, CUDA compilation, native import or model execution."
+  },
+  "cpu_rehearsal": {
+    "container_image_id": "sha256:efbf462a4848fc7ccb8b352dd492fad95b4cde1cfe9356e13fc528e91531fc7a",
+    "python": "3.12.10",
+    "python_files_parsed": 270,
+    "shell_files_parsed_after_lf_normalization": 10,
+    "shell_files_with_windows_checkout_crlf": 10,
+    "network_enabled": false,
+    "deepinfer_code_imported": false,
+    "native_cuda_build_performed": false,
+    "gpu_execution_performed": false,
+    "passed": true,
+    "script_sha256": "e7c8bdafd55949360dca2691c59934040d8995f4c462b6aef2388c5f5968b4b8"
+  },
+  "checkpoint": {
+    "weight_shards": 48,
+    "weight_bytes": 510296708312,
+    "decimal_gb": 510.296708312,
+    "weights_downloaded": false,
+    "existing_80_gb_disk_sufficient": false
+  },
+  "toolchain": {
+    "python": "3.12",
+    "torch": "2.13.0+cu132",
+    "host_cuda_floor_for_candidate": "13.2",
+    "nccl": "2.32.3",
+    "cpp_standard": "C++20",
+    "cxx11_abi_required": true,
+    "vendor_libraries": [
+      "DeepSelect",
+      "FlashMLA",
+      "DeepEP",
+      "DeepGEMM"
+    ]
+  },
+  "budget": {
+    "displayed_balance_usd": "7.26",
+    "credit_floor_usd": "5",
+    "pending_charge_reserve_usd": "0.40",
+    "available_above_floor_before_reserve_usd": "2.26",
+    "available_after_reserve_usd": "1.86",
+    "b200_secure_unit_gpu_hourly_usd": "7.99",
+    "four_b200_gpu_hourly_usd": "31.96",
+    "four_b200_gpu_only_lower_bounds_usd": {
+      "5": "2.663333333333333333333333333",
+      "15": "7.99",
+      "30": "15.98"
+    },
+    "total_quote_verified": false,
+    "storage_and_ancillary_costs_unknown": true,
+    "four_gpu_memory_fit_verified": false
+  },
+  "capacity": {
+    "b200_secure_count_4_cuda_13_2": "NONE",
+    "b200_secure_count_8_cuda_13_2": "NONE",
+    "b300_secure_count_4_cuda_13_2": "NONE",
+    "b300_native_deepinfer_support_verified": false
+  },
+  "benchmark_semantics": {
+    "upstream_decode_metric": "nominal_full_draft_acceptance_not_actual_delivered_tokens",
+    "required_counter": "actual_emitted_token_events",
+    "final_answer_parser_verified": false,
+    "native_http_service_adapter_implemented": false
+  },
+  "paid_resources_created": false,
+  "blockers": [
+    "Insufficient credit above owner floor even for five GPU-only minutes on four B200s",
+    "No currently quoted four/eight B200 stock",
+    "Native CUDA image, vendor builds and ABI are unverified",
+    "Memory/interconnect fit and storage/all-in quote are unverified",
+    "Native output capture and final-answer quality/accounting adapter still require GPU validation"
+  ]
+}

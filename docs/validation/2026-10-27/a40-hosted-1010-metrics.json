@@ -38,7 +38,7 @@
     "guard_rate_usd": 0.61,
     "quote_estimate_upper_usd": 0.2152310173298915,
     "guard_estimate_upper_usd": 0.21845411076744398,
-    "posted_bill_pending": true,
+    "posted_bill_pending": false,
     "successful_input_tokens": 366758,
     "successful_output_tokens": 35095,
     "quote_estimated_usd_per_million_successful_output": 6.132811435529035,
@@ -702,12 +702,25 @@
     "monotone": true,
     "includes": "readiness canaries and retried generation; not billable customer usage"
   },
-  "bill_reconciliation": "Provider returned no records at initial post-run queries; cost fields are estimates, not posted invoice amounts.",
+  "bill_reconciliation": "Posted GPU/disk billing now available; original quote estimates retained separately.",
   "limitations": [
     "Two matched baseline and two adaptive runs on one pod; no confidence interval or broad hardware claim.",
     "Full-rental telemetry incomplete; unobserved intervals are unknown, not zero.",
     "Configured maximum context allocated successfully; actual synthetic prompts do not stress four full 10,240-token sequences.",
     "No equivalent pinned Qwen3-4B hosted-provider comparison or extraction-quality evaluation was run.",
     "Production control-plane, engineering and support costs are not priced here."
-  ]
+  ],
+  "posted_provider_bill": {
+    "source": "RunPod REST v2 list-pod-billing, authenticated exact pod filter",
+    "queried_at_utc": "2026-10-27T12:33:16.074973+00:00",
+    "pod_id": "aal5d2kold5svl",
+    "bucket_start": "2026-10-27T00:00:00Z",
+    "bucket_end_exclusive": "2026-10-28T00:00:00Z",
+    "cpu_usd": 0,
+    "gpu_usd": 0.211228359490633,
+    "disk_usd": 0.003703703638166189,
+    "total_gpu_disk_usd": 0.2149320631287992,
+    "successful_output_tokens": 35095,
+    "gpu_disk_usd_per_million_successful_output": 6.12429300837154
+  }
 }

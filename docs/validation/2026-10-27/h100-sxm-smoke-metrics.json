@@ -29,7 +29,7 @@
   "allocation_usd": 2.2,
   "credit_floor_usd": 5,
   "observed_post_run_credit_usd": 7.46,
-  "itemized_provider_bill_pending": true,
+  "itemized_provider_bill_pending": false,
   "provider_get_after_cleanup": 404,
   "remaining_pods": 0,
   "remaining_network_volumes": 0,
@@ -217,5 +217,18 @@
     "Quoted estimates are not posted provider charges or customer charges.",
     "Same smoke inputs, different hardware/host/startup conditions; no statistical significance or competitive savings established.",
     "Unsigned operator receipts are not independent attestation."
-  ]
+  ],
+  "posted_provider_bill": {
+    "source": "RunPod REST v2 list-pod-billing, authenticated exact pod filter",
+    "queried_at_utc": "2026-10-27T12:33:16.074973+00:00",
+    "pod_id": "iqxickl6fa3uix",
+    "bucket_start": "2026-10-27T00:00:00Z",
+    "bucket_end_exclusive": "2026-10-28T00:00:00Z",
+    "cpu_usd": 0,
+    "gpu_usd": 0.6772736757993698,
+    "disk_usd": 0.0018518518190830946,
+    "total_gpu_disk_usd": 0.6791255276184529,
+    "successful_output_tokens": 345,
+    "gpu_disk_usd_per_million_successful_output": 1968.479790198414
+  }
 }

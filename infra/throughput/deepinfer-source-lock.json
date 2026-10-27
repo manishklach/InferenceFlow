@@ -1,0 +1,37 @@
+{
+  "schema": "inferenceflow.deepinfer-source-lock.v1",
+  "repository": "https://github.com/deepseek-ai/DeepInfer.git",
+  "commit": "553741557a57df44a46fb3ab72b6aafeaf945337",
+  "source_hash_method": "sha256 of UTF-8 text normalized to LF; git commit remains primary source identity",
+  "files": {
+    "README.md": "b55624158ada4dc21b882d24ded06bf82f65350b44d170877b68395712cd670d",
+    "build.sh": "840283a6559bf99f38dbb153f168ddd3157a11669f9f10a38d90809a12175c7d",
+    "requirements.txt": "6b7eb923377c7fa34ea950d5f8fb8c917a240b325494e13a83b3852d7d479db9",
+    "requirements-dev.txt": "ff1d8438df5a35604424fc78fa4965fe36c733c47643eaffffb5b15d06e07b51",
+    "requirements-nvidia.txt": "f76510c5b75dc9633669596d03534a537b9f14241718b8fc93fdff9e4b795162",
+    "setup.py": "c9e99ee64a51fe57a97bbf81729be711b403c49e5fbb856f388e3e5dbe696ec4",
+    "scripts/build.sh": "b750dc4d7861340ab5312823e7782bce347fec01911866e9121a2cf4f4294406",
+    "scripts/build_vendor.sh": "2256ec58231a8e5267ff2403a7c4915d450083c2c731a4480b4d4485705e7571",
+    "examples/README.md": "fde052a91323c18565148398b47281a2183cfb008cd3c0d0f24ec25956ae62d9",
+    "examples/offline_inference.py": "7392a46c7b5c4cc6d0b47d6a818c4be79f12e95a015d14243a9023af2a95ca88",
+    "examples/benchmark.py": "a4e0b114b4173b9d2124cdabfedc54d3dd5cd81d269d7054c48f9bac780eb9f2",
+    "examples/_config.py": "a671d83fa5becac257722e67facec2f33743a1263e0b2e6355dcdb00984f4f42",
+    "examples/_launch.py": "d19d14125140385acb62dd1bb4893569f21c99d55eb6e42add0068b713c09486",
+    "deepinfer/entrypoints/llm.py": "069a5333d9f47047ccc87584792627dfa6eee9cf93bdc046107cbd0218a6bada",
+    "csrc/engine/pybind_output.cpp": "be4123bbf5e05d0e717e3f58816bc7d8726b55f3b02dde5b1854ef6ee1e9a056",
+    "csrc/engine/outputs.hpp": "9ef2f5a37dd07b03fe7fac7f92cbbf1dfc056ff4a0c0fbb9b7a384149f71bf6f"
+  },
+  "nvidia_submodules": {
+    "vendor/DeepEP": "f6aa38fe06cd4a0489e7730365d4e0114970a2f3",
+    "vendor/DeepGEMM": "1fc9c66975ee322d628b3288534ca0e9ce12a64d",
+    "vendor/DeepSelect": "bfa4507d935f17ebfc3d0f00ff7d3c9a4d0e5c18",
+    "vendor/FlashMLA": "2e5429fc5653bab6e081f09477126f731882a6a9"
+  },
+  "python": "3.12",
+  "torch": "2.13.0+cu132",
+  "cuda_line": "13.2",
+  "nccl": "2.32.3",
+  "native_build_verified": false,
+  "validated_image_digest": null,
+  "gpu_test_verified": false
+}

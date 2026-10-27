@@ -2,15 +2,17 @@
 
 **Experimental auditable asynchronous inference.** Submit batches, retrieve results and verify usage/settlement receipts.
 
-Latest high-end follow-up: [H100 SXM smoke report](docs/validation/2026-10-27/h100-sxm-smoke-report.md). **10/10 real requests and receipts passed**, zero drift; larger stages were skipped by the time gate after cold startup. The pod is terminated. Quoted rental estimate **$0.68**, itemized bill pending; displayed credit **$7.46**. This does not complete the sustained hardware comparison or demonstrate H100 savings.
+Latest high-end follow-up: [H100 SXM smoke report](docs/validation/2026-10-27/h100-sxm-smoke-report.md). **10/10 real requests and receipts passed**, zero drift; larger stages were skipped by the time gate after cold startup. The pod is terminated. Posted RunPod GPU/disk cost **$0.67913**; displayed credit immediately after that run was **$7.46** (historical). This does not complete the sustained hardware comparison or demonstrate H100 savings.
 
 Latest complete multi-stage GPU validation: [complete hosted A40 report](docs/validation/2026-10-27/a40-hosted-1010-report.md) and [aggregate measurements](docs/validation/2026-10-27/a40-hosted-1010-metrics.json). **1,010/1,010 real requests succeeded**, including a controlled worker interruption, with **1,010 verified receipts, 1,010 unique usage/capture records and zero wallet drift**. The independent watchdog terminated the pod; no paid resources remain. Displayed credit after that A40 run: **$7.94** (historical).
 
-Matched 100-request arms averaged **46.80 seconds baseline concurrent** versus **53.31 seconds adaptive** from API receipt through completion: adaptive was **13.9% slower**. Pooled baseline output throughput was **2.67x sequential**. Estimated full validation-rental cost is **$0.21523** at the displayed all-in quote; the provider's itemized bill is pending. These results support supervised execution/audit demonstrations, **not a cheapest-inference or adaptive-savings claim**. Public beta, live Stripe and automatic provisioning remain disabled.
+Matched 100-request arms averaged **46.80 seconds baseline concurrent** versus **53.31 seconds adaptive** from API receipt through completion: adaptive was **13.9% slower**. Pooled baseline output throughput was **2.67x sequential**. Posted full validation GPU/disk cost is **$0.21493**; the initial quote estimate was $0.21523. These results support supervised execution/audit demonstrations, **not a cheapest-inference or adaptive-savings claim**. Public beta, live Stripe and automatic provisioning remain disabled.
 
 [Auditable execution receipts](docs/auditable-execution-receipts.md) preserve model identity, prompt/payload/output hashes, token usage and request settlement checks through the API and Python SDK. They are unsigned operator records, not independent attestation or proof of zero retention. Wallet algorithms are unchanged. The hosted experiment verified all 1,010 real receipts against results and a separate SQL audit. This is a defensibility foundation; customer value and competitive economics remain to be established.
 
 The code passed **254 tests** (one real-GPU pytest skipped), **31 scheduler-v2 regressions**, lint/type checks, the dashboard production build and a **40/40 mock hosted rehearsal with 40 verified receipts** before the real run. Real GPU evidence is in the separate experiment report above.
+
+Latest [DeepInfer compatibility and budget readiness](docs/validation/2026-10-27/deepinfer-readiness.md): source/CPU checks passed, native CUDA build and GPU execution unverified. No four/eight-B200 stock at the check; even five minutes on four B200s exceeds funds above the $5 floor. Current displayed credit: **$7.26**. No paid resources created.
 
 ## Model-specific throughput tooling
 
@@ -91,7 +93,7 @@ python -m scripts.benchmark_scheduler --seed 42 --count 240 --output .runtime/be
 
 The [implementation report and file manifest](docs/implementation-v0.3.md) records validation and remaining work. [View the unmodified scheduling dashboard capture](docs/media/v03/scheduling-full.png).
 
-The six-scenario comparison is synthetic: some changes regress some metrics. Actual GPU throughput, sub-hour reliability, model fit and cost advantage still require approved hardware and provider invoices. Follow the [benchmark plan](docs/performance/benchmark-plan.md) before real-GPU calibration or spending.
+The six-scenario comparison is synthetic: some changes regress some metrics. It is not GPU evidence; use the dated real-GPU reports above for measured results. General reliability and competitive cost advantage remain unproven. Follow the [benchmark plan](docs/performance/benchmark-plan.md) before real-GPU calibration or spending.
 
 ## First real GPU experiment — baseline passed, recovery blocked
 
